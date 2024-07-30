@@ -1,9 +1,16 @@
 package cl.praxis.bootcapp.entities;
 
-public class NotaDTO {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class NoteDTO {
     private Long id;
-    private int nota;
+    private int note;
     private User teacher;
-    private User etudent;
+    private User estudent;
     private Subject subject;
 }
