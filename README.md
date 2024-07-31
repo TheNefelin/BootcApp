@@ -1,4 +1,4 @@
-# Dia11 M6 Ejercicio
+# Ejercicio BootcApp
 
 Empaquetado JAR es para Java <br>
 Empaquetado WAR es para Web
@@ -214,4 +214,9 @@ cmd
 netstat -ano
 netstat -ano | findstr :8080
 taskkill /f /pid <pid-number>
+```
+
+### GitHub
+```
+git checkout -b nombre
 ```
