@@ -14,25 +14,17 @@ Empaquetado WAR es para Web
 
 ### Dependency, Spring Boot: 3.4.0 (SNAPSHOT)
 - Developer Tools:
-    * Spring Boot DevTools
-    * Lombok
+  * Spring Boot DevTools
+  * Lombok
 - Web:
-    * Spring Web
-    * Rest Repositories
-    * Spring Web Services
+  * Spring Web
+  * Rest Repositories
+  * Spring Web Services
 - Template Engines:
-    * Thymeleaf
+  * Thymeleaf
 - SQL:
-    * Spring Data JPA
-    * MySql Driver
-```
-<
-dependency
-groupId > groupId
-artifactId > artifactId
-version > version
-dependency
-```
+  * Spring Data JPA
+  * MySql Driver
 
 ### Folder
 ```
@@ -54,39 +46,44 @@ dependency
 
 ### Annotations
 * Clases
-    * @Service
-    * @Repository
-    * @Controller (WebApp)
-    * @RestController (RestAPI)
+  * @Service
+  * @Repository
+  * @Controller (WebApp)
+  * @RestController (RestAPI)
 * Entities
-    * @Entity
-    * @Table
-    * @Id
-    * @GeneratedValue
-    * @Column
-    * @CreationTimestamp + @Column(updatable = false)
-    * @UpdateTimestamp
-    * @ManyToMany
-        * @JoinTable
-            * name = "t1_t2",
-            * joinColumns = @JoinColumn(name = "id_t1"),
-            * inverseJoinColumns = @JoinColumn(name = "id_t2")
-    * @ManyToMany(mappedBy = "t_ant")  
-    * @ManyToOne
-      * @JoinColumn(name = "id_t", ...
+  * @Entity
+  * @Table
+  * @Id
+  * @GeneratedValue
+  * @Column
+  * @CreationTimestamp + @Column(updatable = false)
+  * @UpdateTimestamp
+  * @ManyToMany
+    * @JoinTable
+      * name = "t1_t2",
+      * joinColumns = @JoinColumn(name = "id_t1"),
+      * inverseJoinColumns = @JoinColumn(name = "id_t2")
+  * @ManyToMany(mappedBy = "t_ant")
+  * @ManyToOne
+    * @JoinColumn(name = "id_t", ...
 * Metods
-    * @Autowired
-    * @GetMapping
-    * @PostMapping
-    * @PutMapping
-    * @DeleteMapping
+  * @Autowired
+  * @GetMapping
+  * @PostMapping
+  * @PutMapping
+  * @DeleteMapping
 * Metods Param
-    * @RequestAttribute
-    * @ModelAttribute
-    * @RequestParam
+  * @RequestAttribute
+  * @ModelAttribute
+  * @RequestParam
 
 ### Config DB
 * resource => application.properties
+* para hacer uso de un seed se debe crear data.sql en /resources y reemplazar la linea "spring.jpa.hibernate.ddl-auto=update" por lo siguiente
+  * spring.jpa.hibernate.ddl-auto=create-drop
+  * spring.jpa.defer-datasource-initialization=true
+  * spring.sql.init.mode=always
+
 ```
 spring.mvc.view.prefix=/templates/
 
@@ -99,8 +96,13 @@ spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
 
 # Hibernate Configuration
 spring.jpa.show-sql=true
-spring.jpa.hibernate.ddl-auto=update
 spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.hibernate.ddl-auto=update
+# Seed
+spring.jpa.hibernate.ddl-auto=create-drop
+spring.jpa.defer-datasource-initialization=true
+spring.sql.init.mode=always
+
 ```
 
 ### Config MVC
@@ -216,11 +218,68 @@ netstat -ano | findstr :8080
 taskkill /f /pid <pid-number>
 ```
 
-### GitHub
+### Git
 ```
-git checkout -b nombre      // crear rama
-git checkout main           // cambiar rama
-git pull                    // actualizar
-git commit -m "nombre"      // crear historico
-git push                    // enviar modificaciones al repo
+git checkout -b branchName                  // crear rama
+git checkout main                           // cambiar rama
+git pull                                    // descargar las modificaciones de GitHub
+git branch                                  // ver todas las ramas
+git push --set-upstream origin "branchName" // crea la branch automaticamente en Github
+git commit -m "branchName"                  // crear historico commits
+git push                                    // actualiza el branch en GitHub
+```
+
+### Proyecto
+* Cada requerimiento se trabaja en la rama del Usuario (UserBranch).
+* Finalizado el requerimiento se hace Merge con el Deploy (DeployBranch).
+* No tocar el Main (MainBranch).
+```mermaid
+graph TD;
+    MainBranch
+    DeployBranch-->UserBranch;
+```
+
+### MySQL Query
+```
+INSERT INTO roles
+    (nombre)
+VALUES
+    ('Admin'),
+    ('Profesor'),
+    ('Estudiante'),
+    ('Apoderado');
+
+INSERT INTO cursos
+    (nombre)
+VALUES
+    ('Full Stack Java'),
+    ('Full Stack JavaStript'),
+    ('Full Stack .NET'),
+    ('Python'),
+    ('TypeScript');
+
+INSERT INTO asignaturas
+    (nombre, id_curso)
+VALUES
+    ('Fundamentos de JavaScript', 2),
+    ('JavaScript Avanzado', 2),
+    ('React', 2),
+    ('Fundamentos de JavaScript', 2),
+    ('JavaScript Avanzado', 2),
+    ('React', 2),
+    ('Fundamentos de C#', 3),
+    ('ASP.NET Core', 3),
+    ('Entity Framework', 3),
+    ('Fundamentos de Python', 4),
+    ('Análisis de Datos con Python', 4),
+    ('Machine Learning con Python', 4),
+    ('Fundamentos de TypeScript', 5),
+    ('TypeScript Avanzado', 5),
+    ('Angular', 5);
+
+INSERT INTO usuarios
+    (correo, clave, nombre, apellido, id_rol)
+VALUES
+    ('praxis@praxis.cl', '123456', 'Isaac', 'Netero', 1);
+
 ```
