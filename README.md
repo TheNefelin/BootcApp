@@ -218,5 +218,9 @@ taskkill /f /pid <pid-number>
 
 ### GitHub
 ```
-git checkout -b nombre
+git checkout -b nombre      // crear rama
+git checkout main           // cambiar rama
+git pull                    // actualizar
+git commit -m "nombre"      // crear historico
+git push                    // enviar modificaciones al repo
 ```
