@@ -58,14 +58,23 @@ Empaquetado WAR es para Web
   * @Column
   * @CreationTimestamp + @Column(updatable = false)
   * @UpdateTimestamp
+  * @OneToOne(mappedBy = "atrib_t2", fetch = FetchType.LAZY/EAGER)
+  * @OneToOne(fetch = FetchType.LAZY/EAGER)
+    * @JoinColumn(name = "id_t1")
+  * @OneToMany(mappedBy ="atrib_t2", fetch = FetchType.LAZY/EAGER)
+  * @ManyToOne(fetch = FetchType.LAZY/EAGER)
+    * @JoinColumn(name = "id_t1")
   * @ManyToMany
     * @JoinTable
       * name = "t1_t2",
-      * joinColumns = @JoinColumn(name = "id_t1"),
-      * inverseJoinColumns = @JoinColumn(name = "id_t2")
-  * @ManyToMany(mappedBy = "t_ant")
-  * @ManyToOne
-    * @JoinColumn(name = "id_t", ...
+      * joinColumns = @JoinColumn(name = "id_t2"),
+      * inverseJoinColumns = @JoinColumn(name = "id_t1")
+  * @ManyToMany(fetch = FetchType.LAZY/EAGER)
+    * @JoinTable(
+        name = "t1_t2",
+        joinColumns = @JoinColumn(name = "id_t1"),
+        inverseJoinColumns = @JoinColumn(name = "id_t2"))
+  * @ManyToMany(mappedBy = "atrib_t2", fetch = FetchType.LAZY/EAGER)
 * Metods
   * @Autowired
   * @GetMapping
@@ -227,6 +236,15 @@ git branch                                  // ver todas las ramas
 git push --set-upstream origin "branchName" // crea la branch automaticamente en Github
 git commit -m "branchName"                  // crear historico commits
 git push                                    // actualiza el branch en GitHub
+
+// merge con develop
+git branch
+git checkout develop
+git pull origin develop
+git merge branchName
+git status
+git push origin develop
+git checkout branchName
 ```
 
 ### Proyecto
