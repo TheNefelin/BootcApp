@@ -242,6 +242,9 @@ git branch
 git checkout develop
 git pull origin develop
 git merge branchName
+git status
+git push origin develop
+git checkout branchName
 ```
 
 ### Proyecto
