@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface INoteRepository extends JpaRepository<Grade, Long> {
+public interface IGradeRepository extends JpaRepository<Grade, Long> {
     List<Grade> findAllByIdTeacher(Long idTeacher);
     List<Grade> findAllByIdSubject(Long idSubject);
     List<Grade> findAllByIdStudent(Long idStudent);

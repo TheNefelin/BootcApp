@@ -4,10 +4,11 @@ import cl.praxis.bootcapp.entities.Grade;
 import cl.praxis.bootcapp.entities.GradeDTO;
 import cl.praxis.bootcapp.entities.Subject;
 import cl.praxis.bootcapp.entities.User;
-import cl.praxis.bootcapp.repositories.INoteRepository;
+import cl.praxis.bootcapp.repositories.IGradeRepository;
 import cl.praxis.bootcapp.repositories.ISubjectRepository;
 import cl.praxis.bootcapp.repositories.IUserRepository;
-import cl.praxis.bootcapp.services.INoteService;
+import cl.praxis.bootcapp.services.IBaseServiceCRUD;
+import cl.praxis.bootcapp.services.IGradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +18,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class NoteService implements INoteService {
+public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
     @Autowired
-    private INoteRepository repoNote;
+    private IGradeRepository repoNote;
 
     // MODIFICAR
     @Autowired
@@ -28,6 +29,35 @@ public class NoteService implements INoteService {
     // MODIFICAR
     @Autowired
     private IUserRepository repoUser;
+
+    @Override
+    public List<Grade> getAll() {
+        return repoNote.findAll();
+    }
+
+    @Override
+    public Grade getById(Long id) {
+        return repoNote.findById(id).orElse(null);
+    }
+
+    @Override
+    public Grade create(Grade grade) {
+        return repoNote.save(grade);
+    }
+
+    @Override
+    public Grade update(Grade grade) {
+        return repoNote.save(grade);
+    }
+
+    @Override
+    public boolean delete(Long id) {
+        if (repoNote.findById(id).isPresent()) {
+            repoNote.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public List<GradeDTO> getNoteByIdSubject(Long idSubject) {
