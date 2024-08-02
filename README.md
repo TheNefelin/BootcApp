@@ -89,12 +89,7 @@ Empaquetado WAR es para Web
   * @RequestParam
 
 ### Config DB
-* resource => application.properties
-* para hacer uso de un seed se debe crear data.sql en /resources y reemplazar la linea "spring.jpa.hibernate.ddl-auto=update" por lo siguiente
-  * spring.jpa.hibernate.ddl-auto=create-drop
-  * spring.jpa.defer-datasource-initialization=true
-  * spring.sql.init.mode=always
-
+* Edit application.properties file
 ```
 spring.mvc.view.prefix=/templates/
 
@@ -109,11 +104,6 @@ spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
 spring.jpa.hibernate.ddl-auto=update
-# Seed
-spring.jpa.hibernate.ddl-auto=create-drop
-spring.jpa.defer-datasource-initialization=true
-spring.sql.init.mode=always
-
 ```
 
 ### Config MVC
@@ -240,13 +230,15 @@ git commit -m "branchName"                  // crear historico commits
 git push                                    // actualiza el branch en GitHub
 
 // merge con develop
-git branch
-git checkout develop
-git pull origin develop
-git merge branchName
-git status
-git push origin develop
-git checkout branchName
+git branch                // visualiza los brancha
+git checkout develop      // cambiar y crear branch develop
+git pull origin develop   // descarga brancha develop
+git merge branchName      // hace merge del branchName con el branchActual
+git status                // visualiza los cambios pendientes
+git push origin develop   // envia brancha develop
+git checkout branchName   // cambiar y crear branchName
+git switch branchName     // cambiar a branchName
+git branch -d branchName  // elimina branchName
 ```
 
 ### Proyecto
@@ -257,6 +249,20 @@ git checkout branchName
 graph TD;
     MainBranch
     DeployBranch-->UserBranch;
+```
+
+### Seed
+* Create data.sql in Resources folder 
+* Change config in application.properties config
+```
+// replace this 
+spring.jpa.hibernate.ddl-auto=update
+
+// with this
+# Seed
+spring.jpa.hibernate.ddl-auto=create-drop
+spring.jpa.defer-datasource-initialization=true
+spring.sql.init.mode=always
 ```
 
 ### MySQL Query
@@ -301,5 +307,4 @@ INSERT INTO usuarios
     (correo, clave, nombre, apellido, id_rol)
 VALUES
     ('praxis@praxis.cl', '123456', 'Isaac', 'Netero', 1);
-
 ```
