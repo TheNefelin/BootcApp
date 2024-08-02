@@ -50,6 +50,7 @@ Empaquetado WAR es para Web
   * @Repository
   * @Controller (WebApp)
   * @RestController (RestAPI)
+  * @RequestMapping
 * Entities
   * @Entity
   * @Table
@@ -81,6 +82,7 @@ Empaquetado WAR es para Web
   * @PostMapping
   * @PutMapping
   * @DeleteMapping
+  * @RequestMapping
 * Metods Param
   * @RequestAttribute
   * @ModelAttribute
