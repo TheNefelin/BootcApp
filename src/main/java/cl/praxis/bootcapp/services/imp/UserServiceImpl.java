@@ -3,12 +3,13 @@ package cl.praxis.bootcapp.services.imp;
 import cl.praxis.bootcapp.entities.User;
 import cl.praxis.bootcapp.repositories.IUserRepository;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
+import cl.praxis.bootcapp.services.IUserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements IBaseServiceCRUD<User> {
+public class UserServiceImpl implements IBaseServiceCRUD<User>, IUserService {
 
     private IUserRepository userRepository;
 
