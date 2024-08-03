@@ -4,10 +4,11 @@ import cl.praxis.bootcapp.entities.Grade;
 import cl.praxis.bootcapp.entities.GradeDTO;
 import cl.praxis.bootcapp.entities.Subject;
 import cl.praxis.bootcapp.entities.User;
-import cl.praxis.bootcapp.repositories.INoteRepository;
+import cl.praxis.bootcapp.repositories.IGradeRepository;
 import cl.praxis.bootcapp.repositories.ISubjectRepository;
 import cl.praxis.bootcapp.repositories.IUserRepository;
-import cl.praxis.bootcapp.services.INoteService;
+import cl.praxis.bootcapp.services.IBaseServiceCRUD;
+import cl.praxis.bootcapp.services.IGradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +18,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class NoteService implements INoteService {
+public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
     @Autowired
-    private INoteRepository repoNote;
+    private IGradeRepository repoGrade;
 
     // MODIFICAR
     @Autowired
@@ -30,20 +31,20 @@ public class NoteService implements INoteService {
     private IUserRepository repoUser;
 
     @Override
-    public List<GradeDTO> getNoteByIdSubject(Long idSubject) {
-        List<Grade> grades = repoNote.findAllByIdSubject(idSubject);
+    public List<GradeDTO> getGradeByIdSubject(Long idSubject) {
+        List<Grade> grades = repoGrade.findAllByIdSubject(idSubject);
         return toDTO(grades);
     }
 
     @Override
-    public List<GradeDTO> getNoteByIdTeacher(Long idTeacher) {
-        List<Grade> grades = repoNote.findAllByIdTeacher(idTeacher);
+    public List<GradeDTO> getGradeByIdTeacher(Long idTeacher) {
+        List<Grade> grades = repoGrade.findAllByIdTeacher(idTeacher);
         return toDTO(grades);
     }
 
     @Override
-    public List<GradeDTO> getNoteByIdStudent(Long idStudent) {
-        List<Grade> grades = repoNote.findAllByIdStudent(idStudent);
+    public List<GradeDTO> getGradeByIdStudent(Long idStudent) {
+        List<Grade> grades = repoGrade.findAllByIdStudent(idStudent);
         return toDTO(grades);
     }
 
@@ -59,11 +60,46 @@ public class NoteService implements INoteService {
         return grades.stream().map(grade -> {
             GradeDTO gradeDTO = new GradeDTO();
             gradeDTO.setId(grade.getId());
-            gradeDTO.setNote(grade.getNote());
+            gradeDTO.setNote(grade.getGrade());
             gradeDTO.setTeacher(teacherList.get(grade.getIdTeacher()));
             gradeDTO.setEstudent(studentList.get(grade.getIdStudent()));
             gradeDTO.setSubject(subjectList.get(grade.getIdSubject()));
             return gradeDTO;
         }).collect(Collectors.toList());
     }
+
+    //-----------------------------------------CRUD GRADE---------------------------------------------//
+
+    @Override
+    public List getAll() {
+        return repoGrade.findAll();
+    }
+
+    @Override
+    public Grade getById(Long id) {
+        Grade grade = repoGrade.findById(id).orElse(null);
+        return grade;
+    }
+
+    @Override
+    public Grade create(Grade grade) {
+        return repoGrade.save(grade);
+    }
+
+
+    @Override
+    public Grade update(Grade grade) {
+        return repoGrade.save(grade);
+    }
+
+
+    @Override
+    public boolean delete(Long id) {
+        if (repoGrade.existsById(id)){
+            repoGrade.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
 }

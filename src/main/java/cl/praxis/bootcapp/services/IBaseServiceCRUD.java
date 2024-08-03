@@ -1,5 +1,7 @@
 package cl.praxis.bootcapp.services;
 
+import cl.praxis.bootcapp.entities.Grade;
+
 import java.util.List;
 
 public interface IBaseServiceCRUD<T> {
@@ -7,5 +9,8 @@ public interface IBaseServiceCRUD<T> {
     T getById(Long id);
     T create(T t);
     T update(T t);
+
+    Grade update(Grade grade);
+
     boolean delete(Long id);
 }
