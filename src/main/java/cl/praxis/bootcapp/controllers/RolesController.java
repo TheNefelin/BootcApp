@@ -2,9 +2,8 @@ package cl.praxis.bootcapp.controllers;
 
 
 import cl.praxis.bootcapp.entities.Role;
-import cl.praxis.bootcapp.repositories.IRoleRepository;
-import cl.praxis.bootcapp.repositories.services.IBaseServiceCRUD;
-import cl.praxis.bootcapp.repositories.services.imp.RoleServiceImp;
+import cl.praxis.bootcapp.services.services.IBaseServiceCRUD;
+import cl.praxis.bootcapp.services.services.imp.RoleServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

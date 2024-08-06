@@ -1,4 +1,4 @@
-package cl.praxis.bootcapp.repositories.services.imp;
+package cl.praxis.bootcapp.services.services.imp;
 
 import cl.praxis.bootcapp.entities.Grade;
 import cl.praxis.bootcapp.entities.GradeDTO;
@@ -7,7 +7,7 @@ import cl.praxis.bootcapp.entities.User;
 import cl.praxis.bootcapp.repositories.INoteRepository;
 import cl.praxis.bootcapp.repositories.ISubjectRepository;
 import cl.praxis.bootcapp.repositories.IUserRepository;
-import cl.praxis.bootcapp.repositories.services.INoteService;
+import cl.praxis.bootcapp.services.services.INoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
