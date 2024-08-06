@@ -1,8 +1,6 @@
 package cl.praxis.bootcapp.controllers;
 
 import cl.praxis.bootcapp.entities.User;
-import cl.praxis.bootcapp.services.IBaseServiceCRUD;
-import cl.praxis.bootcapp.services.IUserService;
 import cl.praxis.bootcapp.services.imp.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@Controller("UserController")
 public class UserController {
     private UserServiceImpl crudService;
 
@@ -18,7 +16,7 @@ public class UserController {
         this.crudService = crudService;
     }
 
-    @GetMapping()
+    @GetMapping("/allusers")
     public String getAllUser(Model model) {
        List<User> users = crudService.getAll();
         model.addAttribute("users", users);
@@ -30,6 +28,8 @@ public class UserController {
     public String showForm() {
         return "";
     }
+
+
     @PostMapping("/new")
     public String insertUser(@ModelAttribute User user) {
         User newUser = (User) crudService.create(user);
