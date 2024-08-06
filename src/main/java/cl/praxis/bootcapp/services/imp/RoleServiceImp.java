@@ -1,9 +1,8 @@
-package cl.praxis.bootcapp.repositories.services.imp;
+package cl.praxis.bootcapp.services.imp;
 
 import cl.praxis.bootcapp.entities.Role;
 import cl.praxis.bootcapp.repositories.IRoleRepository;
-import cl.praxis.bootcapp.repositories.services.IBaseServiceCRUD;
-import org.springframework.beans.factory.annotation.Autowired;
+import cl.praxis.bootcapp.services.IBaseServiceCRUD;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

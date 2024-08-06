@@ -1,4 +1,4 @@
-package cl.praxis.bootcapp.repositories.services;
+package cl.praxis.bootcapp.services;
 
 import java.util.List;
 
