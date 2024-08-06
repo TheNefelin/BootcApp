@@ -1,8 +1,8 @@
-package cl.praxis.bootcapp.services.services.imp;
+package cl.praxis.bootcapp.services.imp;
 
 import cl.praxis.bootcapp.entities.Role;
 import cl.praxis.bootcapp.repositories.IRoleRepository;
-import cl.praxis.bootcapp.services.services.IBaseServiceCRUD;
+import cl.praxis.bootcapp.services.IBaseServiceCRUD;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

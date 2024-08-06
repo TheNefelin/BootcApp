@@ -1,8 +1,9 @@
 package cl.praxis.bootcapp.controllers;
 
 import cl.praxis.bootcapp.entities.User;
-import cl.praxis.bootcapp.services.services.IBaseServiceCRUD;
-import cl.praxis.bootcapp.services.services.IUserService;
+import cl.praxis.bootcapp.services.IBaseServiceCRUD;
+import cl.praxis.bootcapp.services.IUserService;
+import cl.praxis.bootcapp.services.imp.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,11 +12,9 @@ import java.util.List;
 
 @Controller
 public class UserController {
-    private IUserService userService;
-    private IBaseServiceCRUD crudService;
+    private UserServiceImpl crudService;
 
-    public UserController(IUserService userService, IBaseServiceCRUD crudService) {
-        this.userService = userService;
+    public UserController(UserServiceImpl crudService) {
         this.crudService = crudService;
     }
 

@@ -1,4 +1,4 @@
-package cl.praxis.bootcapp.services.services;
+package cl.praxis.bootcapp.services;
 
 import cl.praxis.bootcapp.entities.GradeDTO;
 
