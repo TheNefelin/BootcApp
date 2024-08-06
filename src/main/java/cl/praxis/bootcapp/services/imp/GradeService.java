@@ -46,6 +46,12 @@ public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
         return toDTO(grades);
     }
 
+    // obtiene Notas con los OBJ Teacher, Student, Subject en una listaDTO
+    public List<GradeDTO> getAllNote() {
+        List<Grade> grades = repoNote.findAll();
+        return toDTO(grades);
+    }
+
     // obtiene Notas con los OBJ Teacher, Student, Subject en un DTO por idNote
     @Override
     public GradeDTO getNoteByIdNote(Long idNote) {
