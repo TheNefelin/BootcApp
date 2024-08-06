@@ -6,10 +6,43 @@
     <title>Demo</title>
 </head>
 <body>
-    <header class="bg-body-tertiary shadow-lg">
-        <th:block th:insert="components/nav :: nav"></th:block>
-    </header>
+<header class="bg-body-tertiary shadow-lg">
+    <th:block th:insert="components/nav :: nav"></th:block>
+</header>
 
-    <script th:replace="components/bootstrap_js :: script"></script>
+<main class="container mt-4">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Edad</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>Juan</td>
+            <td>Pérez</td>
+            <td>30</td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td>María</td>
+            <td>García</td>
+            <td>25</td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td>Carlos</td>
+            <td>Ramírez</td>
+            <td>28</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<script th:replace="components/bootstrap_js :: script"></script>
 </body>
 </html>
