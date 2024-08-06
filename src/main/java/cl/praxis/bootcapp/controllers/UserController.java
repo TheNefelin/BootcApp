@@ -1,3 +1,4 @@
+/*
 package cl.praxis.bootcapp.controllers;
 
 import cl.praxis.bootcapp.entities.User;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @Controller
 public class UserController {
@@ -63,4 +65,4 @@ public class UserController {
         crudService.delete(id);
         return "redirect:/index";
     }
-}
+}*/
