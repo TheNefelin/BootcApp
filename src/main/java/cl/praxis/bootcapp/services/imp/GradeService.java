@@ -1,7 +1,7 @@
 package cl.praxis.bootcapp.services.imp;
 
-
-import cl.praxis.bootcapp.entities.Grade;
+import cl.praxis.bootcapp.entities.*;
+import cl.praxis.bootcapp.repositories.IGradeRepository;
 import cl.praxis.bootcapp.repositories.ISubjectRepository;
 import cl.praxis.bootcapp.repositories.IUserRepository;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
@@ -9,11 +9,13 @@ import cl.praxis.bootcapp.services.IGradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
     @Autowired
+    private IGradeRepository repoGrade;
 
     // MODIFICAR
     @Autowired
@@ -23,21 +25,49 @@ public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
     @Autowired
     private IUserRepository repoUser;
 
+    // obtiene Notas con los OBJ Teacher, Student, Subject en una listaDTO por idSubject
     @Override
-    }
-
-    @Override
-    }
-
-    @Override
+    public List<GradeDTO> getAllNoteByIdSubject(Long idSubject) {
+        List<Grade> grades = repoGrade.findAllNotesByIdSubject(idSubject);
         return toDTO(grades);
     }
 
+    // obtiene Notas con los OBJ Teacher, Student, Subject en una listaDTO por idTeacher
     @Override
+    public List<GradeDTO> getAllNoteByIdTeacher(Long idTeacher) {
+        List<Grade> grades = repoGrade.findAllNotesByIdTeacher(idTeacher);
         return toDTO(grades);
     }
 
+    // obtiene Notas con los OBJ Teacher, Student, Subject en una listaDTO por idStudent
     @Override
+    public List<GradeDTO> getAllNoteByIdStudent(Long idStudent) {
+        List<Grade> grades = repoGrade.findAllNotesByIdStudent(idStudent);
+        return toDTO(grades);
+    }
+
+    // obtiene Notas con los OBJ Teacher, Student, Subject en una listaDTO
+    @Override
+    public List<GradeDTO> getAllNote() {
+        List<Grade> grades = repoGrade.findAll();
+        return toDTO(grades);
+    }
+
+    // obtiene Notas con los OBJ Teacher, Student, Subject en un DTO por idNote
+    @Override
+    public GradeDTO getNoteByIdNote(Long idNote) {
+        Grade grade = repoGrade.findById(idNote).orElse(null);
+        List<Grade> grades = new ArrayList<>();
+        List<GradeDTO> gradesDTO = new ArrayList<>();
+
+        if (grade != null) {
+            grades.add(grade);
+            gradesDTO = toDTO(grades);
+        } else {
+            gradesDTO.add(null);
+        }
+
+        return gradesDTO.getFirst();
     }
 
     private List<GradeDTO> toDTO(List<Grade> grades) {
@@ -59,4 +89,33 @@ public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
             return gradeDTO;
         }).collect(Collectors.toList());
     }
+
+    @Override
+    public List<Grade> getAll() {
+        return repoGrade.findAll();
+    }
+
+    @Override
+    public Grade getById(Long id) {
+        return repoGrade.findById(id).orElse(null);
+    }
+
+    @Override
+    public Grade create(Grade grade) {
+        return repoGrade.save(grade);
+    }
+
+    @Override
+    public Grade update(Grade grade) {
+        return repoGrade.save(grade);
+    }
+
+    @Override
+    public boolean delete(Long id) {
+        if (repoGrade.existsById(id)) {
+            repoGrade.deleteById(id);
+            return true;
         }
+        return false;
+    }
+}
