@@ -1,6 +1,7 @@
 package cl.praxis.bootcapp.services.imp;
 
-import cl.praxis.bootcapp.repositories.IGradeRepository;
+
+import cl.praxis.bootcapp.entities.Grade;
 import cl.praxis.bootcapp.repositories.ISubjectRepository;
 import cl.praxis.bootcapp.repositories.IUserRepository;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
