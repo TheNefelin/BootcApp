@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Service
 public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
     @Autowired
-    private IGradeRepository repoNote;
+    private IGradeRepository repoGrade;
 
     // MODIFICAR
     @Autowired
@@ -28,34 +28,35 @@ public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
     // obtiene Notas con los OBJ Teacher, Student, Subject en una listaDTO por idSubject
     @Override
     public List<GradeDTO> getAllNoteByIdSubject(Long idSubject) {
-        List<Grade> grades = repoNote.findAllNotesByIdSubject(idSubject);
+        List<Grade> grades = repoGrade.findAllNotesByIdSubject(idSubject);
         return toDTO(grades);
     }
 
     // obtiene Notas con los OBJ Teacher, Student, Subject en una listaDTO por idTeacher
     @Override
     public List<GradeDTO> getAllNoteByIdTeacher(Long idTeacher) {
-        List<Grade> grades = repoNote.findAllNotesByIdTeacher(idTeacher);
+        List<Grade> grades = repoGrade.findAllNotesByIdTeacher(idTeacher);
         return toDTO(grades);
     }
 
     // obtiene Notas con los OBJ Teacher, Student, Subject en una listaDTO por idStudent
     @Override
     public List<GradeDTO> getAllNoteByIdStudent(Long idStudent) {
-        List<Grade> grades = repoNote.findAllNotesByIdStudent(idStudent);
+        List<Grade> grades = repoGrade.findAllNotesByIdStudent(idStudent);
         return toDTO(grades);
     }
 
     // obtiene Notas con los OBJ Teacher, Student, Subject en una listaDTO
+    @Override
     public List<GradeDTO> getAllNote() {
-        List<Grade> grades = repoNote.findAll();
+        List<Grade> grades = repoGrade.findAll();
         return toDTO(grades);
     }
 
     // obtiene Notas con los OBJ Teacher, Student, Subject en un DTO por idNote
     @Override
     public GradeDTO getNoteByIdNote(Long idNote) {
-        Grade grade = repoNote.findById(idNote).orElse(null);
+        Grade grade = repoGrade.findById(idNote).orElse(null);
         List<Grade> grades = new ArrayList<>();
         List<GradeDTO> gradesDTO = new ArrayList<>();
 
@@ -91,28 +92,28 @@ public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
 
     @Override
     public List<Grade> getAll() {
-        return repoNote.findAll();
+        return repoGrade.findAll();
     }
 
     @Override
     public Grade getById(Long id) {
-        return repoNote.findById(id).orElse(null);
+        return repoGrade.findById(id).orElse(null);
     }
 
     @Override
     public Grade create(Grade grade) {
-        return repoNote.save(grade);
+        return repoGrade.save(grade);
     }
 
     @Override
     public Grade update(Grade grade) {
-        return repoNote.save(grade);
+        return repoGrade.save(grade);
     }
 
     @Override
     public boolean delete(Long id) {
-        if (repoNote.existsById(id)) {
-            repoNote.deleteById(id);
+        if (repoGrade.existsById(id)) {
+            repoGrade.deleteById(id);
             return true;
         }
         return false;

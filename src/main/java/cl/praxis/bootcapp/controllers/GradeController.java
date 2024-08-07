@@ -1,6 +1,5 @@
 package cl.praxis.bootcapp.controllers;
 
-import cl.praxis.bootcapp.entities.Grade;
 import cl.praxis.bootcapp.services.imp.GradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
