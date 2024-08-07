@@ -7,6 +7,7 @@ import cl.praxis.bootcapp.services.IUserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements IBaseServiceCRUD<User>, IUserService {
@@ -34,7 +35,13 @@ public class UserServiceImpl implements IBaseServiceCRUD<User>, IUserService {
 
     @Override
     public User update(User user) {
-        return userRepository.save(user);
+        Optional<User> existingUser = userRepository.findById(user.getId());
+        if(existingUser.isPresent()){
+            user.setCourses(existingUser.get().getCourses());
+            return userRepository.save(user);
+        }else{
+            return null;
+        }
     }
 
     @Override
