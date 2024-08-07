@@ -35,9 +35,9 @@ public class UserServiceImpl implements IBaseServiceCRUD<User>, IUserService {
 
     @Override
     public User update(User user) {
-        Optional<User> existingUser = userRepository.findById(user.getId());
-        if(existingUser.isPresent()){
-            user.setCourses(existingUser.get().getCourses());
+        Optional<User> userExist = userRepository.findById(user.getId());
+        if(userExist.isPresent()){
+            user.setCourses(userExist.get().getCourses());
             return userRepository.save(user);
         }else{
             return null;
