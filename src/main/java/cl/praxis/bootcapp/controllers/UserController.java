@@ -1,11 +1,9 @@
 package cl.praxis.bootcapp.controllers;
-
 import cl.praxis.bootcapp.entities.User;
 import cl.praxis.bootcapp.services.imp.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Controller("UserController")
