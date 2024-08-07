@@ -88,19 +88,13 @@ public class GradeServiceTest {
     void delete() {
         Grade grade = new Grade(1L, 7, LocalDate.of(2024, 8, 1), 1L, 1L, 1L);
 
-
         when(gradeRepo.existsById(grade.getId())).thenReturn(true);
 
-
         boolean result = gradeService.delete(grade.getId());
-
 
         verify(gradeRepo).deleteById(grade.getId());
 
         assertTrue(result, "borrado");
     }
-
-
-
 
 }
