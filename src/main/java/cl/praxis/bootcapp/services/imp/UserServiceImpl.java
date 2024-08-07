@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static org.hibernate.internal.util.StringHelper.count;
+
 @Service
 public class UserServiceImpl implements IBaseServiceCRUD<User>, IUserService {
 
@@ -42,6 +44,4 @@ public class UserServiceImpl implements IBaseServiceCRUD<User>, IUserService {
         userRepository.deleteById(id);
         return false;
     }
-
-
 }

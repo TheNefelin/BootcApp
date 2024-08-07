@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller("UserController")
+@Controller("users")
 public class UserController {
     private UserServiceImpl crudService;
 
@@ -16,46 +16,42 @@ public class UserController {
         this.crudService = crudService;
     }
 
-    @GetMapping("/allusers")
+    @GetMapping("/users")
     public String getAllUser(Model model) {
        List<User> users = crudService.getAll();
         model.addAttribute("users", users);
         return "index";
     }
 
-    // Ruta a formulario
+    // Ruta a formulario agregar
     @GetMapping("/new")
-    public String showForm() {
-        return "";
+    public String showForm(@ModelAttribute User user) {
+        return "demo";
     }
 
 
     @PostMapping("/new")
     public String insertUser(@ModelAttribute User user) {
-        User newUser = (User) crudService.create(user);
-        return "redirect:/index";
+        crudService.create(user);
+        return "redirect:/users";
 
     }
 
-
-    @GetMapping("/edit")
-    public String showEditForm(){
-        return "";
+    // Ruta a formulario editar
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable Long id, Model model){
+        User user = crudService.getById(id);
+        model.addAttribute("user", user);
+        return "demo";
     }
 
     @PutMapping("/edit/{id}")
-    public String editUser(@PathVariable Long id,
-                                @ModelAttribute("user") User newUser){
-        User user = (User) crudService.getById(id);
-
-        user.setEmail(newUser.getEmail());
-        user.setPassword(newUser.getPassword());
-        user.setName(newUser.getName());
-        user.setSurname(newUser.getSurname());
-
+    public String editUser(@RequestParam Long id,
+                                @ModelAttribute("user") User user){
+        user.setId(id);
         crudService.update(user);
 
-        return "redirect:/index";
+        return "redirect:/users";
     }
 
     @DeleteMapping("/delete/{id}")
