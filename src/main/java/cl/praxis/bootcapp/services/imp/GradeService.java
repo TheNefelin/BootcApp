@@ -1,9 +1,6 @@
 package cl.praxis.bootcapp.services.imp;
 
-import cl.praxis.bootcapp.entities.Grade;
-import cl.praxis.bootcapp.entities.GradeDTO;
-import cl.praxis.bootcapp.entities.Subject;
-import cl.praxis.bootcapp.entities.User;
+import cl.praxis.bootcapp.entities.*;
 import cl.praxis.bootcapp.repositories.IGradeRepository;
 import cl.praxis.bootcapp.repositories.ISubjectRepository;
 import cl.praxis.bootcapp.repositories.IUserRepository;
@@ -12,9 +9,7 @@ import cl.praxis.bootcapp.services.IGradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,21 +26,88 @@ public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
     private IUserRepository repoUser;
 
     @Override
-    public List<GradeDTO> getGradeByIdSubject(Long idSubject) {
-        List<Grade> grades = repoGrade.findAllByIdSubject(idSubject);
-        return toDTO(grades);
+    public <HEAD> List<GradeDTO> getGradeByIdSubject(Long idSubject) {
+        return null;
     }
 
     @Override
     public List<GradeDTO> getGradeByIdTeacher(Long idTeacher) {
-        List<Grade> grades = repoGrade.findAllByIdTeacher(idTeacher);
-        return toDTO(grades);
+        return null;
     }
 
     @Override
     public List<GradeDTO> getGradeByIdStudent(Long idStudent) {
-        List<Grade> grades = repoGrade.findAllByIdStudent(idStudent);
+        return null;
+    }
+
+    @Override
+    public Grade create(Grade grade) {
+        return null;
+    }
+
+    // obtiene Notas con los OBJ Teacher, Student, Subject en una listaDTO por idSubject
+    @Override
+    public List<GradeDTO> getAllNoteByIdSubject(Long idSubject) {
+        List<Grade> grades = repoGrade.findAllNotesByIdSubject(idSubject);
         return toDTO(grades);
+    }
+
+    // obtiene Notas con los OBJ Teacher, Student, Subject en una listaDTO por idTeacher
+    @Override
+    public List<GradeDTO> getAllNoteByIdTeacher(Long idTeacher) {
+        List<Grade> grades = repoGrade.findAllNotesByIdTeacher(idTeacher);
+        return toDTO(grades);
+    }
+
+    // obtiene Notas con los OBJ Teacher, Student, Subject en una listaDTO por idStudent
+    @Override
+    public List<GradeDTO> getAllNoteByIdStudent(Long idStudent) {
+        List<Grade> grades = repoGrade.findAllNotesByIdStudent(idStudent);
+        return toDTO(grades);
+    }
+
+    // obtiene Notas con los OBJ Teacher, Student, Subject en una listaDTO
+    @Override
+    public List<GradeDTO> getAllNote() {
+        List<Grade> grades = repoGrade.findAll();
+        return toDTO(grades);
+    }
+
+    @Override
+    public List<Grade> getAll() {
+        return null;
+    }
+
+    @Override
+    public Grade getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public Grade update(Grade grade) {
+        return null;
+    }
+
+    @Override
+    public boolean delete(Long id) {
+        return false;
+    }
+
+    // obtiene Notas con los OBJ Teacher, Student, Subject en un DTO por idNote
+    @Override
+    public GradeDTO getNoteByIdNote(Long idNote) {
+        Grade grade = repoGrade.findById(idNote).orElse(null);
+        List<Grade> grades = new ArrayList<>();
+        List<GradeDTO> gradesDTO = new ArrayList<>();
+
+        if (grade != null) {
+            grades.add(grade);
+            gradesDTO = toDTO(grades);
+        } else {
+            gradesDTO.add(null);
+        }
+
+        return gradesDTO.getFirst();
     }
 
     private List<GradeDTO> toDTO(List<Grade> grades) {
@@ -60,46 +122,12 @@ public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
         return grades.stream().map(grade -> {
             GradeDTO gradeDTO = new GradeDTO();
             gradeDTO.setId(grade.getId());
-            gradeDTO.setNote(grade.getGrade());
+            gradeDTO.setNote(grade.getNote());
             gradeDTO.setTeacher(teacherList.get(grade.getIdTeacher()));
             gradeDTO.setEstudent(studentList.get(grade.getIdStudent()));
             gradeDTO.setSubject(subjectList.get(grade.getIdSubject()));
             return gradeDTO;
         }).collect(Collectors.toList());
-    }
-
-    //-----------------------------------------CRUD GRADE---------------------------------------------//
-
-    @Override
-    public List getAll() {
-        return repoGrade.findAll();
-    }
-
-    @Override
-    public Grade getById(Long id) {
-        Grade grade = repoGrade.findById(id).orElse(null);
-        return grade;
-    }
-
-    @Override
-    public Grade create(Grade grade) {
-        return repoGrade.save(grade);
-    }
-
-
-    @Override
-    public Grade update(Grade grade) {
-        return repoGrade.save(grade);
-    }
-
-
-    @Override
-    public boolean delete(Long id) {
-        if (repoGrade.existsById(id)){
-            repoGrade.deleteById(id);
-            return true;
-        }
-        return false;
     }
 
 }
