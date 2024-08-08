@@ -47,8 +47,8 @@ public class GradeServiceTest {
         note2 = 1;
         grade1 = new Grade(id1, note1, LocalDate.now(), 1L, 1L, 1L);
         grade2 = new Grade(id2, note2, LocalDate.now(), 2L, 2L, 2L);
-        gradeDTO1 = new GradeDTO(grade1.getId(), grade1.getNote(), new User(), new User(), new Subject());
-        gradeDTO2 = new GradeDTO(grade2.getId(), grade2.getNote(), new User(), new User(), new Subject());
+        gradeDTO1 = new GradeDTO(grade1.getId(), grade1.getGrade(), new User(), new User(), new Subject());
+        gradeDTO2 = new GradeDTO(grade2.getId(), grade2.getGrade(), new User(), new User(), new Subject());
     }
 
     //    @Test
@@ -107,7 +107,7 @@ public class GradeServiceTest {
         Grade gradeResult = gradeService.create(grade1);
         assertNotNull(gradeResult);
         assertThat(gradeResult.getId()).isEqualTo(grade1.getId());
-        assertThat(gradeResult.getNote()).isEqualTo(grade1.getNote());
+        assertThat(gradeResult.getGrade()).isEqualTo(grade1.getGrade());
         assertThat(gradeResult.getDate()).isEqualTo(grade1.getDate());
         assertThat(gradeResult.getIdStudent()).isEqualTo(grade1.getIdStudent());
         assertThat(gradeResult.getIdTeacher()).isEqualTo(grade1.getIdTeacher());
@@ -123,14 +123,14 @@ public class GradeServiceTest {
     public void updateGradeTest() {
         LOG.info("--> Inicio Test updateGradeTest");
         grade1.setId(id2);
-        grade1.setNote(note2);
+        grade1.setGrade(note2);
         when(gradeRepository.save(grade1)).thenReturn(grade1);
 
         LOG.warn("--> Inicio Pruebas Unitarias updateGradeTest");
         Grade gradeResult = gradeService.update(grade1);
         assertNotNull(gradeResult);
         assertEquals(gradeResult.getId(), id2);
-        assertThat(gradeResult.getNote()).isEqualTo(note2);
+        assertThat(gradeResult.getGrade()).isEqualTo(note2);
 
         LOG.warn("--> Verificacion de ejecucion de metodos de updateGradeTest");
         verify(gradeRepository, times(1)).save(grade1);
