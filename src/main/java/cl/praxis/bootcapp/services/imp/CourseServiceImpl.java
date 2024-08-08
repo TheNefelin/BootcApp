@@ -2,13 +2,16 @@ package cl.praxis.bootcapp.services.imp;
 import cl.praxis.bootcapp.entities.Course;
 import cl.praxis.bootcapp.repositories.ICourseRepository;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
-public class CursoServiceImpl implements IBaseServiceCRUD<Course>{
+@Service
+public class CourseServiceImpl implements IBaseServiceCRUD<Course>{
 
    private ICourseRepository iCourseRepository;
 
-   public CursoServiceImpl (ICourseRepository iCourseRepository){
+   public CourseServiceImpl(ICourseRepository iCourseRepository){
        this.iCourseRepository=iCourseRepository;
    }
     @Override
