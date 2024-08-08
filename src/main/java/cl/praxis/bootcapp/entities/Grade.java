@@ -18,7 +18,7 @@ public class Grade {
     private Long id;
 
     @Column(name = "nota", nullable = false)
-    private int note;
+    private int grade;
 
     @Column(name = "fecha", nullable = false)
     private LocalDate date;

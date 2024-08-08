@@ -1,5 +1,4 @@
 package cl.praxis.bootcapp.entities;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,4 +16,7 @@ public class Role {
 
     @Column(name = "nombre")
     private String name;
+
+    @Column(name = "activo", nullable = false)
+    private Boolean active;
 }
