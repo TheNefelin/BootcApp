@@ -12,3 +12,4 @@ public interface IGradeRepository extends JpaRepository<Grade, Long> {
     List<Grade> findAllGradesByIdSubject(Long idSubject);
     List<Grade> findAllGradesByIdStudent(Long idStudent);
 }
+
