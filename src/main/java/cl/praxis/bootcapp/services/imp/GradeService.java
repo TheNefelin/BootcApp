@@ -27,30 +27,6 @@ public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
     @Autowired
     private IUserRepository repoUser;
 
-<<<<<<< HEAD
-    @Override
-    public <HEAD> List<GradeDTO> getGradeByIdSubject(Long idSubject) {
-        return null;
-    }
-
-    @Override
-    public List<GradeDTO> getGradeByIdTeacher(Long idTeacher) {
-        return null;
-    }
-
-    @Override
-    public List<GradeDTO> getGradeByIdStudent(Long idStudent) {
-        return null;
-    }
-
-    @Override
-    public Grade create(Grade grade) {
-        return null;
-    }
-
-    // obtiene Notas con los OBJ Teacher, Student, Subject en una listaDTO por idSubject
-=======
->>>>>>> develop
     @Override
     public List<GradeDTO> getAllGradesByIdSubject(Long idSubject) {
         List<Grade> grades = repoGrade.findAllGradesByIdSubject(idSubject);
@@ -75,30 +51,6 @@ public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
         return toDTO(grades);
     }
 
-<<<<<<< HEAD
-    @Override
-    public List<Grade> getAll() {
-        return null;
-    }
-
-    @Override
-    public Grade getById(Long id) {
-        return null;
-    }
-
-    @Override
-    public Grade update(Grade grade) {
-        return null;
-    }
-
-    @Override
-    public boolean delete(Long id) {
-        return false;
-    }
-
-    // obtiene Notas con los OBJ Teacher, Student, Subject en un DTO por idNote
-=======
->>>>>>> develop
     @Override
     public GradeDTO getGradesByIdGrade(Long idNote) {
         Grade grade = repoGrade.findById(idNote).orElse(null);
@@ -135,4 +87,28 @@ public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
         }).collect(Collectors.toList());
     }
 
+    @Override
+    public List<Grade> getAll() {
+        return null;
+    }
+
+    @Override
+    public Grade getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public Grade create(Grade grade) {
+        return null;
+    }
+
+    @Override
+    public Grade update(Grade grade) {
+        return null;
+    }
+
+    @Override
+    public boolean delete(Long id) {
+        return false;
+    }
 }
