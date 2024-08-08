@@ -1,19 +1,19 @@
 INSERT INTO roles
-(nombre)
+(nombre, activo)
 VALUES
-    ('Admin'),
-    ('Profesor'),
-    ('Estudiante'),
-    ('Apoderado');
+    ('Admin', true),
+    ('Profesor', true),
+    ('Estudiante', true),
+    ('Apoderado', true);
 
 INSERT INTO cursos
-(nombre)
+(nombre, activo)
 VALUES
-    ('Full Stack Java'),
-    ('Full Stack JavaStript'),
-    ('Full Stack .NET'),
-    ('Python'),
-    ('TypeScript');
+    ('Full Stack Java', true),
+    ('Full Stack JavaStript', true),
+    ('Full Stack .NET', true),
+    ('Python', true),
+    ('TypeScript', true);
 
 INSERT INTO asignaturas
 (nombre, id_curso)

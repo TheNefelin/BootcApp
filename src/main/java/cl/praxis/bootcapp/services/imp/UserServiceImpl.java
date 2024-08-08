@@ -49,6 +49,4 @@ public class UserServiceImpl implements IBaseServiceCRUD<User>, IUserService {
         userRepository.deleteById(id);
         return false;
     }
-
-
 }

@@ -20,6 +20,9 @@ public class Course {
     @Column(name = "nombre", nullable = false, length = 50)
     private String name;
 
+    @Column(name = "activo", nullable = false)
+    private Boolean active;
+
     @ManyToMany(mappedBy = "courses")
     private Set<User> users;
 }
