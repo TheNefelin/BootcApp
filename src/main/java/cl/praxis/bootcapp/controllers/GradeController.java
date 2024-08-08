@@ -14,12 +14,12 @@ public class GradeController {
     private GradeService gradeService;
 
     // ROUTE
-    @GetMapping
+    /*@GetMapping
     public String getAllGrades(Model model) {
         model.addAttribute("grades", gradeService.getAllNote());
         return "grade_list";
     }
-
+*/
     // ROUTE
     @GetMapping("/create")
     public String createGradeRoute(Model model) {
