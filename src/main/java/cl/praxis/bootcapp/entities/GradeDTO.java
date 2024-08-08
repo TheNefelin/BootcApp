@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GradeDTO {
     private Long id;
-    private int note;
+    private int grade;
     private User teacher;
     private User estudent;
     private Subject subject;
