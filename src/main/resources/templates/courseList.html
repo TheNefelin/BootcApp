@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="components/bootstrap_css :: head"></th:block>
+    <title>Title</title>
+</head>
+<body>
+    <header class="bg-body-tertiary shadow-lg">
+        <th:block th:insert="components/nav :: nav"></th:block>
+    </header>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" method="post">
+                        <label for="courseName" class="form-label">Nombre curso</label>
+                        <input type="text" name="courseName" id="courseName">
+                        <select name="activo" id="activo">
+                            <option value=""></option>
+                        </select>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Understood</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container mx-auto">
+        <h2 class="text-center">Lista de cursos</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nombre Curso</th>
+                <th>Activo</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="course : ${courses}">
+                <td th:text="${course.name}">10</td>
+                <td th:text="${course.active}">2023-01-01</td>
+                <td>
+                    <form  th:action="@{/course/edit/{id}(id=${course.id})}" method="post" th:object="${courses}" >
+                        <button type="submit" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a href="#">Volver</a>
+    </div>
+    <script th:replace="components/bootstrap_js :: script"></script>
+</body>
+</html>
