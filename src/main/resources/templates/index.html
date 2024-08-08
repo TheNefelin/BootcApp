@@ -33,13 +33,13 @@
                 <td th:text="${user.email}"></td>
                 <td></td>
                 <td class="d-flex gap-2">
-                    <form method="delete" th:action="@{/edit/{id}(id=${user.id})}" th:object="${users}">
+                    <form method="get" th:action="@{/edit/{id}(id=${user.id})}" th:object="${users}">
                         <!--<input type="hidden" name="_method" th:value="put" >-->
                         <!--<input type="hidden" name="id" th:value="${user.id}" >-->
                         <button type="submit" class="btn btn-secondary">Editar</button>
                     </form>
-                    <form  method="get" th:action="@{/delete/{id}(id=${user.id})}" th:object="${users}">
-                        <input type="hidden" name="_method" th:value="delete" >
+                    <form  th:method="delete" th:action="@{/delete/{id}(id=${user.id})}" th:object="${users}">
+                       <!-- <input type="hidden" name="_method" th:value="delete" >-->
                        <!-- <input type="hidden" name="id" th:value="${user.id}" > -->
                         <button type="submit" class="btn btn-danger" onclick="return confirmDelete()">Borrar</button>
                     </form>
