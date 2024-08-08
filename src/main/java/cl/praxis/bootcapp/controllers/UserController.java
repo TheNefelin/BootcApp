@@ -1,11 +1,9 @@
 package cl.praxis.bootcapp.controllers;
-
 import cl.praxis.bootcapp.entities.User;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Controller("users")
@@ -18,7 +16,7 @@ public class UserController {
 
     @GetMapping("/users")
     public String getAllUser(Model model) {
-       List<User> users = crudService.getAll();
+        List<User> users = crudService.getAll();
         model.addAttribute("users", users);
         return "index";
     }
@@ -47,12 +45,13 @@ public class UserController {
 
     @PutMapping("/edit/{id}")
     public String editUser(@PathVariable Long id,
-                                @ModelAttribute("user") User user){
+                           @ModelAttribute("user") User user){
         user.setId(id);
         crudService.update(user);
 
         return "redirect:/users";
     }
+
 
     @DeleteMapping("/delete/{id}")
     public String deleteUser(@PathVariable Long id){

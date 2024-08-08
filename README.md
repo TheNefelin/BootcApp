@@ -22,6 +22,8 @@ Empaquetado WAR es para Web
   * Spring Web Services
 - Template Engines:
   * Thymeleaf
+- Security
+  * Spring Security
 - SQL:
   * Spring Data JPA
   * MySql Driver
@@ -32,6 +34,7 @@ Empaquetado WAR es para Web
 ├── main/
 │   ├── java/
 │   │   └── packages/
+│   │      ├── configure/
 │   │      ├── controllers/
 │   │      ├── entities/
 │   │      ├── repositories/
@@ -57,6 +60,7 @@ Empaquetado WAR es para Web
   * @Id
   * @GeneratedValue
   * @Column
+  * @Transient // el Atributo no se crea en la BD
   * @CreationTimestamp + @Column(updatable = false)
   * @UpdateTimestamp
   * @OneToOne(mappedBy = "atrib_t2", fetch = FetchType.LAZY/EAGER)
@@ -65,11 +69,6 @@ Empaquetado WAR es para Web
   * @OneToMany(mappedBy ="atrib_t2", fetch = FetchType.LAZY/EAGER)
   * @ManyToOne(fetch = FetchType.LAZY/EAGER)
     * @JoinColumn(name = "id_t1")
-  * @ManyToMany
-    * @JoinTable
-      * name = "t1_t2",
-      * joinColumns = @JoinColumn(name = "id_t2"),
-      * inverseJoinColumns = @JoinColumn(name = "id_t1")
   * @ManyToMany(fetch = FetchType.LAZY/EAGER)
     * @JoinTable(
         name = "t1_t2",
@@ -107,14 +106,14 @@ spring.jpa.hibernate.ddl-auto=update
 ```
 
 ### Config MVC
-* resource => application.properties
+* Edit application.properties file
 ```
 # Enable PUT and DELETE in MVC
 spring.mvc.hiddenmethod.filter.enabled=true
 ```
 
 ### Config Error Template
-* resource => application.properties
+* Edit application.properties file
 ```
 # Custom Error Controller
 server.error.whitelabel.enabled=false
@@ -188,6 +187,29 @@ public void run(String... args) throws Exception {
 }
 ```
 
+### Spring Security
+* SecurityConfig Class in /configure folder
+```
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.authorizeRequests(request -> request
+                        .requestMatchers("/", "/login", "/register", "/css/**").permitAll()
+                        .anyRequest().authenticated()
+        ).formLogin(formLogin -> formLogin
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/demo", true)
+                        .permitAll())
+                .csrf(csrf -> csrf.disable());
+
+        return http.build();
+    }
+}
+```
+
 ### Bootstrap
 ```
 <!-- Bootstrap CSS -->
@@ -253,7 +275,7 @@ graph TD;
 
 ### Seed
 * Create data.sql in Resources folder 
-* Change config in application.properties config
+* Edit application.properties file
 ```
 // replace this 
 spring.jpa.hibernate.ddl-auto=update
@@ -308,3 +330,17 @@ INSERT INTO usuarios
 VALUES
     ('praxis@praxis.cl', '123456', 'Isaac', 'Netero', 1);
 ```
+
+### CSS
+```
+/* Hide scrollbar for Chrome, Safari and Opera */
+html::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+html {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+``
