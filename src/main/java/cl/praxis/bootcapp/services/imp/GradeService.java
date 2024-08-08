@@ -89,26 +89,31 @@ public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
 
     @Override
     public List<Grade> getAll() {
-        return null;
+        return repoGrade.findAll();
     }
 
     @Override
     public Grade getById(Long id) {
-        return null;
+        Grade grade = repoGrade.findById(id).orElse(null);
+        return grade;
     }
 
     @Override
     public Grade create(Grade grade) {
-        return null;
+        return repoGrade.save(grade);
     }
 
     @Override
     public Grade update(Grade grade) {
-        return null;
+        return repoGrade.save(grade);
     }
 
     @Override
     public boolean delete(Long id) {
+        if(repoGrade.existsById(id)){
+            repoGrade.deleteById(id);
+            return true;
+        }
         return false;
     }
 }
