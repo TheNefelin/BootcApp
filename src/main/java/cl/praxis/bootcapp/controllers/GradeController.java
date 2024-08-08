@@ -16,7 +16,7 @@ public class GradeController {
     // ROUTE
     @GetMapping
     public String getAllGrades(Model model) {
-        model.addAttribute("grades", gradeService.getAllGrades());
+        model.addAttribute("grades", gradeService.getAllGrade());
         return "grade_list";
     }
 
