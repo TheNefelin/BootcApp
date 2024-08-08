@@ -33,18 +33,18 @@
             <tbody>
             <tr th:each="grade : ${grades}">
                 <th th:text="${grade.id}" scope="row"></th>
-                <td th:text="${grade.note}"></td>
+                <td th:text="${grade.grade}"></td>
                 <td th:text="${grade.teacher.name + ' ' + grade.teacher.surname}"></td>
                 <td th:text="${grade.estudent.name + ' ' + grade.estudent.surname}"></td>
                 <td th:text="${grade.subject.name}"></td>
                 <td th:text="${grade.subject.course.name}"></td>
                 <td class="d-flex gap-2">
                     <form th:method="put" th:action="@{''}">
-                        <input th:value="${''}" name="id" type="hidden">
+                        <input th:value="${grade.id}" name="id" type="hidden">
                         <button type="submit" class="btn btn-warning btn-sm"><i class="bi bi-pencil-fill"></i></button>
                     </form>
                     <form th:method="delete" th:action="@{''}">
-                        <input th:value="${''}" name="id" type="hidden">
+                        <input th:value="${grade.id}" name="id" type="hidden">
                         <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash3-fill"></i></button>
                     </form>
                 </td>
