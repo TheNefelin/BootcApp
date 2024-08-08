@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface IGradeService {
 <<<<<<< HEAD
+<<<<<<< HEAD
     List<GradeDTO> getGradeByIdSubject(Long idSubject);
     List<GradeDTO> getGradeByIdTeacher(Long idTeacher);
     List<GradeDTO> getGradeByIdStudent(Long idStudent);
@@ -32,3 +33,12 @@ public interface IGradeService {
     GradeDTO getNoteByIdNote(Long idNote);
 >>>>>>> develop
 }
+=======
+    List<GradeDTO> getAllGradesByIdSubject(Long idSubject);
+    List<GradeDTO> getAllGradesByIdTeacher(Long idTeacher);
+    List<GradeDTO> getAllGradesByIdStudent(Long idStudent);
+    List<GradeDTO> getAllGrades();
+    GradeDTO getGradesByIdGrade(Long idNote);
+
+}
+>>>>>>> develop
