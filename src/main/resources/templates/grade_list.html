@@ -1,17 +1,33 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:insert="components/bootstrap_css :: head"></th:block>
+    <th:block th:insert="~{components/bootstrap_css :: head}"></th:block>
 
     <title>Notas</title>
 </head>
 <body>
     <header class="bg-body-tertiary shadow-lg">
-        <th:block th:insert="components/nav :: nav"></th:block>
+        <th:block th:insert="~{components/nav :: nav}"></th:block>
     </header>
 
     <section class="container my-4">
         <h3>Lista de Notas</h3>
+
+        <div>
+            <div class="d-flex flex-column gap-2 col-6">
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-primary w-100" type="button">Lista alumnos</button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-primary w-100" type="button">Lista cursos</button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-primary w-100" type="button">Lista asignaturas</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <a th:href="@{'/grades/create'}" type="button" class="btn btn-primary my-4">
             <i class="bi bi-plus-circle"></i>
@@ -53,6 +69,6 @@
         </table>
     </section>
 
-    <script th:replace="components/bootstrap_js :: script"></script>
+    <script th:replace="~{components/bootstrap_js :: script}"></script>
 </body>
 </html>
