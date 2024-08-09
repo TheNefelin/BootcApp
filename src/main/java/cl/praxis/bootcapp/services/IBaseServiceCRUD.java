@@ -1,5 +1,7 @@
 package cl.praxis.bootcapp.services;
 
+import cl.praxis.bootcapp.entities.Subject;
+
 import java.util.List;
 
 public interface IBaseServiceCRUD<T> {
