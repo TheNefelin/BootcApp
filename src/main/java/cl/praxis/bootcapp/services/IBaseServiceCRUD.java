@@ -7,5 +7,6 @@ public interface IBaseServiceCRUD<T> {
     T getById(Long id);
     T create(T t);
     T update(T t);
+
     boolean delete(Long id);
 }

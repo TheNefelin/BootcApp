@@ -8,33 +8,6 @@
     <header class="bg-body-tertiary shadow-lg">
         <th:block th:insert="components/nav :: nav"></th:block>
     </header>
-
-    <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="#" method="post">
-                        <label for="courseName" class="form-label">Nombre curso</label>
-                        <input type="text" name="courseName" id="courseName">
-                        <select name="activo" id="activo">
-                            <option value=""></option>
-                        </select>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Understood</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <div class="container mx-auto">
         <h2 class="text-center">Lista de cursos</h2>
         <table class="table table-striped">
@@ -46,15 +19,21 @@
             </thead>
             <tbody>
             <tr th:each="course : ${courses}">
-                <td th:text="${course.name}">10</td>
-                <td th:text="${course.active}">2023-01-01</td>
-                <td>
-                    <form  th:action="@{/course/edit/{id}(id=${course.id})}" method="post" th:object="${courses}" >
-                        <button type="submit" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar</button>
-                    </form>
-
-                    <a href=""></a>
-                </td>
+                <form th:action="@{/course/update}" th:object="${course}" method="post">
+                    <input name="id" type="hidden" th:value="${course.id}" />
+                    <td>
+                        <input name="name" type="text" class="form-control" th:value="${course.name}" />
+                    </td>
+                    <td>
+                        <select name="active" class="form-control">
+                            <option th:value="true" th:text="'Activo'" th:selected="${course.active == true}"></option>
+                            <option th:value="false" th:text="'Inactivo'" th:selected="${course.active == false}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </td>
+                </form>
             </tr>
             </tbody>
         </table>

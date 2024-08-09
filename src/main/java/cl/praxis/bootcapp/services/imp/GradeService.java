@@ -94,7 +94,8 @@ public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
 
     @Override
     public Grade getById(Long id) {
-        return repoGrade.findById(id).orElse(null);
+        Grade grade = repoGrade.findById(id).orElse(null);
+        return grade;
     }
 
     @Override
@@ -109,7 +110,7 @@ public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
 
     @Override
     public boolean delete(Long id) {
-        if (repoGrade.existsById(id)) {
+        if(repoGrade.existsById(id)){
             repoGrade.deleteById(id);
             return true;
         }
