@@ -11,7 +11,6 @@ import java.util.List;
 
 @Service
 public class SubjectService implements  IBaseServiceCRUD<Subject> {
-
     @Autowired
     private ISubjectRepository subjectRepository;
 
@@ -33,8 +32,7 @@ public class SubjectService implements  IBaseServiceCRUD<Subject> {
 
     @Override
     public Subject update(Subject subject){
-        return subjectRepository.update(subject);
-
+        return subjectRepository.save(subject);
     }
 
     @Override
