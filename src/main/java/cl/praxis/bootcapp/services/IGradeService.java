@@ -5,6 +5,7 @@ import cl.praxis.bootcapp.entities.GradeDTO;
 import java.util.List;
 
 public interface IGradeService {
+
     List<GradeDTO> getAllGradesByIdSubject(Long idSubject);
     List<GradeDTO> getAllGradesByIdTeacher(Long idTeacher);
     List<GradeDTO> getAllGradesByIdStudent(Long idStudent);
@@ -12,3 +13,4 @@ public interface IGradeService {
     GradeDTO getGradesByIdGrade(Long idNote);
 
 }
+
