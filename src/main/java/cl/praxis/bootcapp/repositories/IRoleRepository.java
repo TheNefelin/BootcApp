@@ -1,6 +1,5 @@
 package cl.praxis.bootcapp.repositories;
 
-
 import cl.praxis.bootcapp.entities.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

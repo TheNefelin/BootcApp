@@ -3,7 +3,6 @@ package cl.praxis.bootcapp.services.imp;
 import cl.praxis.bootcapp.entities.Subject;
 import cl.praxis.bootcapp.repositories.ISubjectRepository;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
-import cl.praxis.bootcapp.services.ISubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,39 +10,25 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SubjectService implements ISubjectService, IBaseServiceCRUD<Subject> {
+public class SubjectService implements  IBaseServiceCRUD<Subject> {
+
     @Autowired
     private ISubjectRepository subjectRepository;
 
     @Override
-    public List<Subject> findAll(){
+    public List<Subject> getAll()
+    {
         return subjectRepository.findAll();
     }
 
-   @Override
-    public Subject findById(Long id){
-
-       return subjectRepository.findById(id).orElse(null);
-   }
-
     @Override
-    public Subject save(Subject subject) {
-        return subjectRepository.save(subject);
-    }
-
-    @Override
-    public List<Subject> getAll() {
-        return null;
-    }
-
-    @Override
-    public Subject getById(int id) {
-        return null;
+    public Subject getById(Long id) {
+        return subjectRepository.findById(id).orElse(null);
     }
 
     @Override
     public Subject create(Subject subject) {
-        return null;
+        return subjectRepository.save(subject);
     }
 
     @Override
@@ -53,13 +38,11 @@ public class SubjectService implements ISubjectService, IBaseServiceCRUD<Subject
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Long id) {
+        if(subjectRepository.existsById(id)) {
+            subjectRepository.deleteById(id);
+            return true;
+        }
         return false;
-    }
-
-    @Override
-    public void delete(Subject subject) {
-        subjectRepository.delete(subject);
-
     }
 }
