@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="components/bootstrap_css :: head"></th:block>
+
+    <title>Notas</title>
+</head>
+<body>
+    <header class="bg-body-tertiary shadow-lg">
+        <th:block th:insert="components/nav :: nav"></th:block>
+    </header>
+
+    <section class="container my-4">
+        <h3>Lista de Notas</h3>
+
+        <a th:href="@{'/grades/create'}" type="button" class="btn btn-primary my-4">
+            <i class="bi bi-plus-circle"></i>
+            Agregar Nota
+        </a>
+
+        <table class="table table-striped rounded border">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nota</th>
+                <th scope="col">Profesor</th>
+                <th scope="col">Estudiante</th>
+                <th scope="col">Asignatura</th>
+                <th scope="col">Curso</th>
+                <th scope="col">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="grade : ${grades}">
+                <th th:text="${grade.id}" scope="row"></th>
+                <td th:text="${grade.grade}"></td>
+                <td th:text="${grade.teacher.name + ' ' + grade.teacher.surname}"></td>
+                <td th:text="${grade.estudent.name + ' ' + grade.estudent.surname}"></td>
+                <td th:text="${grade.subject.name}"></td>
+                <td th:text="${grade.subject.course.name}"></td>
+                <td class="d-flex gap-2">
+                    <form th:method="put" th:action="@{''}">
+                        <input th:value="${grade.id}" name="id" type="hidden">
+                        <button type="submit" class="btn btn-warning btn-sm"><i class="bi bi-pencil-fill"></i></button>
+                    </form>
+                    <form th:method="delete" th:action="@{''}">
+                        <input th:value="${grade.id}" name="id" type="hidden">
+                        <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash3-fill"></i></button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <script th:replace="components/bootstrap_js :: script"></script>
+</body>
+</html>

@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NoteDTO {
+public class GradeDTO {
     private Long id;
-    private int note;
+    private int grade;
     private User teacher;
     private User estudent;
     private Subject subject;
