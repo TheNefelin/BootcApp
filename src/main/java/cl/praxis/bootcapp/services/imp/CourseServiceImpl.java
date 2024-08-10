@@ -16,7 +16,6 @@ public class CourseServiceImpl implements IBaseServiceCRUD<Course>{
    }
     @Override
     public List<Course> getAll() {
-
         return iCourseRepository.findAll();
     }
     @Override

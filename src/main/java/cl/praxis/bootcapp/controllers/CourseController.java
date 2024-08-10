@@ -22,6 +22,6 @@ public class CourseController  {
     public String updateCourse(@ModelAttribute Course course, Model model){
         courseService.update(course);
         model.addAttribute("courses", courseService.getAll());
-        return "courseList";
+        return "redirect:/course/list";
     }
 }
