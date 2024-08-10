@@ -13,37 +13,6 @@
 <section class="container my-4">
     <h3>Lista de Notas</h3>
 
-    <div th:each="user : ${users}">
-        <div  th:if="${user.role.id == 1}">
-            <p><strong>Nombre Administrador:</strong></p> <span th:text="${user.name + '' + user.surname}"></span></p>
-            <p><strong>Correo:</strong></p> <span th:text="${user.email}"></span></p>
-        </div>
-    </div>
-
-    <div th:each="user : ${users}">
-        <div  th:if="${user.role.id == 2}">
-            <p><strong>Nombre Profesor:</strong></p> <span th:text="${user.name + '' + user.surname}"></span></p>
-            <p><strong>Correo:</strong></p> <span th:text="${user.email}"></span></p>
-        </div>
-    </div>
-
-    <div th:each="user : ${users}">
-        <div  th:if="${user.role.id == 3}">
-            <p><strong>Nombre Estudiante:</strong></p> <span th:text="${user.name + '' + user.surname}"></span></p>
-            <p><strong>Correo:</strong></p> <span th:text="${user.email}"></span></p>
-        </div>
-    </div>
-
-    <div th:each="user : ${users}">
-        <div  th:if="${user.role.id == 4}">
-            <p><strong>Nombre Apoderado:</strong></p> <span th:text="${user.name + '' + user.surname}"></span></p>
-            <p><strong>Correo:</strong></p> <span th:text="${user.email}"></span></p>
-        </div>
-    </div>
-
-
-
-
     <a th:href="@{'/grades/create'}" type="button" class="btn btn-primary my-4">
         <i class="bi bi-plus-circle"></i>
         Agregar Nota
