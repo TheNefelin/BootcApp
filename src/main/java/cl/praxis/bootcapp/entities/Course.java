@@ -1,5 +1,4 @@
 package cl.praxis.bootcapp.entities;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +22,7 @@ public class Course {
     @Column(name = "activo", nullable = false)
     private Boolean active;
 
-    @ManyToMany(mappedBy = "courses")
-    private Set<User> users;
+    //esta relacion impedia el mapeo correcto desde user hasta la tabla courses
+    /*@ManyToMany(mappedBy = "courses")
+    private Set<User> users;*/
 }
