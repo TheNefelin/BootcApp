@@ -26,10 +26,10 @@ public class courseServiceTest {
     @Test
     void testGetAll(){
         //Datos simulados
-        Course course1 = new Course(1L, "Introduccion a la programacion", true, null);
-        Course course2 = new Course(2L,"Python",true,null);
+        Course course1 = new Course(1L, "Introduccion a la programacion", true);
+        Course course2 = new Course(2L,"Python",true);
 
-        //cuando se llame a metodo findAll() este retornara una array con los datos simulados
+        //cuando se llame a metodo findAll() este retornara una array con los objetos de prueba
         when(iCourseRepository.findAll()).thenReturn(Arrays.asList(course1,course2));
 
         List<Course>result = courseService.getAll();
