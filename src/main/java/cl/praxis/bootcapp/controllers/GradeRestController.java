@@ -20,8 +20,8 @@ public class GradeRestController {
     @Autowired
     private IBaseServiceCRUD<Grade> gradeServiceCrud;
 
-
     //---------------------------CRUD------------------------------------------//
+
     @GetMapping
     public List<GradeDTO> getAllGrades(){
         return gradeService.getAllGrades();
@@ -64,18 +64,4 @@ public class GradeRestController {
     public List<GradeDTO> getAllGradesByIdStudent(@PathVariable Long idStudent) {
         return gradeService.getAllGradesByIdStudent(idStudent);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
