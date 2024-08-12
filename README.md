@@ -261,6 +261,8 @@ git push origin develop   // envia brancha develop
 git checkout branchName   // cambiar y crear branchName
 git switch branchName     // cambiar a branchName
 git branch -d branchName  // elimina branchName
+git rm --cached src/main/resources/application.properties // agrega a git ignore
+
 ```
 
 ### Proyecto

@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface IGradeRepository extends JpaRepository<Grade, Long> {
+
     List<Grade> findAllGradesByIdTeacher(Long idTeacher);
     List<Grade> findAllGradesByIdSubject(Long idSubject);
     List<Grade> findAllGradesByIdStudent(Long idStudent);
