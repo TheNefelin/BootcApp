@@ -1,5 +1,8 @@
 package cl.praxis.bootcapp.services;
 
-public interface IUserService {
+import cl.praxis.bootcapp.entities.User;
 
+import java.util.List;
+
+public interface IUserService {
 }
