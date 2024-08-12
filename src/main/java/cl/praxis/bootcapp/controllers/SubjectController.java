@@ -14,17 +14,11 @@ public class SubjectController {
     @Autowired
     private SubjectService subjectService;
 
-    @GetMapping
-    public String getAllSubject(Model model){
-        model.addAttribute("subjects",subjectService.getAll());
-        return "subject_list";
-    }
-
     @GetMapping("/create")
     public String createSubjectRoute() {return "subject_form";}
 
     @PutMapping("/update")
-    public String routeUpdate(@RequestParam Long id,Model model){
+    public String UpdateSubjectRoute(@RequestParam Long id,Model model){
         Subject subject = subjectService.getById(id);
 
         if (subject != null) {
@@ -34,7 +28,14 @@ public class SubjectController {
             else
                 return "redirect:/subject_list";
     }
-/////////////////CRUD///////////////////////
+
+    /////////////////CRUD///////////////////////
+    @GetMapping
+    public String getAllSubject(Model model){
+        model.addAttribute("subjects",subjectService.getAll());
+        return "subject_list";
+    }
+
     @PostMapping()
     public String create(@ModelAttribute Subject subject) {
         subjectService.create(subject);
@@ -52,7 +53,6 @@ public class SubjectController {
         subjectService.delete(id);
         return "redirect:/subjects";
     }
-
 }
 
 
