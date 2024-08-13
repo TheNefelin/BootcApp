@@ -32,7 +32,7 @@ public class UserController {
     // Ruta a formulario agregar
     @GetMapping("/new")
     public String showForm(@ModelAttribute User user) {
-        return "demo";
+        return "user_form";
     }
 
 
@@ -48,7 +48,7 @@ public class UserController {
     public String showEditForm(@PathVariable Long id, Model model){
         User user = crudService.getById(id);
         model.addAttribute("user", user);
-        return "demo";
+        return "user_form";
     }
 
     @PutMapping("/edit/{id}")

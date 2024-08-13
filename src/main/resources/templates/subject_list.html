@@ -2,6 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:insert="components/bootstrap_css :: head"></th:block>
+    <link th:replace="components/dataTable_css :: link">
     <title>Asignaturas</title>
 </head>
 <body>
@@ -17,7 +18,7 @@
         Agregar Asignatura
     </a>
 
-    <table class="table table-striped rounded border">
+    <table id="myTable" class="display">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -47,5 +48,11 @@
 </section>
 
 <script th:replace="components/bootstrap_js :: script"></script>
+<script th:replace="~{components/dataTable_js :: script}"></script>
+<script>
+    $(document).ready(function() {
+        $('#myTable').DataTable();
+    });
+</script>
 </body>
 </html>
