@@ -1,22 +1,80 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:insert="components/bootstrap_css :: head"></th:block>
+    <th:block th:insert="~{components/bootstrap_css :: head}"></th:block>
 
     <title>Notas</title>
 </head>
 <body>
     <header class="bg-body-tertiary shadow-lg">
-        <th:block th:insert="components/nav :: nav"></th:block>
+        <th:block th:insert="~{components/nav :: nav}"></th:block>
     </header>
 
     <section class="container my-4">
         <h3>Lista de Notas</h3>
 
-        <a th:href="@{'/grades/create'}" type="button" class="btn btn-primary my-4">
-            <i class="bi bi-plus-circle"></i>
-            Agregar Nota
-        </a>
+        <div th:each="user : ${users}">
+            <div th:switch="${user.role.id}">
+                <div th:case="1">
+                    <p><strong>Nombre Administrador:</strong> <span th:text="${user.name + ' ' + user.surname}"></span></p>
+                    <p><strong>Correo:</strong> <span th:text="${user.email}"></span></p>
+                </div>
+                <div th:case="2">
+                    <p><strong>Nombre Profesor:</strong> <span th:text="${user.name + ' ' + user.surname}"></span></p>
+                    <p><strong>Correo:</strong> <span th:text="${user.email}"></span></p>
+                </div>
+                <div th:case="3">
+                    <p><strong>Nombre Estudiante:</strong> <span th:text="${user.name + ' ' + user.surname}"></span></p>
+                    <p><strong>Correo:</strong> <span th:text="${user.email}"></span></p>
+                </div>
+                <div th:case="4">
+                    <p><strong>Nombre Apoderado:</strong> <span th:text="${user.name + ' ' + user.surname}"></span></p>
+                    <p><strong>Correo:</strong> <span th:text="${user.email}"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <form th:action="@{/grades}" method="get" class="my-4">
+            <div clas="row">
+                <div class="col">
+                    <lavel for="student" class="form-label">Lista Alumno</lavel>
+                    <select id="student" name="student" class="form-select">
+                        <option value="">Seleccione Alumno</option>
+                        <option th:each="student : ${students}"
+                                th:value="${student.id}"
+                                th:text="${student.name + ' ' + student.surname }"></option>
+                    </select>
+                </div>
+                <div class="col">
+                    <lavel for="course" class="form-label">Lista Cursos</lavel>
+                    <select id="course" name="course" class="form-select">
+                        <option value="">Seleccione Curso</option>
+                        <option th:each="course : ${courses}"
+                                th:value="${course.id}"
+                                th:text="${course.name}"></option>
+                    </select>
+                </div>
+                <div class="col">
+                    <lavel for="subject" class="form-label">Lista Asignaturas</lavel>
+                    <select id="subject" name="subject" class="form-select">
+                        <option value="">Seleccione Asignatura</option>
+                        <option th:each="subject : ${subjects}"
+                                th:value="${subject.id}"
+                                th:text="${subject.name}"></option>
+                    </select>
+                </div>
+                <div cass="col">
+                    <button type="submit" class="btn btn-primary mt-4">Buscar</button>
+                </div>
+            </div>
+        </form>
+
+        <div th:if="${role == 'profesor' or role == 'Admin'}">
+            <a th:href="@{'/grades/create'}" type="button" class="btn btn-primary my-4">
+                <i class="bi bi-plus-circle"></i>
+                Agregar Nota
+            </a>
+        </div>
 
         <table class="table table-striped rounded border">
             <thead>
@@ -27,7 +85,7 @@
                 <th scope="col">Estudiante</th>
                 <th scope="col">Asignatura</th>
                 <th scope="col">Curso</th>
-                <th scope="col">Acciones</th>
+                <th scope="col" th:if="${role == 'profesor' or role == 'Admin'}">Acciones</th>
             </tr>
             </thead>
             <tbody>
@@ -38,7 +96,7 @@
                 <td th:text="${grade.estudent.name + ' ' + grade.estudent.surname}"></td>
                 <td th:text="${grade.subject.name}"></td>
                 <td th:text="${grade.subject.course.name}"></td>
-                <td class="d-flex gap-2">
+                <td class="d-flex gap-2" th:if="${role == 'Profesor' or role == 'Admin'}">
                     <form th:method="put" th:action="@{''}">
                         <input th:value="${grade.id}" name="id" type="hidden">
                         <button type="submit" class="btn btn-warning btn-sm"><i class="bi bi-pencil-fill"></i></button>
@@ -53,6 +111,6 @@
         </table>
     </section>
 
-    <script th:replace="components/bootstrap_js :: script"></script>
+    <script th:replace="~{components/bootstrap_js :: script}"></script>
 </body>
 </html>
