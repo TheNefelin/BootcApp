@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="components/bootstrap_css :: head"></th:block>
+    <title>Asignatura</title>
+</head>
+<body>
+<header class="bg-body-tertiary shadow-lg">
+    <th:block th:insert="components/nav :: nav"></th:block>
+</header>
+
+<section class="container my-4">
+    <h3 th:text="${subject != null ? 'Modificar Asignatura' : 'Nueva Asignatura'}"></h3>
+
+    <form th:action="@{/subjects}" th:method="${subject != null ? 'PUT' : 'POST'}" class="my-4 p-4 rounded border">
+        <input th:if="${subject != null}" th:value="${subject.id}" type="hidden" name="id">
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input th:value="${subject != null ? subject.name : ''}" required type="text" class="form-control" id="name" name="name">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Curso</label>
+            <select name="course" required class="form-select" aria-label="Default select example">
+                <th:block th:each="course : ${courses}">
+                    <option
+                            th:value="${course.id}"
+                            th:text="${course.name}"
+                            th:selected="${subject != null and subject.course != null and subject.course.id == course.id}"
+                    ></option>
+                </th:block>
+            </select>
+        </div>
+
+        <button th:text="${subject != null ? 'Modificar' : 'Crear Nuevo'}" type="submit" class="btn btn-primary"></button>
+    </form>
+</section>
+
+<script th:replace="components/bootstrap_js :: script"></script>
+</body>
+</html>
