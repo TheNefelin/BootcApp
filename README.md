@@ -333,6 +333,17 @@ VALUES
     ('praxis@praxis.cl', '123456', 'Isaac', 'Netero', 1);
 ```
 
+### Create new SQL User
+```
+CREATE DATABASE praxis;
+USE praxis;
+
+CREATE USER 'praxis'@'localhost' IDENTIFIED BY 'praxis';
+GRANT CREATE, ALTER, DROP ON *.* TO 'praxis'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON *.* TO 'praxis'@'localhost';
+GRANT REFERENCES ON praxis.* TO 'praxis'@'localhost';
+```
+
 ### CSS
 ```
 /* Hide scrollbar for Chrome, Safari and Opera */
