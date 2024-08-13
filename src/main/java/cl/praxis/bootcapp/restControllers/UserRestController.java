@@ -44,9 +44,10 @@ public class UserRestController {
         newUser.setCourses(null);
         return userService.update(newUser);
     }
-/*
-    @DeleteMapping("")
-    public void deleteUser(@RequestBody User user) {}
 
-     */
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        userService.delete(id);
+    }
+
 }
