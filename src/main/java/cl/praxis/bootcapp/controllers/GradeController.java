@@ -1,7 +1,11 @@
 package cl.praxis.bootcapp.controllers;
 
 import cl.praxis.bootcapp.entities.Grade;
+
+
 import cl.praxis.bootcapp.services.imp.GradeService;
+import cl.praxis.bootcapp.services.imp.RoleServiceImp;
+import cl.praxis.bootcapp.services.imp.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +16,6 @@ import org.springframework.web.bind.annotation.*;
 public class GradeController {
     @Autowired
     private GradeService gradeService;
-
-    // -------------- ROUTES --------------
 
     @GetMapping
     public String getAllGrades(Model model) {
@@ -54,6 +56,7 @@ public class GradeController {
     @DeleteMapping
     public String delete(@RequestParam Long id) {
         gradeService.delete(id);
-        return "redirect:/grade_list";
+        return "redirect:/grades";
     }
 }
+
