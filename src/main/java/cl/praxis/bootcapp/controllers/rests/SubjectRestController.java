@@ -1,4 +1,4 @@
-package cl.praxis.bootcapp.controllers;
+package cl.praxis.bootcapp.controllers.rests;
 
 import cl.praxis.bootcapp.entities.Subject;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
