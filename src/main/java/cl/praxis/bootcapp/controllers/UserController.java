@@ -1,6 +1,8 @@
 package cl.praxis.bootcapp.controllers;
+import cl.praxis.bootcapp.entities.Course;
 import cl.praxis.bootcapp.entities.User;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
+import cl.praxis.bootcapp.services.imp.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,13 +12,19 @@ import java.util.List;
 public class UserController {
     private IBaseServiceCRUD<User> crudService;
 
-    public UserController(IBaseServiceCRUD<User> crudService) {
+    private IBaseServiceCRUD<Course> courseCrudService;
+
+    public UserController(IBaseServiceCRUD<User> crudService, IBaseServiceCRUD<Course> courseCrudService) {
         this.crudService = crudService;
+        this.courseCrudService = courseCrudService;
     }
 
     @GetMapping("/users")
     public String getAllUser(Model model) {
         List<User> users = crudService.getAll();
+
+        System.out.println(users);
+
         model.addAttribute("users", users);
         return "index";
     }
