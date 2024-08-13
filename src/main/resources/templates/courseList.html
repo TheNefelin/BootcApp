@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="components/bootstrap_css :: head"></th:block>
+    <title>Title</title>
+</head>
+<body>
+    <header class="bg-body-tertiary shadow-lg">
+        <th:block th:insert="components/nav :: nav"></th:block>
+    </header>
+    <div class="container mx-auto">
+        <h2 class="text-center">Lista de cursos</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nombre Curso</th>
+                <th>Activo</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="course : ${courses}">
+                <form th:action="@{/course/update}" th:object="${course}" method="post">
+                    <input name="id" type="hidden" th:value="${course.id}" />
+                    <td>
+                        <input name="name" type="text" class="form-control" th:value="${course.name}" />
+                    </td>
+                    <td>
+                        <select name="active" class="form-control">
+                            <option th:value="true" th:text="'Activo'" th:selected="${course.active == true}"></option>
+                            <option th:value="false" th:text="'Inactivo'" th:selected="${course.active == false}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </td>
+                </form>
+            </tr>
+            </tbody>
+        </table>
+        <a href="#">Volver</a>
+    </div>
+    <script th:replace="components/bootstrap_js :: script"></script>
+</body>
+</html>
