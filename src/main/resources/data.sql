@@ -43,7 +43,7 @@ VALUES
     ('apoderado@praxis.cl', '123456', 'Ging', 'Freecss', 4);
 
 INSERT INTO notas
-    (nota, fecha, id_profesor, id_estudiante, id_asignatura)
+(nota, fecha, id_profesor, id_estudiante, id_asignatura)
 VALUES
     (7, '2024-01-01 08:30:12', 2, 3, 1),
     (4, '2024-01-01 08:30:12', 2, 3, 2),
