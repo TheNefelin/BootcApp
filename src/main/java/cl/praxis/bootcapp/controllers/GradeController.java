@@ -17,6 +17,12 @@ public class GradeController {
     @Autowired
     private GradeService gradeService;
 
+    @GetMapping
+    public String getAllGrades(Model model) {
+        model.addAttribute("grades", gradeService.getAllGrades());
+        return "grade_list";
+    }
+
     @GetMapping("/create")
     public String createGradeRoute() {
         return "grade_form";
@@ -50,7 +56,7 @@ public class GradeController {
     @DeleteMapping
     public String delete(@RequestParam Long id) {
         gradeService.delete(id);
-        return "redirect:/grade_list";
+        return "redirect:/grades";
     }
 }
 

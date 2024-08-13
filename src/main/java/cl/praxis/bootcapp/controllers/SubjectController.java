@@ -25,8 +25,8 @@ public class SubjectController {
             model.addAttribute("subject", subject);
             return "subject_form";
         }
-            else
-                return "redirect:/subject_list";
+        else
+            return "redirect:/subject_list";
     }
 
     /////////////////CRUD///////////////////////
@@ -54,5 +54,3 @@ public class SubjectController {
         return "redirect:/subjects";
     }
 }
-
-
