@@ -11,10 +11,27 @@
                         <a class="nav-link" aria-current="page" th:href="${'/'}">Inicio</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" th:href="${'/users'}">Usuarios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="${'/course/list'}">Curso</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" th:href="${'/grades'}">Notas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="${'/subjects'}">Asignaturas</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            usuario@usuario.cl
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Mi Perfil</a></li>
+                            <li><a class="dropdown-item" href="#">Mi Bandeja</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
