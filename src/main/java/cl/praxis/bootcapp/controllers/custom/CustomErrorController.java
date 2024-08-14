@@ -1,4 +1,4 @@
-package cl.praxis.bootcapp.controllers;
+package cl.praxis.bootcapp.controllers.custom;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
