@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="components/bootstrap_css :: head"></th:block>
+    <title>Gestión de Roles</title>
+</head>
+<body>
+<header class="bg-body-tertiary shadow-lg">
+    <th:block th:insert="components/nav :: nav"></th:block>
+</header>
+
+<section class="container my-4">
+    <h3 th:text="${role != null ? 'Modificar Rol' : 'Nuevo Rol'}"></h3>
+
+    <form th:action="@{${role != null ? '/roles/' + role.id : '/roles'}}" th:method="${role != null ? 'PUT' : 'POST'}" class="my-4 p-4 rounded border">
+        <input th:if="${role != null}" th:value="${role.id}" type="hidden" name="id">
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre del Rol</label>
+            <input th:value="${role != null ? role.name : ''}" required type="text" class="form-control" id="name" name="name">
+        </div>
+
+        <div class="mb-3">
+            <label for="active" class="form-label">Activo</label>
+            <input th:checked="${role != null ? role.active : false}" type="checkbox" class="form-check-input" id="active" name="active">
+        </div>
+
+        <button th:text="${role != null ? 'Modificar' : 'Crear Nuevo'}" type="submit" class="btn btn-primary"></button>
+    </form>
+
+    <h4 class="mt-5">Roles Existentes</h4>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Activo</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="role : ${roles}">
+            <td th:text="${role.id}"></td>
+            <td th:text="${role.name}"></td>
+            <td th:text="${role.active ? 'Sí' : 'No'}"></td>
+            <td>
+                <a th:href="@{/roles/{id}(id=${role.id})}" class="btn btn-sm btn-warning">Modificar</a>
+                <form th:action="@{/roles/{id}(id=${role.id})}" method="post" style="display:inline;">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+<script th:replace="components/bootstrap_js :: script"></script>
+</body>
+</html>
