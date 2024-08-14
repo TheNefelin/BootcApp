@@ -75,7 +75,7 @@
                 <td th:text="${grade.subject.name}"></td>
                 <td th:text="${grade.subject.course.name}"></td>
                 <td class="d-flex gap-2">
-                    <form th:method="put" th:action="@{/grades}">
+                    <form th:method="put" th:action="@{/grades/update}">
                         <input th:value="${grade.id}" name="id" type="hidden">
                         <button type="submit" class="btn btn-warning btn-sm"><i class="bi bi-pencil-fill"></i></button>
                     </form>

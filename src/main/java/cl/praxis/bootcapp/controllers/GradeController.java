@@ -61,6 +61,7 @@ public class GradeController {
             model.addAttribute("students", student);
             model.addAttribute("teachers", teachers);
             model.addAttribute("subjects", subjects);
+            model.addAttribute("grade", grade);
             return "grade_form";
         } else
             return "redirect:/grades";
@@ -68,7 +69,7 @@ public class GradeController {
 
     // -------------- CRUD --------------
 
-    @PostMapping("/create")
+    @PostMapping
     public String create(@ModelAttribute Grade grade) {
         grade.setDate(LocalDate.now());
         gradeService.create(grade);
