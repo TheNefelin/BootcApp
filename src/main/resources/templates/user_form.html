@@ -3,6 +3,14 @@
 <head>
     <th:block th:insert="components/bootstrap_css :: head"></th:block>
     <title>Demo</title>
+    <style>
+        #cursoContainer.hidden{
+            display: none !important;
+        }
+        #cursoContainer.visible{
+            display: block !important;
+        }
+    </style>
 </head>
 <body>
 <header class="bg-body-tertiary shadow-lg">
@@ -10,7 +18,7 @@
 </header>
 <h2 class="text-center my-3" th:text="${user.id != null} ? 'Formulario edición usuario' : 'Formulario creación nuevo usuario'"></h2>
 <div class="d-flex flex-row justify-content-center">
-    <form class="card" th:object="${user}" th:action="${users}" method="post">
+    <form class="card" th:object="${user}" th:action="@{/new}" method="post">
         <input type="hidden" name="_method" th:value="${user.id != null} ? 'put' : 'post'" />
         <input type="hidden" name="id" th:value="${user.id}" >
         <div class="px-3 mx-3 my-3">
@@ -29,6 +37,25 @@
             <div class="d-flex flex-column mt-3">
                 <label for="password">Contraseña</label>
                 <input th:value="${user.password}" th:type="${user.id != null} ? 'text' : 'password'" id="password" th:field="*{password}" required>
+            </div>
+            <div class="d-flex justify-content-center my-3">
+                <select th:field="*{role}" id="roleSelected" onchange="mostrarCurso()">
+                    <option value="" disabled selected>Seleciona un rol</option>
+                    <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+                </select>
+            </div>
+            <div class="d-flex justify-content-center my-3 hidden" id="cursoContainer">
+                <select th:field="*{courses}">
+                    <option value="" disabled selected>Seleciona un rol</option>
+                    <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
+                </select>
+            </div>
+            <div id="additionalCoursesContainer"></div>
+
+            <div class="d-flex justify-content-center my-3">
+                <button type="button" class="btn btn-danger" onclick="addCourse()">
+                    <i class="bi bi-file-plus">Agregar curso</i>
+                </button>
             </div>
 
             <div class="d-flex justify-content-center my-3">
@@ -69,6 +96,30 @@
 
 <script th:replace="components/bootstrap_js :: script"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script>
+    function mostrarCurso(){
+        let roleSeleccionado = document.querySelector("#roleSelected");
+        let cursoContainer = document.querySelector("#cursoContainer");
+
+        let roleSelected = roleSeleccionado.value;
+
+        if(roleSelected == 2 || roleSelected == 3){
+            cursoContainer.classList.add('visible');
+            cursoContainer.classList.remove('hidden');
+        } else{
+            cursoContainer.classList.remove('visible');
+            cursoContainer.classList.add('hidden');
+        }
+    }
+</script>
+<script>
+    function addCourse() {
+        let container = document.getElementById("cursoContainer");
+        let newSelect = container.cloneNode(true);
+        newSelect.querySelector('select').selectedIndex = 0;
+        document.getElementById("additionalCoursesContainer").appendChild(newSelect);
+    }
+</script>
 
 <footer class="bg-dark text-white text-center py-3">
     Harakiri

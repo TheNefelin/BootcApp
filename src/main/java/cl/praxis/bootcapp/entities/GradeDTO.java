@@ -11,6 +11,6 @@ public class GradeDTO {
     private Long id;
     private int grade;
     private User teacher;
-    private User estudent;
+    private User student;
     private Subject subject;
 }
