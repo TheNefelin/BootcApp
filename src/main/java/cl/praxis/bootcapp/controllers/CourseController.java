@@ -24,4 +24,12 @@ public class CourseController  {
         model.addAttribute("courses", courseService.getAll());
         return "redirect:/course/list";
     }
+    @PostMapping("/course/create")
+    public String CreateCourse(@ModelAttribute Course course, Model model){
+        courseService.create(course);
+        model.addAttribute("courses", courseService.create(course));
+        return "redirect:/course/list";
+    }
+
+
 }
