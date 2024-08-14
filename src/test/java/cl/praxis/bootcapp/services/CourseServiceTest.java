@@ -15,7 +15,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class courseServiceTest {
+public class CourseServiceTest {
 
     public static Course course1, course2;
 
