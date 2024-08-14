@@ -14,7 +14,7 @@
         <h3 th:text="${grade != null ? 'Modificar Nota' : 'Agregar Nota'}" ></h3>
 
 
-        <form th:action="@{/students}" th:method="${student != null ? 'PUT' : 'POST'}" class="my-4 p-4 rounded border">
+        <form th:action="@{/grades}" th:method="${grade != null ? 'PUT' : 'POST'}" class="my-4 p-4 rounded border">
             <input th:if="${grade != null}" th:value="${grade.id}" type="hidden" name="id">
 
             <div class="mb-3">
