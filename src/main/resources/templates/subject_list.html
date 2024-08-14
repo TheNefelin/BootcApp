@@ -18,6 +18,16 @@
         Agregar Asignatura
     </a>
 
+    <div th:if="${msgSuccess != null}" class="my-4 alert alert-success alert-dismissible fade show" role="alert">
+        <p class="m-0" th:text="${msgSuccess}"></p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:if="${msgError != null}" class="my-4 alert alert-danger alert-dismissible fade show" role="alert">
+        <p class="m-0" th:text="${msgError}"></p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
     <table id="myTable" class="display">
         <thead>
         <tr>

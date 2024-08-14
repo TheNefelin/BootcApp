@@ -39,14 +39,14 @@
                 <input th:value="${user.password}" th:type="${user.id != null} ? 'text' : 'password'" id="password" th:field="*{password}" required>
             </div>
             <div class="d-flex justify-content-center my-3">
-                <select th:field="*{role}" id="roleSelected" onchange="mostrarCurso()">
+                <select  th:field="*{role}" id="roleSelected" onchange="mostrarCurso()">
                     <option value="" disabled selected>Seleciona un rol</option>
                     <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
                 </select>
             </div>
             <div class="d-flex justify-content-center my-3 hidden" id="cursoContainer">
                 <select th:field="*{courses}">
-                    <option value="" disabled selected>Seleciona un rol</option>
+                    <option value="" disabled selected>Seleciona un curso</option>
                     <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
                 </select>
             </div>
