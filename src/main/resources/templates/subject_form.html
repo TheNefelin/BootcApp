@@ -10,6 +10,21 @@
 </header>
 
 <section class="container my-4">
+    <div class="mt-4 alert alert-info row" role="alert">
+        <div class="list-group col-md-4 col-12">
+            <button type="button" class="list-group-item list-group-item-action active" aria-current="true">Usuario</button>
+            <button type="button" class="list-group-item list-group-item-action">Nombre Apellido</button>
+        </div>
+        <div class="list-group col-md-4 col-12">
+            <button type="button" class="list-group-item list-group-item-action active" aria-current="true">Rol</button>
+            <button type="button" class="list-group-item list-group-item-action">Admin - Profesor - Estudiante</button>
+        </div>
+        <div class="list-group col-md-4 col-12">
+            <button type="button" class="list-group-item list-group-item-action active" aria-current="true">Correo</button>
+            <button type="button" class="list-group-item list-group-item-action">prueba@prueba.cl</button>
+        </div>
+    </div>
+
     <h3 th:text="${subject != null ? 'Modificar Asignatura' : 'Nueva Asignatura'}"></h3>
 
     <form th:action="@{/subjects}" th:method="${subject != null ? 'PUT' : 'POST'}" class="my-4 p-4 rounded border">
@@ -23,7 +38,7 @@
         <div class="mb-3">
             <label class="form-label">Curso</label>
             <select th:disabled="${subject != null}" name="course" required class="form-select" aria-label="Default select example">
-                <option selected disabled>Seleccione un curso</option>
+                <!-- <option selected disabled>Seleccione un curso</option> -->
                 <option th:each="course : ${courses}"
                         th:value="${course.id}"
                         th:text="${course.name}"
