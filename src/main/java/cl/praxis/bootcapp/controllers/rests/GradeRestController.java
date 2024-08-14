@@ -1,4 +1,4 @@
-package cl.praxis.bootcapp.controllers;
+package cl.praxis.bootcapp.controllers.rests;
 
 
 import cl.praxis.bootcapp.entities.Grade;
@@ -22,14 +22,14 @@ public class GradeRestController {
 
     //---------------------------CRUD------------------------------------------//
 
-    @GetMapping
-    public List<GradeDTO> getAllGrades(){
-        return gradeService.getAllGrades();
+    @GetMapping("/all-grades")
+    public List<Grade> getAll() {
+        return gradeServiceCrud.getAll();
     }
 
-    @GetMapping("/{id}")
-    public GradeDTO getGradeByIdGrade(@PathVariable Long id){
-        return gradeService.getGradesByIdGrade(id);
+    @GetMapping("/all-grades/{id}")
+    public Grade getById(@PathVariable Long id) {
+        return gradeServiceCrud.getById(id);
     }
 
     @PostMapping
@@ -49,6 +49,16 @@ public class GradeRestController {
     }
 
     //--------------------POR ENTIDAD------------------------------------------------//
+
+    @GetMapping
+    public List<GradeDTO> getAllGrades(){
+        return gradeService.getAllGrades();
+    }
+
+    @GetMapping("/{id}")
+    public GradeDTO getGradeByIdGrade(@PathVariable Long id){
+        return gradeService.getGradesByIdGrade(id);
+    }
 
     @GetMapping("/subject/{idSubject}")
     public List<GradeDTO> getAllGradesByIdSubject(@PathVariable Long idSubject) {
