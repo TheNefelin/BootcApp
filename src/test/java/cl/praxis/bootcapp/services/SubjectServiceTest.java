@@ -2,6 +2,7 @@ package cl.praxis.bootcapp.services;
 
 import cl.praxis.bootcapp.entities.Subject;
 import cl.praxis.bootcapp.repositories.ISubjectRepository;
+import cl.praxis.bootcapp.services.imp.GradeService;
 import cl.praxis.bootcapp.services.imp.SubjectService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,6 +30,9 @@ public class SubjectServiceTest {
     public static Long id1, id2;
     public static String name1, name2;
     public static Subject subject1, subject2;
+
+    @Mock
+    GradeService gradeService;
 
     @Mock
     ISubjectRepository subjectRepository;
@@ -117,14 +123,13 @@ public class SubjectServiceTest {
     @Test
     public void deleteSubjectTest() {
         LOG.info("--> Inicio Test");
-        when(subjectRepository.existsById(id1)).thenReturn(true);
+        when(gradeService.getAllGradesByIdSubject(id1)).thenReturn(Collections.emptyList());
 
         LOG.warn("--> Inicio Pruebas Unitarias");
         Boolean idDeleted = subjectService.delete(id1);
         assertThat(idDeleted).isTrue();
 
         LOG.warn("--> Verificacion de ejecucion de metodos");
-        verify(subjectRepository, times(1)).existsById(id1);
         verify(subjectRepository, times(1)).deleteById(id1);
 
         LOG.info("--> Finalizando test");
