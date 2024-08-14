@@ -1,24 +1,51 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:insert="components/bootstrap_css :: head"></th:block>
-
+    <th:block th:insert="~{components/bootstrap_css :: head}"></th:block>
+    <link th:replace="components/dataTable_css :: link">
     <title>Notas</title>
 </head>
 <body>
     <header class="bg-body-tertiary shadow-lg">
-        <th:block th:insert="components/nav :: nav"></th:block>
+        <th:block th:insert="~{components/nav :: nav}"></th:block>
     </header>
 
     <section class="container my-4">
         <h3>Lista de Notas</h3>
+
+
+        <div class="mt-4 alert alert-info" role="alert">
+            <p><strong>Nombre: Invitado</strong></p>
+            <p><strong>Correo: invitado@invitado.cl</strong></p>
+        </div>
+
+        <div th:each="user : ${users}">
+            <div th:switch="${user.role.id}">
+                <div th:case="1">
+                    <p><strong>Nombre Administrador:</strong> <span th:text="${user.name + ' ' + user.surname}"></span></p>
+                    <p><strong>Correo:</strong> <span th:text="${user.email}"></span></p>
+                </div>
+                <div th:case="2">
+                    <p><strong>Nombre Profesor:</strong> <span th:text="${user.name + ' ' + user.surname}"></span></p>
+                    <p><strong>Correo:</strong> <span th:text="${user.email}"></span></p>
+                </div>
+                <div th:case="3">
+                    <p><strong>Nombre Estudiante:</strong> <span th:text="${user.name + ' ' + user.surname}"></span></p>
+                    <p><strong>Correo:</strong> <span th:text="${user.email}"></span></p>
+                </div>
+                <div th:case="4">
+                    <p><strong>Nombre Apoderado:</strong> <span th:text="${user.name + ' ' + user.surname}"></span></p>
+                    <p><strong>Correo:</strong> <span th:text="${user.email}"></span></p>
+                </div>
+            </div>
+        </div>
 
         <a th:href="@{'/grades/create'}" type="button" class="btn btn-primary my-4">
             <i class="bi bi-plus-circle"></i>
             Agregar Nota
         </a>
 
-        <table class="table table-striped rounded border">
+        <table id="myTable" class="display">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -32,18 +59,18 @@
             </thead>
             <tbody>
             <tr th:each="grade : ${grades}">
-                <th th:text="${grade.id}" scope="row"></th>
-                <td th:text="${grade.grade}"></td>
+                <th th:text="${grade.id}" scope="row" class="text-center"></th>
+                <td th:text="${grade.grade}" class="text-center"></td>
                 <td th:text="${grade.teacher.name + ' ' + grade.teacher.surname}"></td>
-                <td th:text="${grade.estudent.name + ' ' + grade.estudent.surname}"></td>
+                <td th:text="${grade.student.name + ' ' + grade.student.surname}"></td>
                 <td th:text="${grade.subject.name}"></td>
                 <td th:text="${grade.subject.course.name}"></td>
                 <td class="d-flex gap-2">
-                    <form th:method="put" th:action="@{''}">
+                    <form th:method="put" th:action="@{/grades/update}">
                         <input th:value="${grade.id}" name="id" type="hidden">
                         <button type="submit" class="btn btn-warning btn-sm"><i class="bi bi-pencil-fill"></i></button>
                     </form>
-                    <form th:method="delete" th:action="@{''}">
+                    <form th:method="delete" th:action="@{/grades}">
                         <input th:value="${grade.id}" name="id" type="hidden">
                         <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash3-fill"></i></button>
                     </form>
@@ -51,8 +78,19 @@
             </tr>
             </tbody>
         </table>
+
     </section>
 
-    <script th:replace="components/bootstrap_js :: script"></script>
+    <section class="container">
+        <th:block th:insert="components/footer :: footer"></th:block>
+    </section>
+
+    <script th:replace="~{components/bootstrap_js :: script}"></script>
+    <script th:replace="~{components/dataTable_js :: script}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable();
+        });
+    </script>
 </body>
 </html>

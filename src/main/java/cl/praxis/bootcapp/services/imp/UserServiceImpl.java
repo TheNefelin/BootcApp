@@ -5,7 +5,6 @@ import cl.praxis.bootcapp.repositories.IUserRepository;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
 import cl.praxis.bootcapp.services.IUserService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -47,6 +46,6 @@ public class UserServiceImpl implements IBaseServiceCRUD<User>, IUserService {
     @Override
     public boolean delete(Long id) {
         userRepository.deleteById(id);
-        return false;
+        return true;
     }
 }

@@ -2,13 +2,21 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:insert="components/bootstrap_css :: head"></th:block>
-
+    <link th:replace="components/dataTable_css :: link">
     <title>Demo</title>
 </head>
-    <body>
+<body>
     <header class="bg-body-tertiary shadow-lg">
         <th:block th:insert="components/nav :: nav"></th:block>
     </header>
+
+    <p>Plantilla, solo para copiar y crear nuevos html</p>
+
+
+
+    <section class="container">
+        <th:block th:insert="components/footer :: footer"></th:block>
+    </section>
 
     <script th:replace="components/bootstrap_js :: script"></script>
 </body>

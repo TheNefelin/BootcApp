@@ -1,5 +1,5 @@
 INSERT INTO roles
-(nombre, activo)
+    (nombre, activo)
 VALUES
     ('Admin', true),
     ('Profesor', true),
@@ -7,7 +7,7 @@ VALUES
     ('Apoderado', true);
 
 INSERT INTO cursos
-(nombre, activo)
+    (nombre, activo)
 VALUES
     ('Full Stack Java', true),
     ('Full Stack JavaStript', true),
@@ -16,7 +16,7 @@ VALUES
     ('TypeScript', true);
 
 INSERT INTO asignaturas
-(nombre, id_curso)
+    (nombre, id_curso)
 VALUES
     ('Fundamentos de Java', 1),
     ('Java Avanzado', 1),
@@ -35,7 +35,7 @@ VALUES
     ('Angular', 5);
 
 INSERT INTO usuarios
-(correo, clave, nombre, apellido, id_rol)
+    (correo, clave, nombre, apellido, id_rol)
 VALUES
     ('praxis@praxis.cl', '123456', 'Isaac', 'Netero', 1),
     ('profesor@praxis.cl', '123456', 'Biscuit', 'Krueger', 2),
@@ -51,3 +51,9 @@ VALUES
     (1, '2024-01-01 08:30:12', 2, 3, 4),
     (5, '2024-01-01 08:30:12', 2, 3, 5);
 
+INSERT INTO usuario_curso
+    (id_curso,id_usuario)
+VALUES
+    (2,2),
+    (1,2),
+    (3,3);

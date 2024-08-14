@@ -31,7 +31,7 @@ public class User {
     @JoinColumn(name = "id_rol")
     private Role role;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "usuario_curso",
             joinColumns = @JoinColumn(name = "id_usuario"),
