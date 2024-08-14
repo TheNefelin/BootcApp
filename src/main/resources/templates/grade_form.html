@@ -6,9 +6,9 @@
     <title>Notas</title>
 </head>
 <body>
-    <header class="bg-body-tertiary shadow-lg">
-        <th:block th:insert="components/nav :: nav"></th:block>
-    </header>
+<header class="bg-body-tertiary shadow-lg">
+    <th:block th:insert="components/nav :: nav"></th:block>
+</header>
 
     <section class="container my-4">
         <h3 th:text="${grade != null ? 'Modificar Nota' : 'Agregar Nota'}" ></h3>
@@ -46,10 +46,23 @@
             </div>
 
             <div class="mb-3">
-                <label for="name" class="form-label">Nota</label>
-                <input th:value="${grade != null ? grade.grade : ''}" required type="number" class="form-control" id="name" name="name">
+                <label class="form-label">Profesor</label>
+                <select th:disabled="${grade != null}" name="idTeacher" required class="form-select" aria-label="Default select example">
+                    <th:block th:each="teacher : ${teachers}">
+
+                        <option
+                                th:value="${teacher.id}"
+                                th:text="${teacher.name}"
+                                th:selected="${grade != null and teacher.id  == grade.idTeacher}"
+                        ></option>
+                    </th:block>
+                </select>
             </div>
 
+            <div class="mb-3">
+                <label for="grade" class="form-label">Nota</label>
+                <input required type="number" class="form-control" id="grade" name="grade">
+            </div>
             <button th:text="${grade != null ? 'Modificar' : 'Crear Nuevo'}" type="submit" class="btn btn-primary"></button>
         </form>
     </section>
