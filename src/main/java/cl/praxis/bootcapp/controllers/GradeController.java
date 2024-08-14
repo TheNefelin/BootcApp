@@ -42,9 +42,7 @@ public class GradeController {
     public String createGradeRoute(Model model) {
         List<User> users = userService.getAll();
         List<Subject> subjects = subjectService.getAll();
-        List<User> teachers = users.stream()
-                .filter(user -> user.getRole().getId() == 2)
-                .collect(Collectors.toList());
+        List<User> teachers = userService.getAll();
 
         model.addAttribute("users", users);
         model.addAttribute("teachers", teachers);
