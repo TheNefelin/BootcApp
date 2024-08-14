@@ -12,7 +12,7 @@
 <section class="container my-4">
     <h3 th:text="${role != null ? 'Modificar Rol' : 'Nuevo Rol'}"></h3>
 
-    <form th:action="@{${role != null ? '/roles/' + role.id : '/roles'}}" th:method="${role != null ? 'PUT' : 'POST'}" class="my-4 p-4 rounded border">
+    <form th:action="@{${role != null ? '/role/roles/' + role.id : '/role/roles'}}" th:method="${role != null ? 'PUT' : 'POST'}" class="my-4 p-4 rounded border">
         <input th:if="${role != null}" th:value="${role.id}" type="hidden" name="id">
 
         <div class="mb-3">
@@ -44,7 +44,7 @@
             <td th:text="${role.name}"></td>
             <td th:text="${role.active ? 'Sí' : 'No'}"></td>
             <td>
-                <a th:href="@{/roles/{id}(id=${role.id})}" class="btn btn-sm btn-warning">Modificar</a>
+                <a th:href="@{/role/roles/{id}(id=${role.id})}" class="btn btn-sm btn-warning">Modificar</a>
                 <form th:action="@{/roles/{id}(id=${role.id})}" method="post" style="display:inline;">
                     <input type="hidden" name="_method" value="delete"/>
                     <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
@@ -54,7 +54,9 @@
         </tbody>
     </table>
 </section>
-
+<section class="container">
+    <th:block th:insert="components/footer :: footer"></th:block>
+</section>
 <script th:replace="components/bootstrap_js :: script"></script>
 </body>
 </html>

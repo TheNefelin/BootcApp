@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@RequestMapping("/role")
 public class RoleController {
 
     private final RoleServiceImp roleServiceImp;
@@ -30,7 +31,7 @@ public class RoleController {
     @PostMapping("/roles")
     public String createRole(@ModelAttribute Role role) {
         roleServiceImp.create(role);
-        return "redirect:/allroles"; // Redirige a la lista de roles después de crear o actualizar
+        return "redirect:/role/allroles"; // Redirige a la lista de roles después de crear o actualizar
     }
 
     @PutMapping("/roles/{id}")

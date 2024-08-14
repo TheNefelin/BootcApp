@@ -18,7 +18,7 @@
 </header>
 <h2 class="text-center my-3" th:text="${user.id != null} ? 'Formulario edición usuario' : 'Formulario creación nuevo usuario'"></h2>
 <div class="d-flex flex-row justify-content-center">
-    <form class="card" th:object="${user}" th:action="@{/new}" method="post">
+    <form class="card" th:object="${user}" th:action="@{/user/new}" method="post">
         <input type="hidden" name="_method" th:value="${user.id != null} ? 'put' : 'post'" />
         <input type="hidden" name="id" th:value="${user.id}" >
         <div class="px-3 mx-3 my-3">
@@ -93,7 +93,9 @@
         <a class="btn btn-primary" href="/demoadd">Agregar Nota</a>
     </div>
 </div>
-
+<section class="container">
+    <th:block th:insert="components/footer :: footer"></th:block>
+</section>
 <script th:replace="components/bootstrap_js :: script"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
