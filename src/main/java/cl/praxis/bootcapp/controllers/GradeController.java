@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -38,10 +39,12 @@ public class GradeController {
 
     @GetMapping("/create")
     public String createGradeRoute(Model model) {
-        List<User> users = userService.getAll();
+        List<User> student = userService.getAll();
+        List<User> teachers = userService.getAll();
         List<Subject> subjects = subjectService.getAll();
 
-        model.addAttribute("users", users);
+        model.addAttribute("students", student);
+        model.addAttribute("teachers", teachers);
         model.addAttribute("subjects", subjects);
         return "grade_form";
     }
@@ -49,30 +52,37 @@ public class GradeController {
     @PutMapping("/update")
     public String routeUpdate(@RequestParam Long id, Model model) {
         Grade grade = gradeService.getById(id);
-        List<User> users = userService.getAll();
+        List<User> student = userService.getAll();
+        List<User> teachers = userService.getAll();
         List<Subject> subjects = subjectService.getAll();
 
         if (grade != null) {
-            model.addAttribute("users", users);
+            model.addAttribute("students", student);
+            model.addAttribute("teachers", teachers);
             model.addAttribute("subjects", subjects);
             model.addAttribute("grade", grade);
             return "grade_form";
         } else
-            return "redirect:/grade_list";
+            return "redirect:/grades";
     }
 
     // -------------- CRUD --------------
 
     @PostMapping()
     public String create(@ModelAttribute Grade grade) {
+        grade.setDate(LocalDate.now());
         gradeService.create(grade);
-        return "redirect:/grade_list";
+        return "redirect:/grades";
     }
 
     @PutMapping()
     public String update(@ModelAttribute Grade grade) {
-        gradeService.update(grade);
-        return "redirect:/grade_list";
+        Grade updateGrade = gradeService.getById(grade.getId());
+        updateGrade.setDate(LocalDate.now());
+        updateGrade.setGrade(grade.getGrade());
+
+        gradeService.update(updateGrade);
+        return "redirect:/grades";
     }
 
     @DeleteMapping
