@@ -16,7 +16,7 @@ VALUES
     ('TypeScript', true);
 
 INSERT INTO asignaturas
-(nombre, id_curso)
+    (nombre, id_curso)
 VALUES
     ('Fundamentos de Java', 1),
     ('Java Avanzado', 1),
