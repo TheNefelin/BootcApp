@@ -81,7 +81,7 @@ public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
             gradeDTO.setId(grade.getId());
             gradeDTO.setGrade(grade.getGrade());
             gradeDTO.setTeacher(teacherList.get(grade.getIdTeacher()));
-            gradeDTO.setEstudent(studentList.get(grade.getIdStudent()));
+            gradeDTO.setStudent(studentList.get(grade.getIdStudent()));
             gradeDTO.setSubject(subjectList.get(grade.getIdSubject()));
             return gradeDTO;
         }).collect(Collectors.toList());

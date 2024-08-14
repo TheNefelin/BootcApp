@@ -22,7 +22,6 @@
                 <th scope="col">Apellido</th>
                 <th scope="col">Correo</th>
                 <th scope="col">Rol</th>
-                <th scope="col">cursos</th>
                 <th scope="col">Acciones</th>
             </tr>
             </thead>
@@ -32,12 +31,7 @@
                 <td th:text="${user.name}"></td>
                 <td th:text="${user.surname}"></td>
                 <td th:text="${user.email}"></td>
-                <td th:text="${user.role.name}"></td>
-                <td>
-                   <ul th:each="course : ${user.courses}">
-                       <li th:text="${course.name}"></li>
-                   </ul>
-                </td>
+                <td></td>
                 <td class="d-flex gap-2">
                     <form method="get" th:action="@{/edit/{id}(id=${user.id})}" th:object="${users}">
                         <button type="submit" class="btn btn-secondary">Editar</button>
