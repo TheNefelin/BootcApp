@@ -50,6 +50,14 @@
                     <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
                 </select>
             </div>
+            <div id="additionalCoursesContainer"></div>
+
+            <div class="d-flex justify-content-center my-3">
+                <button type="button" class="btn btn-danger" onclick="addCourse()">
+                    <i class="bi bi-file-plus">Agregar curso</i>
+                </button>
+            </div>
+
             <div class="d-flex justify-content-center my-3">
                 <input type="submit" th:value="${user.id != null} ? 'Editar' : 'Agregar' " th:class= "${user.id != null} ? 'btn btn-secondary' : 'btn btn-primary'" >
             </div>
@@ -104,6 +112,15 @@
         }
     }
 </script>
+<script>
+    function addCourse() {
+        let container = document.getElementById("cursoContainer");
+        let newSelect = container.cloneNode(true);
+        newSelect.querySelector('select').selectedIndex = 0;
+        document.getElementById("additionalCoursesContainer").appendChild(newSelect);
+    }
+</script>
+
 <footer class="bg-dark text-white text-center py-3">
     Harakiri
 </footer>
