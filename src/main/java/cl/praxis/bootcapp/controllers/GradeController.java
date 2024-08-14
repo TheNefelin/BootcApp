@@ -54,7 +54,7 @@ public class GradeController {
     }
 
     @DeleteMapping
-    public String delete(@RequestParam Long id) {
+    public String delete(@RequestParam Long id, Model model) {
         gradeService.delete(id);
         return "redirect:/grades";
     }

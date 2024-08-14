@@ -11,19 +11,35 @@
     </header>
 
     <section class="container my-4">
-        <h3 th:text="${student != null ? 'Modificar Nota' : 'Nuevo Nota'}" ></h3>
+        <h3 th:text="${student != null ? 'Modificar Nota' : 'Nueva Nota'}" ></h3>
 
         <form th:action="@{/students}" th:method="${student != null ? 'PUT' : 'POST'}" class="my-4 p-4 rounded border">
             <input th:if="${student != null}" th:value="${student.id}" type="hidden" name="id">
 
             <div class="mb-3">
-                <label for="name" class="form-label">Nombre</label>
-                <input th:value="${student != null ? student.name : ''}" required type="text" class="form-control" id="name" name="name">
+                <label for="name" class="form-label">Nombre alumno</label>
+                <input th:value="${student != null ? student.name : ''}" required type="text" class="form-control" id="name" name="name" readonly>
             </div>
             <div class="mb-3">
-                <label for="surname" class="form-label">Apellido</label>
-                <input th:value="${student != null ? student.surname : ''}" required type="text" class="form-control" id="surname" name="surname">
+                <label for="surname" class="form-label">Apellido alumno</label>
+                <input th:value="${student != null ? student.surname : ''}" required type="text" class="form-control" id="surname" name="surname" readonly>
             </div>
+
+            <div class="mb-3">
+                <label class="form-label">Curso</label>
+                <input th:value="${student != null ? student.course.name : ''}" type="text" class="form-control" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label for="gradeValue" class="form-label">Nota</label>
+                <input type="number" id="gradeValue" name="gradeValue"
+                       class="form-control"
+                       th:value="${student != null ? student.gradeValue : ''}"
+                       required />
+            </div>
+
+            <button th:text="${student != null ? 'Modificar' : 'Crear Nuevo'}" type="submit" class="btn btn-primary"></button>
+
             <div class="mb-3">
                 <label class="form-label">Curso</label>
                 <select name="course" required class="form-select" aria-label="Default select example">
