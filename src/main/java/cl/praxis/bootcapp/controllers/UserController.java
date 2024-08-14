@@ -3,30 +3,30 @@ import cl.praxis.bootcapp.entities.Course;
 import cl.praxis.bootcapp.entities.Role;
 import cl.praxis.bootcapp.entities.User;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
-import cl.praxis.bootcapp.services.imp.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@Controller("users")
+@Controller
+@RequestMapping("/user")
 public class UserController {
-    private IBaseServiceCRUD<User> crudService;
+    private IBaseServiceCRUD<User> userCrudService;
     private IBaseServiceCRUD<Role> roleService;
     private IBaseServiceCRUD<Course> courseCrudService;
 
-    public UserController(IBaseServiceCRUD<User> crudService, IBaseServiceCRUD<Course> courseCrudService,
+    public UserController(IBaseServiceCRUD<User> userCrudService, IBaseServiceCRUD<Course> courseCrudService,
                           IBaseServiceCRUD<Role> roleService) {
-        this.crudService = crudService;
+        this.userCrudService = userCrudService;
         this.courseCrudService = courseCrudService;
         this.roleService = roleService;
     }
 
     @GetMapping("/users")
     public String getAllUser(Model model) {
-        List<User> users = crudService.getAll();
+        List<User> users = userCrudService.getAll();
         model.addAttribute("users", users);
-        return "index";
+        return "user_list";
     }
 
     // Ruta a formulario agregar
@@ -39,35 +39,38 @@ public class UserController {
         return "user_form";
     }
 
-
     @PostMapping("/new")
     public String insertUser(@ModelAttribute User user) {
-        System.out.println("User" + user);
-        crudService.create(user);
-        return "redirect:/users";
+        userCrudService.create(user);
+        return "redirect:/user/users";
     }
 
     // Ruta a formulario editar
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model){
-        User user = crudService.getById(id);
+        User user = userCrudService.getById(id);
+        List<Role> roles = roleService.getAll();
+        List<Course> courses = courseCrudService.getAll();
         model.addAttribute("user", user);
-        return "user_form";
+        model.addAttribute("roles", roles);
+        model.addAttribute("courses", courses);
+        model.addAttribute("numCourses", user.getCourses().size());
+        return "/user_form";
     }
 
     @PutMapping("/edit/{id}")
     public String editUser(@PathVariable Long id,
                            @ModelAttribute("user") User user){
         user.setId(id);
-        crudService.update(user);
+        userCrudService.update(user);
 
-        return "redirect:/users";
+        return "redirect:/user/users";
     }
 
 
     @DeleteMapping("/delete/{id}")
     public String deleteUser(@PathVariable Long id){
-        crudService.delete(id);
-        return "redirect:/users";
+        userCrudService.delete(id);
+        return "redirect:/user/users";
     }
 }
