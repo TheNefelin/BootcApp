@@ -50,6 +50,9 @@
         </tbody>
     </table>
 </div>
+<section class="container">
+    <th:block th:insert="components/footer :: footer"></th:block>
+</section>
 <script th:inline="javascript">
     function confirmDelete() {
         if (confirm('Estás seguro que deseas eliminar al usuario?')) {
