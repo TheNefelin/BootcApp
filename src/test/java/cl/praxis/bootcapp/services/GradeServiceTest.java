@@ -51,21 +51,6 @@ public class GradeServiceTest {
         gradeDTO2 = new GradeDTO(grade2.getId(), grade2.getGrade(), new User(), new User(), new Subject());
     }
 
-    //    @Test
-//    public void getAllNoteByIdSubjectTest() {
-//        Long id = 1L;
-//        List<Grade> gradeDTOList = Arrays.asList(new Grade(), new Grade());
-//
-//        when(gradeRepo.findAllNotesByIdSubject(id)).thenReturn(gradeDTOList);
-//
-//        List<GradeDTO> dtoList = servicio.getAllNoteByIdSubject(id);
-//
-//        assertNotNull(dtoList);
-//        assertEquals(2, dtoList.size());
-//
-//        verify(gradeRepo, times(1)).findAllNotesByIdSubject(id);
-//    }
-
     @Test
     public void getAllGradesTest() {
         LOG.info("--> Inicio Test getAllGradesTest");
