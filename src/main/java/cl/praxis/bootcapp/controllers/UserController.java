@@ -3,7 +3,6 @@ import cl.praxis.bootcapp.entities.Course;
 import cl.praxis.bootcapp.entities.Role;
 import cl.praxis.bootcapp.entities.User;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
-import cl.praxis.bootcapp.services.imp.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,20 +10,20 @@ import java.util.List;
 
 @Controller("users")
 public class UserController {
-    private IBaseServiceCRUD<User> crudService;
+    private IBaseServiceCRUD<User> userCrudService;
     private IBaseServiceCRUD<Role> roleService;
     private IBaseServiceCRUD<Course> courseCrudService;
 
-    public UserController(IBaseServiceCRUD<User> crudService, IBaseServiceCRUD<Course> courseCrudService,
+    public UserController(IBaseServiceCRUD<User> userCrudService, IBaseServiceCRUD<Course> courseCrudService,
                           IBaseServiceCRUD<Role> roleService) {
-        this.crudService = crudService;
+        this.userCrudService = userCrudService;
         this.courseCrudService = courseCrudService;
         this.roleService = roleService;
     }
 
     @GetMapping("/users")
     public String getAllUser(Model model) {
-        List<User> users = crudService.getAll();
+        List<User> users = userCrudService.getAll();
         model.addAttribute("users", users);
         return "index";
     }
@@ -42,16 +41,19 @@ public class UserController {
 
     @PostMapping("/new")
     public String insertUser(@ModelAttribute User user) {
-        System.out.println("User" + user);
-        crudService.create(user);
+        userCrudService.create(user);
         return "redirect:/users";
     }
 
     // Ruta a formulario editar
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model){
-        User user = crudService.getById(id);
+        User user = userCrudService.getById(id);
+        List<Role> roles = roleService.getAll();
+        List<Course> courses = courseCrudService.getAll();
         model.addAttribute("user", user);
+        model.addAttribute("roles", roles);
+        model.addAttribute("courses", courses);
         return "user_form";
     }
 
@@ -59,7 +61,7 @@ public class UserController {
     public String editUser(@PathVariable Long id,
                            @ModelAttribute("user") User user){
         user.setId(id);
-        crudService.update(user);
+        userCrudService.update(user);
 
         return "redirect:/users";
     }
@@ -67,7 +69,7 @@ public class UserController {
 
     @DeleteMapping("/delete/{id}")
     public String deleteUser(@PathVariable Long id){
-        crudService.delete(id);
+        userCrudService.delete(id);
         return "redirect:/users";
     }
 }
