@@ -40,11 +40,11 @@ public class GradeController {
 
     @GetMapping("/create")
     public String createGradeRoute(Model model) {
-        List<User> users = userService.getAll();
-        List<Subject> subjects = subjectService.getAll();
+        List<User> student = userService.getAll();
         List<User> teachers = userService.getAll();
+        List<Subject> subjects = subjectService.getAll();
 
-        model.addAttribute("users", users);
+        model.addAttribute("students", student);
         model.addAttribute("teachers", teachers);
         model.addAttribute("subjects", subjects);
         return "grade_form";
@@ -53,35 +53,35 @@ public class GradeController {
     @PutMapping("/update")
     public String routeUpdate(@RequestParam Long id, Model model) {
         Grade grade = gradeService.getById(id);
-        List<User> users = userService.getAll();
+        List<User> student = userService.getAll();
+        List<User> teachers = userService.getAll();
         List<Subject> subjects = subjectService.getAll();
 
         if (grade != null) {
-            List<User> teachers = users.stream()
-                    .filter(user -> user.getRole().getId() == 2)
-                    .collect(Collectors.toList());
-
-            model.addAttribute("users", users);
-            model.addAttribute("subjects", subjects);
+            model.addAttribute("students", student);
             model.addAttribute("teachers", teachers);
+            model.addAttribute("subjects", subjects);
             return "grade_form";
         } else
-            return "redirect:/grade_list";
+            return "redirect:/grades";
     }
 
     // -------------- CRUD --------------
 
     @PostMapping("/create")
     public String create(@ModelAttribute Grade grade) {
+        grade.setDate(LocalDate.now());
         gradeService.create(grade);
-        return "redirect:/grade_list";
+        return "redirect:/grades";
     }
 
     @PutMapping()
-    public String update(@PathVariable Long id,
-                         @ModelAttribute("grade") Grade grade) {
-        grade.setId(id);
-        gradeService.update(grade);
+    public String update(@ModelAttribute Grade grade) {
+        Grade updateGrade = gradeService.getById(grade.getId());
+        updateGrade.setDate(LocalDate.now());
+        updateGrade.setGrade(grade.getGrade());
+
+        gradeService.update(updateGrade);
         return "redirect:/grades";
     }
 

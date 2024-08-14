@@ -24,6 +24,12 @@ public class SubjectController {
 
     // -------------- ROUTES --------------
 
+    @GetMapping
+    public String getAllSubject(Model model){
+        model.addAttribute("subjects",subjectService.getAll());
+        return "subject_list";
+    }
+
     @GetMapping("/create")
     public String createSubjectRoute(Model model) {
         model.addAttribute("courses", courseService.getAll());
@@ -45,22 +51,20 @@ public class SubjectController {
     }
 
     // -------------- CRUD --------------
-    @GetMapping
-    public String getAllSubject(Model model){
-        model.addAttribute("subjects",subjectService.getAll());
-        return "subject_list";
-    }
 
     @PostMapping()
     public String create(@ModelAttribute Subject subject) {
         subjectService.create(subject);
-        return "redirect:/subject_list";
+        return "redirect:/subjects";
     }
 
     @PutMapping()
     public String update(@ModelAttribute Subject subject) {
-        subjectService.update(subject);
-        return "redirect:/subject_list";
+        Subject updateSubject = subjectService.getById(subject.getId());
+        updateSubject.setName(subject.getName());
+
+        subjectService.update(updateSubject);
+        return "redirect:/subjects";
     }
 
     @DeleteMapping
