@@ -20,7 +20,7 @@
             <div class="mb-3">
 
                 <label class="form-label">Usuarios</label>
-                <select th:disabled="${grade != null}" name="course" required class="form-select" aria-label="Default select example">
+                <select th:disabled="${grade != null}" name="idStudent" required class="form-select" aria-label="Default select example">
                     <th:block th:each="user : ${users}">
 
                         <option
@@ -34,7 +34,7 @@
 
             <div class="mb-3">
                 <label class="form-label">Asignatura</label>
-                <select th:disabled="${grade != null}" name="course" required class="form-select" aria-label="Default select example">
+                <select th:disabled="${grade != null}" name="idSubject" required class="form-select" aria-label="Default select example">
                     <th:block th:each="subject : ${subjects}">
                         <option
                                 th:value="${subject.id}"

@@ -66,17 +66,17 @@ public class GradeController {
     @PostMapping()
     public String create(@ModelAttribute Grade grade) {
         gradeService.create(grade);
-        return "redirect:/grade_list";
+        return "redirect:/grade";
     }
 
     @PutMapping()
     public String update(@ModelAttribute Grade grade) {
         gradeService.update(grade);
-        return "redirect:/grade_list";
+        return "redirect:/grade";
     }
 
     @DeleteMapping
-    public String delete(@RequestParam Long id, Model model) {
+    public String delete(@RequestParam Long id) {
         gradeService.delete(id);
         return "redirect:/grades";
     }
