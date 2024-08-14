@@ -10,25 +10,28 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CourseServiceTest {
+
+    public static Course course1, course2;
+
     @Mock
     private ICourseRepository iCourseRepository;
     @InjectMocks
     private CourseServiceImpl courseService;
     @BeforeEach
     void setUp(){
+        course1 = new Course(1L, "Introduccion a la programacion", true);
+        course2 = new Course(2L,"Python",true);
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void testGetAll(){
-        //Datos simulados
-        Course course1 = new Course(1L, "Introduccion a la programacion", true);
-        Course course2 = new Course(2L,"Python",true);
-
         //cuando se llame a metodo findAll() este retornara una array con los objetos de prueba
         when(iCourseRepository.findAll()).thenReturn(Arrays.asList(course1,course2));
 
@@ -39,5 +42,15 @@ public class CourseServiceTest {
         assertEquals("Python",result.get(1).getName());
         //Verifica que se llamo al metodo findAll() 1 sola vez de la interfaz ICourseRepository
         verify(iCourseRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testGetById(){
+        when(iCourseRepository.getById(1L)).thenReturn(course1);
+
+        Course result = courseService.getById(1L);
+        assertEquals(1L, result.getId());
+        assertEquals("Introduccion a la programacion", result.getName());
+        verify(iCourseRepository, times(1)).getById(1L);
     }
 }
