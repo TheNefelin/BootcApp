@@ -46,6 +46,6 @@ public class UserServiceImpl implements IBaseServiceCRUD<User>, IUserService {
     @Override
     public boolean delete(Long id) {
         userRepository.deleteById(id);
-        return false;
+        return true;
     }
 }

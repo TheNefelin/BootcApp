@@ -2,16 +2,20 @@ package cl.praxis.bootcapp.services;
 
 import cl.praxis.bootcapp.entities.Subject;
 import cl.praxis.bootcapp.repositories.ISubjectRepository;
+import cl.praxis.bootcapp.services.imp.GradeService;
 import cl.praxis.bootcapp.services.imp.SubjectService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
 @SpringBootTest
 public class SubjectServiceTest {
 
@@ -29,6 +32,9 @@ public class SubjectServiceTest {
     public static Subject subject1, subject2;
 
     @Mock
+    GradeService gradeService;
+
+    @Mock
     ISubjectRepository subjectRepository;
 
     @InjectMocks
@@ -36,6 +42,7 @@ public class SubjectServiceTest {
 
     @BeforeEach
     void setUp() {
+        MockitoAnnotations.openMocks(this);
         LOG.info("--> Inicio SetUp");
         id1 = 1L;
         id2 = 2L;
@@ -116,14 +123,13 @@ public class SubjectServiceTest {
     @Test
     public void deleteSubjectTest() {
         LOG.info("--> Inicio Test");
-        when(subjectRepository.existsById(id1)).thenReturn(true);
+        when(gradeService.getAllGradesByIdSubject(id1)).thenReturn(Collections.emptyList());
 
         LOG.warn("--> Inicio Pruebas Unitarias");
         Boolean idDeleted = subjectService.delete(id1);
         assertThat(idDeleted).isTrue();
 
         LOG.warn("--> Verificacion de ejecucion de metodos");
-        verify(subjectRepository, times(1)).existsById(id1);
         verify(subjectRepository, times(1)).deleteById(id1);
 
         LOG.info("--> Finalizando test");
