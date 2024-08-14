@@ -13,7 +13,7 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class courseServiceTest {
+public class CourseServiceTest {
     @Mock
     private ICourseRepository iCourseRepository;
     @InjectMocks
