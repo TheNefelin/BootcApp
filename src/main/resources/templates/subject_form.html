@@ -22,14 +22,13 @@
 
         <div class="mb-3">
             <label class="form-label">Curso</label>
-            <select name="course" required class="form-select" aria-label="Default select example">
-                <th:block th:each="course : ${courses}">
-                    <option
-                            th:value="${course.id}"
-                            th:text="${course.name}"
-                            th:selected="${subject != null and subject.course != null and subject.course.id == course.id}"
-                    ></option>
-                </th:block>
+            <select th:disabled="${subject != null}" name="course" required class="form-select" aria-label="Default select example">
+                <option selected disabled>Seleccione un curso</option>
+                <option th:each="course : ${courses}"
+                        th:value="${course.id}"
+                        th:text="${course.name}"
+                        th:selected="${course != null and subject != null and course.id == subject.course.id}"
+                ></option>
             </select>
         </div>
 
