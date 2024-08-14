@@ -1,4 +1,4 @@
-package cl.praxis.bootcapp.controllers;
+package cl.praxis.bootcapp.controllers.rests;
 import cl.praxis.bootcapp.entities.Course;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
 import org.springframework.beans.factory.annotation.Autowired;

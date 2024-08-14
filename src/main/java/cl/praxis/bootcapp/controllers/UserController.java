@@ -8,7 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@Controller("users")
+@Controller
+@RequestMapping("/user")
 public class UserController {
     private IBaseServiceCRUD<User> userCrudService;
     private IBaseServiceCRUD<Role> roleService;
@@ -25,7 +26,7 @@ public class UserController {
     public String getAllUser(Model model) {
         List<User> users = userCrudService.getAll();
         model.addAttribute("users", users);
-        return "index";
+        return "user_list";
     }
 
     // Ruta a formulario agregar
@@ -38,11 +39,10 @@ public class UserController {
         return "user_form";
     }
 
-
     @PostMapping("/new")
     public String insertUser(@ModelAttribute User user) {
         userCrudService.create(user);
-        return "redirect:/users";
+        return "redirect:/user/users";
     }
 
     // Ruta a formulario editar
@@ -54,7 +54,8 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("roles", roles);
         model.addAttribute("courses", courses);
-        return "user_form";
+        model.addAttribute("numCourses", user.getCourses().size());
+        return "/user_form";
     }
 
     @PutMapping("/edit/{id}")
@@ -63,13 +64,13 @@ public class UserController {
         user.setId(id);
         userCrudService.update(user);
 
-        return "redirect:/users";
+        return "redirect:/user/users";
     }
 
 
     @DeleteMapping("/delete/{id}")
     public String deleteUser(@PathVariable Long id){
         userCrudService.delete(id);
-        return "redirect:/users";
+        return "redirect:/user/users";
     }
 }

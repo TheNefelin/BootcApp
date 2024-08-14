@@ -18,7 +18,7 @@
 </header>
 <h2 class="text-center my-3" th:text="${user.id != null} ? 'Formulario edición usuario' : 'Formulario creación nuevo usuario'"></h2>
 <div class="d-flex flex-row justify-content-center">
-    <form class="card" th:object="${user}" th:action="@{/new}" method="post">
+    <form class="card" th:object="${user}" th:action="@{/user/new}" method="post">
         <input type="hidden" name="_method" th:value="${user.id != null} ? 'put' : 'post'" />
         <input type="hidden" name="id" th:value="${user.id}" >
         <div class="px-3 mx-3 my-3">
