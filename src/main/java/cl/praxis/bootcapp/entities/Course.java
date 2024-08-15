@@ -24,6 +24,6 @@ public class Course {
     private Boolean active;
 
     //esta relacion impedia el mapeo correcto desde user hasta la tabla courses
-    /*@ManyToMany(mappedBy = "courses")
-    private Set<User> users;*/
+    //@ManyToMany(mappedBy = "courses")
+    //private Set<User> users;
 }

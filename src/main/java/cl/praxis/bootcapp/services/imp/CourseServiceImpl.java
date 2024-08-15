@@ -1,17 +1,22 @@
 package cl.praxis.bootcapp.services.imp;
 import cl.praxis.bootcapp.entities.Course;
+import cl.praxis.bootcapp.entities.User;
 import cl.praxis.bootcapp.repositories.ICourseRepository;
+import cl.praxis.bootcapp.repositories.IUserRepository;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CourseServiceImpl implements IBaseServiceCRUD<Course>{
 
    private ICourseRepository iCourseRepository;
+   private IUserRepository iUserRepository;
 
-   public CourseServiceImpl(ICourseRepository iCourseRepository){
+   public CourseServiceImpl(ICourseRepository iCourseRepository, IUserRepository iUserRepository){
+       this.iUserRepository = iUserRepository;
        this.iCourseRepository=iCourseRepository;
    }
     @Override
@@ -28,7 +33,7 @@ public class CourseServiceImpl implements IBaseServiceCRUD<Course>{
     }
     @Override
     public Course update(Course course) {
-        return iCourseRepository.save(course);
+      return iCourseRepository.save(course);
     }
 
     @Override

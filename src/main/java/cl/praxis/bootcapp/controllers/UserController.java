@@ -51,6 +51,7 @@ public class UserController {
         User user = userCrudService.getById(id);
         List<Role> roles = roleService.getAll();
         List<Course> courses = courseCrudService.getAll();
+
         model.addAttribute("user", user);
         model.addAttribute("roles", roles);
         model.addAttribute("courses", courses);

@@ -45,9 +45,9 @@
                 </select>
             </div>
             <div class="d-flex justify-content-center my-3 hidden" id="cursoContainer">
-                <select th:field="*{courses}">
+                <select th:field="*{courses}" th:each="course : ${courses}" >
                     <option value="" disabled selected>Seleciona un curso</option>
-                    <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
+                    <option  th:value="${user.id == null} ? ${course.id} : ${user.courses}" th:text="${course.name}"></option>
                 </select>
             </div>
             <div id="additionalCoursesContainer"></div>
