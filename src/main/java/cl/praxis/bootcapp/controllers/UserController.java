@@ -3,10 +3,15 @@ import cl.praxis.bootcapp.entities.Course;
 import cl.praxis.bootcapp.entities.Role;
 import cl.praxis.bootcapp.entities.User;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
+import cl.praxis.bootcapp.services.imp.CourseServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/user")
@@ -15,11 +20,13 @@ public class UserController {
     private IBaseServiceCRUD<Role> roleService;
     private IBaseServiceCRUD<Course> courseCrudService;
 
+    private CourseServiceImpl courseService ;
     public UserController(IBaseServiceCRUD<User> userCrudService, IBaseServiceCRUD<Course> courseCrudService,
-                          IBaseServiceCRUD<Role> roleService) {
+                          IBaseServiceCRUD<Role> roleService, CourseServiceImpl courseService) {
         this.userCrudService = userCrudService;
         this.courseCrudService = courseCrudService;
         this.roleService = roleService;
+        this.courseService = courseService;
     }
 
     @GetMapping("/users")
@@ -39,7 +46,27 @@ public class UserController {
         return "user_form";
     }
 
-    @PostMapping("/new")
+    @GetMapping("/edit/userCourse/{id}")
+    public String edituserCourse(@PathVariable Long id, Model model){
+        User user = userCrudService.getById(id);
+        List<Course> allCourse = courseCrudService.getAll();
+        List<Course> courses = new ArrayList<>(user.getCourses());
+        model.addAttribute("user", user);
+        model.addAttribute("allCourses", allCourse);
+        model.addAttribute("courses",courses);
+        return "/user_course_update";
+    }
+
+    @PostMapping("/update/userCourse")
+    public String updateUserCourse(@RequestParam("userId") Long userId, @RequestParam("courseIds") List<Long> courseIds) {
+        User user = userCrudService.getById(userId);
+        Set<Course> courses = new HashSet<>(courseService.getCoursesByIds(courseIds));
+        user.setCourses(courses);
+        userCrudService.update(user);
+        return "redirect:/user/users";
+    }
+  
+    @PostMapping
     public String insertUser(@ModelAttribute User user) {
         userCrudService.create(user);
         return "redirect:/user/users";
@@ -58,19 +85,16 @@ public class UserController {
         return "/user_form";
     }
 
-    @PutMapping("/edit/{id}")
-    public String editUser(@PathVariable Long id,
-                           @ModelAttribute("user") User user){
-        user.setId(id);
+    @PutMapping
+    public String editUser(@ModelAttribute("user") User user){
         userCrudService.update(user);
-
         return "redirect:/user/users";
     }
-
 
     @DeleteMapping("/delete/{id}")
     public String deleteUser(@PathVariable Long id){
         userCrudService.delete(id);
         return "redirect:/user/users";
     }
+
 }
