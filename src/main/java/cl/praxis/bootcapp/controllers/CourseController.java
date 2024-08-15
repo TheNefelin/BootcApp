@@ -9,27 +9,27 @@ import org.springframework.ui.Model;
 import java.util.Optional;
 
 @Controller
+@RequestMapping("/course")
 public class CourseController  {
     @Autowired
     private CourseServiceImpl courseService;
 
-    @GetMapping("/course/list")
+    @GetMapping("/list")
     public String getAllCourse(Model model){
         model.addAttribute("courses", courseService.getAll());
         return "courseList";
     }
-  @PostMapping("/course/update")
+  @PostMapping("/update")
     public String updateCourse(@ModelAttribute Course course, Model model){
         courseService.update(course);
         model.addAttribute("courses", courseService.getAll());
         return "redirect:/course/list";
     }
-    @PostMapping("/course/create")
+    @PostMapping("/create")
     public String CreateCourse(@ModelAttribute Course course, Model model){
         courseService.create(course);
         model.addAttribute("courses", courseService.create(course));
         return "redirect:/course/list";
     }
-
 
 }

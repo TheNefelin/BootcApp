@@ -6,54 +6,66 @@
     <title>BootcApp</title>
 </head>
 <body>
-    <header class="bg-body-tertiary shadow-lg">
-        <th:block th:insert="components/nav :: nav"></th:block>
-    </header>
-    <form th:action="@{/new}" method="get" class="my-4 ms-2">
-        <button type="submit" class="btn btn-primary">Registrar nuevo usuario</button>
-    </form>
-    <div class="container ms-5 my-5">
-        <h2 class="text-center">Listado de usuarios y sus roles</h2>
-        <table class="table mt-5">
-            <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Rol</th>
-                <th scope="col">Acciones</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="user: ${users}">
-                <td scope="row" th:text="${user.id}"></td>
-                <td th:text="${user.name}"></td>
-                <td th:text="${user.surname}"></td>
-                <td th:text="${user.email}"></td>
-                <td></td>
-                <td class="d-flex gap-2">
-                    <form method="get" th:action="@{/edit/{id}(id=${user.id})}" th:object="${users}">
-                        <button type="submit" class="btn btn-secondary">Editar</button>
-                    </form>
-                    <form  th:method="delete" th:action="@{/delete/{id}(id=${user.id})}" th:object="${users}">
-                        <button type="submit" class="btn btn-danger" onclick="return confirmDelete()">Borrar</button>
-                    </form>
-                </td>
-            </tr>
+<header class="bg-body-tertiary shadow-lg">
+    <th:block th:insert="components/nav :: nav"></th:block>
+</header>
+<form th:action="@{/user/new}" method="get" class="my-4 ms-2">
+    <button type="submit" class="btn btn-primary">Registrar nuevo usuario</button>
+</form>
+<div class="container ms-5 my-5">
+    <h2 class="text-center">Listado de usuarios y sus roles</h2>
+    <table class="table mt-5">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Rol</th>
+            <th scope="col">cursos</th>
+            <th scope="col">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user: ${users}">
+            <td scope="row" th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.surname}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.role.name}"></td>
+            <td>
+                <ul th:each="course : ${user.courses}">
+                    <li th:text="${course.name}"></li>
+                </ul>
+            </td>
+            <td class="d-flex gap-2">
+                <form method="get" th:action="@{/user/edit/{id}(id=${user.id})}" th:object="${users}">
+                    <button type="submit" class="btn btn-secondary">Editar</button>
+                </form>
+                <form  th:method="delete" th:action="@{/user/delete/{id}(id=${user.id})}" th:object="${users}">
+                    <button type="submit" class="btn btn-danger" onclick="return confirmDelete()">Borrar</button>
+                </form>
+                <form  th:method="get" th:action="@{/user/edit/userCourse/{id}(id=${user.id})}" th:object="${users}">
+                    <button type="submit" class="btn btn-success">gestionar curso</button>
+                </form>
+            </td>
+        </tr>
         </tbody>
-        </table>
-    </div>
-    <script th:inline="javascript">
-        function confirmDelete() {
-            if (confirm('Estás seguro que deseas eliminar al usuario?')) {
-                return true;
-            } else {
-                event.preventDefault();
-                return false;
-            }
+    </table>
+</div>
+<section class="container">
+    <th:block th:insert="components/footer :: footer"></th:block>
+</section>
+<script th:inline="javascript">
+    function confirmDelete() {
+        if (confirm('Estás seguro que deseas eliminar al usuario?')) {
+            return true;
+        } else {
+            event.preventDefault();
+            return false;
         }
-    </script>
-    <script th:replace="components/bootstrap_js :: script"></script>
+    }
+</script>
+<script th:replace="components/bootstrap_js :: script"></script>
 </body>
 </html>

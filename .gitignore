@@ -34,4 +34,4 @@ build/
 .vscode/
 
 ## app propoperties ##
-application.properties
+/src/main/resources/application.properties

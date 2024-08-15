@@ -11,27 +11,55 @@
     </header>
 
     <section class="container my-4">
+        <div class="mt-4 alert alert-info row" role="alert">
+            <div class="list-group col-md-4 col-12">
+                <button type="button" class="list-group-item list-group-item-action active" aria-current="true">Usuario</button>
+                <button type="button" class="list-group-item list-group-item-action">Nombre Apellido</button>
+            </div>
+            <div class="list-group col-md-4 col-12">
+                <button type="button" class="list-group-item list-group-item-action active" aria-current="true">Rol</button>
+                <button type="button" class="list-group-item list-group-item-action">Admin - Profesor - Estudiante</button>
+            </div>
+            <div class="list-group col-md-4 col-12">
+                <button type="button" class="list-group-item list-group-item-action active" aria-current="true">Correo</button>
+                <button type="button" class="list-group-item list-group-item-action">prueba@prueba.cl</button>
+            </div>
+        </div>
+
         <h3 th:text="${grade != null ? 'Modificar Nota' : 'Agregar Nota'}" ></h3>
 
-        <form th:action="@{/students}" th:method="${student != null ? 'PUT' : 'POST'}" class="my-4 p-4 rounded border">
+        <form th:action="@{/grades}" th:method="${grade != null ? 'PUT' : 'POST'}" class="my-4 p-4 rounded border row">
             <input th:if="${grade != null}" th:value="${grade.id}" type="hidden" name="id">
 
-            <div class="mb-3">
-                <label class="form-label">Usuarios</label>
-                <select th:disabled="${grade != null}" name="course" required class="form-select" aria-label="Default select example">
-                    <th:block th:each="user : ${users}">
+            <div class="mb-3 col-md-6 col-12">
+                <label class="form-label">Profesor</label>
+                <select th:disabled="${grade != null}" name="idTeacher" required class="form-select" aria-label="Default select example">
+                    <th:block th:each="teacher : ${teachers}">
                         <option
-                                th:value="${user.id}"
-                                th:text="${user.name}"
-                                th:selected="${user != null and grade != null and user.id == grade.idStudent}"
+                                th:value="${teacher.id}"
+                                th:text="${teacher.name}"
+                                th:selected="${teacher != null and grade != null and teacher.id  == grade.idTeacher}"
                         ></option>
                     </th:block>
                 </select>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 col-md-6 col-12">
+                <label class="form-label">Estudiante</label>
+                <select th:disabled="${grade != null}" name="idStudent" required class="form-select" aria-label="Default select example">
+                    <th:block th:each="student : ${students}">
+                        <option
+                                th:value="${student.id}"
+                                th:text="${student.name}"
+                                th:selected="${student != null and grade != null and student.id == grade.idStudent}"
+                        ></option>
+                    </th:block>
+                </select>
+            </div>
+
+            <div class="mb-3 col-md-6 col-12">
                 <label class="form-label">Asignatura</label>
-                <select th:disabled="${grade != null}" name="course" required class="form-select" aria-label="Default select example">
+                <select th:disabled="${grade != null}" name="idSubject" required class="form-select" aria-label="Default select example">
                     <th:block th:each="subject : ${subjects}">
                         <option
                                 th:value="${subject.id}"
@@ -42,13 +70,19 @@
                 </select>
             </div>
 
-            <div class="mb-3">
-                <label for="name" class="form-label">Nota</label>
-                <input th:value="${grade != null ? grade.grade : ''}" required type="number" class="form-control" id="name" name="name">
+            <div class="mb-3 col-md-6 col-12">
+                <label for="grade" class="form-label">Nota</label>
+                <input th:value="${grade != null ? grade.grade : ''}" required type="number" class="form-control" id="grade" name="grade">
             </div>
 
-            <button th:text="${grade != null ? 'Modificar' : 'Crear Nuevo'}" type="submit" class="btn btn-primary"></button>
+            <div class="mb-3  col-md-6 col-12" >
+                <button th:text="${grade != null ? 'Modificar' : 'Crear Nuevo'}" type="submit" class="btn btn-primary"></button>
+            </div>
         </form>
+    </section>
+
+    <section class="container">
+        <th:block th:insert="components/footer :: footer"></th:block>
     </section>
 
     <script th:replace="components/bootstrap_js :: script"></script>

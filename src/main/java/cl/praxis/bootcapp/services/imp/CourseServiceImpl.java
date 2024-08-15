@@ -27,6 +27,10 @@ public class CourseServiceImpl implements IBaseServiceCRUD<Course>{
     public Course getById(Long id) {
         return iCourseRepository.getById(id);
     }
+
+    public List<Course> getCoursesByIds(List<Long> courseId){
+       return iCourseRepository.findAllById(courseId);
+    }
     @Override
     public Course create(Course course) {
         return iCourseRepository.save(course);

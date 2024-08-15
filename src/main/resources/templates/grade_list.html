@@ -11,13 +11,22 @@
     </header>
 
     <section class="container my-4">
-        <h3>Lista de Notas</h3>
-
-
-        <div class="mt-4 alert alert-info" role="alert">
-            <p><strong>Nombre: Invitado</strong></p>
-            <p><strong>Correo: invitado@invitado.cl</strong></p>
+        <div class="mt-4 alert alert-info row" role="alert">
+            <div class="list-group col-md-4 col-12">
+                <button type="button" class="list-group-item list-group-item-action active" aria-current="true">Usuario</button>
+                <button type="button" class="list-group-item list-group-item-action">Nombre Apellido</button>
+            </div>
+            <div class="list-group col-md-4 col-12">
+                <button type="button" class="list-group-item list-group-item-action active" aria-current="true">Rol</button>
+                <button type="button" class="list-group-item list-group-item-action">Admin - Profesor - Estudiante</button>
+            </div>
+            <div class="list-group col-md-4 col-12">
+                <button type="button" class="list-group-item list-group-item-action active" aria-current="true">Correo</button>
+                <button type="button" class="list-group-item list-group-item-action">prueba@prueba.cl</button>
+            </div>
         </div>
+
+        <h3>Lista de Notas</h3>
 
         <div th:each="user : ${users}">
             <div th:switch="${user.role.id}">
@@ -79,6 +88,10 @@
             </tbody>
         </table>
 
+    </section>
+
+    <section class="container">
+        <th:block th:insert="components/footer :: footer"></th:block>
     </section>
 
     <script th:replace="~{components/bootstrap_js :: script}"></script>
