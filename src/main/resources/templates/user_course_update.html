@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="components/bootstrap_css :: head"></th:block>
+    <link th:replace="components/dataTable_css :: link">
+    <title>Demo</title>
+</head>
+<body>
+<header class="bg-body-tertiary shadow-lg">
+    <th:block th:insert="components/nav :: nav"></th:block>
+</header>
+<section class="container mx-auto mt-5">
+    <div>
+        <h2 class="text-center">Añadir curso</h2>
+        <select id="course-select">
+            <option th:each="allCourse : ${allCourses}" th:value="${allCourse.id}" th:text="${allCourse.name}"></option>
+        </select>
+        <button class="btn btn-primary" onclick="addCourse()">Añadir curso</button>
+    </div>
+
+    <form th:action="@{/user/update/userCourse}" method="post">
+        <input type="hidden" name="userId" th:value="${user.id}"> <!-- Id del usuario -->
+        <div id="course-ids-container"></div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nombre Curso</th>
+                <th>Acción</th>
+            </tr>
+            </thead>
+            <tbody id="courses-table-body">
+            <tr th:each="course : ${courses}" th:id="${course.id}">
+                <td th:text="${course.name}"></td>
+                <td>
+                    <!-- El campo oculto debe estar aquí -->
+                    <input type="hidden" name="courseIds" th:value="${course.id}" />
+                    <button type="button" class="btn btn-danger" th:attr="onclick='removeCourse(' + ${course.id} + ')'">
+                        Borrar
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-success">Guardar cambios</button>
+    </form>
+</section>
+<section class="container">
+    <th:block th:insert="components/footer :: footer"></th:block>
+</section>
+<script>
+    // Arreglo para almacenar los cursos seleccionados
+    let selectedCourses = [];
+
+    // Función para añadir el curso seleccionado a la tabla
+    function addCourse() {
+        const selectElement = document.getElementById('course-select');
+        const courseId = selectElement.value;
+        const courseName = selectElement.options[selectElement.selectedIndex].text;
+
+        // Verificar si el curso ya fue añadido
+        if (selectedCourses.includes(courseId)) {
+            alert("Este curso ya ha sido añadido.");
+            return;
+        }
+
+        // Añadir el curso al arreglo de cursos seleccionados
+        selectedCourses.push(courseId);
+
+        // Crear una nueva fila para el curso en la tabla
+        const tableBody = document.getElementById('courses-table-body');
+        const newRow = document.createElement('tr');
+        newRow.id = courseId;
+
+        // Crear las celdas para el nombre del curso y el botón de borrar
+        const courseNameCell = document.createElement('td');
+        courseNameCell.textContent = courseName;
+
+        const removeButtonCell = document.createElement('td');
+        const removeButton = document.createElement('button');
+        removeButton.type = 'button';
+        removeButton.className = 'btn btn-danger';
+        removeButton.textContent = 'Borrar';
+        removeButton.onclick = function() { removeCourse(courseId); };
+
+        removeButtonCell.appendChild(removeButton);
+
+        // Añadir las celdas a la nueva fila
+        newRow.appendChild(courseNameCell);
+        newRow.appendChild(removeButtonCell);
+
+        // Añadir la nueva fila al cuerpo de la tabla
+        tableBody.appendChild(newRow);
+
+        // Actualizar los campos ocultos en el formulario
+        updateHiddenFields();
+    }
+
+    function removeCourse(courseId) {
+        // Eliminar el curso del arreglo de cursos seleccionados
+        selectedCourses = selectedCourses.filter(id => id !== courseId.toString());
+
+        // Eliminar la fila correspondiente de la tabla
+        const row = document.getElementById(courseId);
+        if (row) {
+            row.parentNode.removeChild(row);
+        }
+
+        // Actualizar los campos ocultos en el formulario
+        updateHiddenFields();
+    }
+
+    function updateHiddenFields() {
+        const container = document.getElementById('course-ids-container');
+        container.innerHTML = ''; // Limpiar los campos ocultos existentes
+
+        selectedCourses.forEach(courseId => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'courseIds'; // Nombre del campo oculto
+            input.value = courseId;   // Valor del campo oculto
+            container.appendChild(input);
+        });
+    }
+</script>
+<script th:replace="components/bootstrap_js :: script"></script>
+</body>
+</html>

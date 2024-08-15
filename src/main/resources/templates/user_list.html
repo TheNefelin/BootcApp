@@ -45,6 +45,9 @@
                 <form  th:method="delete" th:action="@{/user/delete/{id}(id=${user.id})}" th:object="${users}">
                     <button type="submit" class="btn btn-danger" onclick="return confirmDelete()">Borrar</button>
                 </form>
+                <form  th:method="get" th:action="@{/user/edit/userCourse/{id}(id=${user.id})}" th:object="${users}">
+                    <button type="submit" class="btn btn-success">gestionar curso</button>
+                </form>
             </td>
         </tr>
         </tbody>
