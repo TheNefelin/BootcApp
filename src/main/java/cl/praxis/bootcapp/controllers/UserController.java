@@ -39,7 +39,7 @@ public class UserController {
         return "user_form";
     }
 
-    @PostMapping("/new")
+    @PostMapping
     public String insertUser(@ModelAttribute User user) {
         userCrudService.create(user);
         return "redirect:/user/users";
@@ -58,10 +58,8 @@ public class UserController {
         return "/user_form";
     }
 
-    @PutMapping("/edit/{id}")
-    public String editUser(@PathVariable Long id,
-                           @ModelAttribute("user") User user){
-        user.setId(id);
+    @PutMapping
+    public String editUser(@ModelAttribute("user") User user){
         userCrudService.update(user);
 
         return "redirect:/user/users";
@@ -73,4 +71,5 @@ public class UserController {
         userCrudService.delete(id);
         return "redirect:/user/users";
     }
+
 }
