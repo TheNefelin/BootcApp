@@ -66,7 +66,7 @@ public class UserController {
         return "redirect:/user/users";
     }
   
-    @PostMappin
+    @PostMapping
     public String insertUser(@ModelAttribute User user) {
         userCrudService.create(user);
         return "redirect:/user/users";
