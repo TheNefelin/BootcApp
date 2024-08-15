@@ -1,6 +1,7 @@
 package cl.praxis.bootcapp.controllers;
 
 
+import cl.praxis.bootcapp.entities.Course;
 import cl.praxis.bootcapp.entities.Role;
 import cl.praxis.bootcapp.services.imp.RoleServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,35 +22,38 @@ public class RoleController {
         this.roleServiceImp = roleServiceImp;
     }
 
-    @GetMapping("/allroles")
+    @GetMapping()
     public String getAllRoles(Model model) {
         List<Role> roles = roleServiceImp.getAll();
         model.addAttribute("roles", roles);
-        return "role"; // Nombre de la vista que se renderiza (role.html)
+        return "role";
     }
 
-    @PostMapping("/roles")
+    @PostMapping()
     public String createRole(@ModelAttribute Role role) {
         roleServiceImp.create(role);
-        return "redirect:/role/allroles"; // Redirige a la lista de roles después de crear o actualizar
+        return "redirect:/role";
     }
 
-    @PutMapping("/roles/{id}")
-    public String updateRole(@PathVariable Long id, @ModelAttribute Role role) {
+    @PostMapping("/update")
+    public String updateRole(@ModelAttribute Role role, Model model) {
         roleServiceImp.update(role);
-        return "redirect:/allroles"; // Redirige a la lista de roles después de actualizar
+        model.addAttribute("roles", roleServiceImp.getAll());
+        return "redirect:/role";
     }
+
 
     @GetMapping("/roles/{id}")
     public String getRoleById(@PathVariable Long id, Model model) {
         Role role = roleServiceImp.getById(id);
         model.addAttribute("role", role);
-        return "role"; // Renderiza la vista role.html con los detalles del rol
+        return "role";
     }
 
-    @DeleteMapping("/roles/{id}")
-    public String deleteRole(@PathVariable Long id) {
+
+    @DeleteMapping
+    public String delete(@RequestParam Long id) {
         roleServiceImp.delete(id);
-        return "redirect:/allroles"; // Redirige a la lista de roles después de eliminar
+        return "redirect:/role";
     }
 }
