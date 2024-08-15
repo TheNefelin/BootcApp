@@ -32,5 +32,4 @@ public class CourseController  {
         return "redirect:/course/list";
     }
 
-
 }

@@ -9,88 +9,88 @@
     <th:block th:insert="components/nav :: nav"></th:block>
 </header>
 <section class="container my-4">
-<div class="mt-4 alert alert-info" role="alert">
-    <p><strong>Nombre: Invitado</strong></p>
-    <p><strong>Correo: invitado@invitado.cl</strong></p>
-</div>
+    <div class="mt-4 alert alert-info" role="alert">
+        <p><strong>Nombre: Invitado</strong></p>
+        <p><strong>Correo: invitado@invitado.cl</strong></p>
+    </div>
 
-<div th:each="user : ${users}">
-    <div th:switch="${user.role.id}">
-        <div th:case="1">
-            <p><strong>Nombre Administrador:</strong> <span th:text="${user.name + ' ' + user.surname}"></span></p>
-            <p><strong>Correo:</strong> <span th:text="${user.email}"></span></p>
-        </div>
-        <div th:case="2">
-            <p><strong>Nombre Profesor:</strong> <span th:text="${user.name + ' ' + user.surname}"></span></p>
-            <p><strong>Correo:</strong> <span th:text="${user.email}"></span></p>
-        </div>
-        <div th:case="3">
-            <p><strong>Nombre Estudiante:</strong> <span th:text="${user.name + ' ' + user.surname}"></span></p>
-            <p><strong>Correo:</strong> <span th:text="${user.email}"></span></p>
-        </div>
-        <div th:case="4">
-            <p><strong>Nombre Apoderado:</strong> <span th:text="${user.name + ' ' + user.surname}"></span></p>
-            <p><strong>Correo:</strong> <span th:text="${user.email}"></span></p>
+    <div th:each="user : ${users}">
+        <div th:switch="${user.role.id}">
+            <div th:case="1">
+                <p><strong>Nombre Administrador:</strong> <span th:text="${user.name + ' ' + user.surname}"></span></p>
+                <p><strong>Correo:</strong> <span th:text="${user.email}"></span></p>
+            </div>
+            <div th:case="2">
+                <p><strong>Nombre Profesor:</strong> <span th:text="${user.name + ' ' + user.surname}"></span></p>
+                <p><strong>Correo:</strong> <span th:text="${user.email}"></span></p>
+            </div>
+            <div th:case="3">
+                <p><strong>Nombre Estudiante:</strong> <span th:text="${user.name + ' ' + user.surname}"></span></p>
+                <p><strong>Correo:</strong> <span th:text="${user.email}"></span></p>
+            </div>
+            <div th:case="4">
+                <p><strong>Nombre Apoderado:</strong> <span th:text="${user.name + ' ' + user.surname}"></span></p>
+                <p><strong>Correo:</strong> <span th:text="${user.email}"></span></p>
+            </div>
         </div>
     </div>
-</div>
-<div class="container mx-auto">
-    <h2 class="text-center">Lista de cursos</h2>
-    <div class="card mb-4">
-        <div class="card-header bg-primary text-white">
-            <h3 class="mb-0">Crear un nuevo curso</h3>
+    <div class="container mx-auto">
+        <h2 class="text-center">Lista de cursos</h2>
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">Crear un nuevo curso</h3>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/course/create}" th:object="${newCourse}" method="post">
+                    <div class="form-group mb-3">
+                        <label for="name" class="form-label">Nombre del Curso</label>
+                        <input id="name" name="name" type="text" class="form-control" placeholder="Nombre del curso" />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="active" class="form-label">Estado</label>
+                        <select id="active" name="active" class="form-control">
+                            <option th:value="true">Activo</option>
+                            <option th:value="false">Inactivo</option>
+                        </select>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success btn-block">Crear Curso</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="card-body">
-            <form th:action="@{/course/create}" th:object="${newCourse}" method="post">
-                <div class="form-group mb-3">
-                    <label for="name" class="form-label">Nombre del Curso</label>
-                    <input id="name" name="name" type="text" class="form-control" placeholder="Nombre del curso" />
-                </div>
-                <div class="form-group mb-3">
-                    <label for="active" class="form-label">Estado</label>
-                    <select id="active" name="active" class="form-control">
-                        <option th:value="true">Activo</option>
-                        <option th:value="false">Inactivo</option>
-                    </select>
-                </div>
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-success btn-block">Crear Curso</button>
-                </div>
-            </form>
-        </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nombre Curso</th>
+                <th>Activo</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="course : ${courses}">
+                <form th:action="@{/course/update}" th:object="${course}" method="post">
+                    <input name="id" type="hidden" th:value="${course.id}" />
+                    <td>
+                        <input name="name" type="text" class="form-control" th:value="${course.name}" />
+                    </td>
+                    <td>
+                        <select name="active" class="form-control">
+                            <option th:value="true" th:text="'Activo'" th:selected="${course.active}"></option>
+                            <option th:value="false" th:text="'Inactivo'" th:selected="${!course.active}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                    </td>
+                </form>
+            </tr>
+            </tbody>
+        </table>
+
+        <a href="#" class="btn btn-secondary">Volver</a>
     </div>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Nombre Curso</th>
-            <th>Activo</th>
-            <th>Acciones</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr th:each="course : ${courses}">
-            <form th:action="@{/course/update}" th:object="${course}" method="post">
-                <input name="id" type="hidden" th:value="${course.id}" />
-                <td>
-                    <input name="name" type="text" class="form-control" th:value="${course.name}" />
-                </td>
-                <td>
-                    <select name="active" class="form-control">
-                        <option th:value="true" th:text="'Activo'" th:selected="${course.active}"></option>
-                        <option th:value="false" th:text="'Inactivo'" th:selected="${!course.active}"></option>
-                    </select>
-                </td>
-                <td>
-                    <button type="submit" class="btn btn-primary">Actualizar</button>
-                </td>
-            </form>
-        </tr>
-        </tbody>
-    </table>
-
-    <a href="#" class="btn btn-secondary">Volver</a>
-</div>
 </section>
 <section class="container">
     <th:block th:insert="components/footer :: footer"></th:block>
