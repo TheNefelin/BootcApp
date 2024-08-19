@@ -39,7 +39,7 @@
                 </ul>
             </td>
             <td class="d-flex gap-2">
-                <form method="get" th:action="@{/user/edit/{id}(id=${user.id})}" th:object="${users}">
+                <form method="get" th:action="@{/user/edit/{id}(id=${user.id})}" th:object="${user}">
                     <button type="submit" class="btn btn-secondary">Editar</button>
                 </form>
                 <form  th:method="delete" th:action="@{/user/delete/{id}(id=${user.id})}" th:object="${users}">

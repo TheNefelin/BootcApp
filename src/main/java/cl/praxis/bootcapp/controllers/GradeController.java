@@ -5,11 +5,9 @@ import cl.praxis.bootcapp.entities.Grade;
 
 import cl.praxis.bootcapp.entities.GradeDTO;
 import cl.praxis.bootcapp.entities.Subject;
-import cl.praxis.bootcapp.entities.User;
+import cl.praxis.bootcapp.entities.UserEntity;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
 import cl.praxis.bootcapp.services.imp.GradeService;
-import cl.praxis.bootcapp.services.imp.RoleServiceImp;
-import cl.praxis.bootcapp.services.imp.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +23,7 @@ public class GradeController {
     private GradeService gradeService;
 
     @Autowired
-    private IBaseServiceCRUD<User> userService;
+    private IBaseServiceCRUD<UserEntity> userService;
 
     @Autowired
     private IBaseServiceCRUD<Subject> subjectService;
@@ -39,8 +37,8 @@ public class GradeController {
 
     @GetMapping("/create")
     public String createGradeRoute(Model model) {
-        List<User> student = userService.getAll();
-        List<User> teachers = userService.getAll();
+        List<UserEntity> student = userService.getAll();
+        List<UserEntity> teachers = userService.getAll();
         List<Subject> subjects = subjectService.getAll();
 
         model.addAttribute("students", student);
@@ -52,8 +50,8 @@ public class GradeController {
     @PutMapping("/update")
     public String routeUpdate(@RequestParam Long id, Model model) {
         Grade grade = gradeService.getById(id);
-        List<User> student = userService.getAll();
-        List<User> teachers = userService.getAll();
+        List<UserEntity> student = userService.getAll();
+        List<UserEntity> teachers = userService.getAll();
         List<Subject> subjects = subjectService.getAll();
 
         if (grade != null) {

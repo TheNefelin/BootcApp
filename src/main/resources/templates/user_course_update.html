@@ -18,8 +18,8 @@
         <button class="btn btn-primary" onclick="addCourse()">Añadir curso</button>
     </div>
 
-    <form th:action="@{/user/update/userCourse}" method="post">
-        <input type="hidden" name="userId" th:value="${user.id}"> <!-- Id del usuario -->
+    <form th:action="@{/userEntity/update/userCourse}" method="post">
+        <input type="hidden" name="userId" th:value="${userEntity.id}"> <!-- Id del usuario -->
         <div id="course-ids-container"></div>
         <table class="table table-striped">
             <thead>

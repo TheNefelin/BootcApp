@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class GradeDTO {
     private Long id;
     private int grade;
-    private User teacher;
-    private User student;
+    private UserEntity teacher;
+    private UserEntity student;
     private Subject subject;
 }

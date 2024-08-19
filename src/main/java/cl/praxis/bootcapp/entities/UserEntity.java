@@ -10,7 +10,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "usuarios")
-public class User {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,6 +26,10 @@ public class User {
 
     @Column(name = "apellido", nullable = false, length = 50)
     private String surname;
+
+    @Transient
+    @Column(length = 100)
+    private String passwordConfirmation;
 
     @ManyToOne
     @JoinColumn(name = "id_rol")

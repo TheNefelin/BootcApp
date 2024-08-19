@@ -73,8 +73,8 @@ public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
         Set<Long> idStudentsSet = grades.stream().map(Grade::getIdStudent).collect(Collectors.toSet());
 
         Map<Long, Subject> subjectList = repoSubject.findAllById(idSubjectSet).stream().collect(Collectors.toMap(Subject::getId, subject -> subject));
-        Map<Long, User> teacherList = repoUser.findAllById(idTeacherSet).stream().collect(Collectors.toMap(User::getId, user -> user));
-        Map<Long, User> studentList = repoUser.findAllById(idStudentsSet).stream().collect(Collectors.toMap(User::getId, user -> user));
+        Map<Long, UserEntity> teacherList = repoUser.findAllById(idTeacherSet).stream().collect(Collectors.toMap(UserEntity::getId, user -> user));
+        Map<Long, UserEntity> studentList = repoUser.findAllById(idStudentsSet).stream().collect(Collectors.toMap(UserEntity::getId, user -> user));
 
         return grades.stream().map(grade -> {
             GradeDTO gradeDTO = new GradeDTO();

@@ -1,13 +1,11 @@
 package cl.praxis.bootcapp.services.imp;
 import cl.praxis.bootcapp.entities.Course;
-import cl.praxis.bootcapp.entities.User;
 import cl.praxis.bootcapp.repositories.ICourseRepository;
 import cl.praxis.bootcapp.repositories.IUserRepository;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class CourseServiceImpl implements IBaseServiceCRUD<Course>{

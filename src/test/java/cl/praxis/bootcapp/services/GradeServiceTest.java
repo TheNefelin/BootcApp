@@ -5,11 +5,9 @@ import cl.praxis.bootcapp.repositories.IGradeRepository;
 import cl.praxis.bootcapp.services.imp.GradeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -47,8 +45,8 @@ public class GradeServiceTest {
         note2 = 1;
         grade1 = new Grade(id1, note1, LocalDate.now(), 1L, 1L, 1L);
         grade2 = new Grade(id2, note2, LocalDate.now(), 2L, 2L, 2L);
-        gradeDTO1 = new GradeDTO(grade1.getId(), grade1.getGrade(), new User(), new User(), new Subject());
-        gradeDTO2 = new GradeDTO(grade2.getId(), grade2.getGrade(), new User(), new User(), new Subject());
+        gradeDTO1 = new GradeDTO(grade1.getId(), grade1.getGrade(), new UserEntity(), new UserEntity(), new Subject());
+        gradeDTO2 = new GradeDTO(grade2.getId(), grade2.getGrade(), new UserEntity(), new UserEntity(), new Subject());
     }
 
     @Test

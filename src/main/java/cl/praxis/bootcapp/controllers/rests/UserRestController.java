@@ -1,6 +1,6 @@
 package cl.praxis.bootcapp.controllers.rests;
 
-import cl.praxis.bootcapp.entities.User;
+import cl.praxis.bootcapp.entities.UserEntity;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,39 +10,39 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserRestController {
 
-    private IBaseServiceCRUD<User> userService;
+    private IBaseServiceCRUD<UserEntity> userService;
 
-    public UserRestController(IBaseServiceCRUD<User> userService) {
+    public UserRestController(IBaseServiceCRUD<UserEntity> userService) {
         this.userService = userService;
     }
 
     @GetMapping("")
-    public List<User> getAllUsers() {
+    public List<UserEntity> getAllUsers() {
         return userService.getAll();
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable long id) {
+    public UserEntity getUserById(@PathVariable long id) {
         return userService.getById(id);
     }
 
     @PostMapping("/new")
-    public User createUser(@RequestBody User user) {
-        return userService.create(user);
+    public UserEntity createUser(@RequestBody UserEntity userEntity) {
+        return userService.create(userEntity);
     }
 
     @PutMapping("/update/{id}")
-    public User updateUser(@RequestBody User user, @PathVariable long id) {
+    public UserEntity updateUser(@RequestBody UserEntity userEntity, @PathVariable long id) {
 
-        System.out.println(user);
-        User newUser = userService.getById(id);
-        newUser.setName(user.getName());
-        newUser.setEmail(user.getEmail());
-        newUser.setPassword(user.getPassword());
-        newUser.setSurname(user.getSurname());
-        newUser.setRole(user.getRole());
-        newUser.setCourses(null);
-        return userService.update(newUser);
+        System.out.println(userEntity);
+        UserEntity newUserEntity = userService.getById(id);
+        newUserEntity.setName(userEntity.getName());
+        newUserEntity.setEmail(userEntity.getEmail());
+        newUserEntity.setPassword(userEntity.getPassword());
+        newUserEntity.setSurname(userEntity.getSurname());
+        newUserEntity.setRole(userEntity.getRole());
+        newUserEntity.setCourses(null);
+        return userService.update(newUserEntity);
     }
 
     @DeleteMapping("/{id}")

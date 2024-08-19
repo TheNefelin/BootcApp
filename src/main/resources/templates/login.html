@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <th:block th:insert="components/bootstrap_css :: head"></th:block>
+</head>
+<body>
+<header class="bg-body-tertiary shadow-lg">
+    <th:block th:insert="components/nav :: nav"></th:block>
+</header>
+<section class="container mt-5">
+    <form th:action="@{/login}" th:method="post" class="border rounded p-4 shadow-lg m-auto login">
+        <h3 class="text-center mb-4">Iniciar Sessión</h3>
+
+        <div class="mb-3">
+            <label for="username" class="form-label">Correo Electronico</label>
+            <input required type="email" class="form-control" id="username" name="username">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input required type="password" class="form-control" id="password" name="password">
+        </div>
+        <button type="submit" class="btn btn-primary">Iniciar Sessión</button>
+    </form>
+</section>
+<section class="container">
+    <th:block th:insert="components/footer :: footer"></th:block>
+</section>
+
+<script th:replace="components/bootstrap_js :: script"></script>
+</body>
+</html>

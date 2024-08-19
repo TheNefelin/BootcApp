@@ -36,10 +36,18 @@
                 <label for="email">Email</label>
                 <input th:value="${user.email}" type="email" id="email" th:field="*{email}" required>
             </div>
+
+
             <div class="d-flex flex-column mt-3">
                 <label for="password">Contraseña</label>
                 <input th:value="${user.password}" th:type="${user.id != null} ? 'text' : 'password'"
                        id="password" th:field="*{password}" required />
+            </div>
+
+            <div class="d-flex flex-column mt-3">
+                <label for="passwordConfirmation">Confirmar Contraseña</label>
+                <input th:value="${user.passwordConfirmation}" th:type="${user.id != null} ? 'text' : 'password'"
+                       id="passwordConfirmation" th:field="*{passwordConfirmation}" required />
             </div>
 
             <div class="d-flex justify-content-center my-3">

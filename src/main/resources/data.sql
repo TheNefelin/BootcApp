@@ -1,6 +1,7 @@
 INSERT INTO roles
     (nombre, activo)
 VALUES
+    ('User', true),
     ('Admin', true),
     ('Profesor', true),
     ('Estudiante', true),

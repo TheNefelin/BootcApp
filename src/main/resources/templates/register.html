@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="components/bootstrap_css :: head"></th:block>
+    <title>Registro</title>
+    <style>
+        #cursoContainer.hidden {
+            display: none !important;
+        }
+        #cursoContainer.visible {
+            display: block !important;
+        }
+    </style>
+</head>
+<body>
+<header class="bg-body-tertiary shadow-lg">
+    <th:block th:insert="components/nav :: nav"></th:block>
+</header>
+
+<h2 class="text-center my-3">Registro Usuario</h2>
+
+<div class="d-flex flex-row justify-content-center">
+
+    <form class="card" th:action="@{/register}"  th:method="post">
+        <div class="px-3 mx-3 my-3">
+            <div class="d-flex flex-column mt-3">
+                <label for="name">Nombre</label>
+                <input type="text" id="name" name="name" required />
+            </div>
+            <div class="d-flex flex-column mt-3">
+                <label for="surname">Apellido</label>
+                <input type="text" id="surname" name="surname" required />
+            </div>
+            <div class="d-flex flex-column mt-3">
+                <label for="email">Email</label>
+                <input  type="email" id="email" name="email" required>
+            </div>
+            <div class="d-flex flex-column mt-3">
+                <label for="password">Contraseña</label>
+                <input id="password" name="password" required />
+            </div>
+
+            <div class="d-flex flex-column mt-3">
+                <label for="passwordConfirmation">Confirmar Contraseña</label>
+                <input id="passwordConfirmation" name="passwordConfirmation" required />
+            </div>
+            <div class="d-flex justify-content-center my-3">
+                <div class="mb-3">
+                    <a th:href="@{'/login'}">Iniciar Sessión</a>
+                </div>
+                <button type="submit" class="btn btn-primary">Registrarse</button>
+            </div>
+        </div>
+    </form>
+</div>
+<section class="container">
+    <th:block th:insert="components/footer :: footer"></th:block>
+</section>
+
+<script th:replace="components/bootstrap_js :: script"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+<footer class="bg-dark text-white text-center py-3">
+    Harakiri
+</footer>
+</body>
+</html>
