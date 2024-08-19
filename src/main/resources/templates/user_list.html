@@ -2,19 +2,20 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:insert="components/bootstrap_css :: head"></th:block>
-
+    <link th:replace="components/dataTable_css :: link">
     <title>BootcApp</title>
 </head>
 <body>
 <header class="bg-body-tertiary shadow-lg">
     <th:block th:insert="components/nav :: nav"></th:block>
 </header>
+<section class="container my-4">
 <form th:action="@{/user/new}" method="get" class="my-4 ms-2">
-    <button type="submit" class="btn btn-primary">Registrar nuevo usuario</button>
+    <button type="submit" class="btn btn-primary"><i class="bi bi-plus-circle"> Agregar usuario</i></button>
 </form>
-<div class="container ms-5 my-5">
-    <h2 class="text-center">Listado de usuarios y sus roles</h2>
-    <table class="table mt-5">
+
+    <h2 class="text-center">Listado de usuarios</h2>
+    <table id="myTable" class="display">
         <thead>
         <tr>
             <th scope="col">Id</th>
@@ -23,7 +24,8 @@
             <th scope="col">Correo</th>
             <th scope="col">Rol</th>
             <th scope="col">cursos</th>
-            <th scope="col">Acciones</th>
+            <th scope="col">Acciones Usuario</th>
+            <th scope="col">Acciones Cursos</th>
         </tr>
         </thead>
         <tbody>
@@ -40,23 +42,32 @@
             </td>
             <td class="d-flex gap-2">
                 <form method="get" th:action="@{/user/edit/{id}(id=${user.id})}" th:object="${user}">
-                    <button type="submit" class="btn btn-secondary">Editar</button>
+                    <button type="submit" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-fill"></i></button>
                 </form>
                 <form  th:method="delete" th:action="@{/user/delete/{id}(id=${user.id})}" th:object="${users}">
-                    <button type="submit" class="btn btn-danger" onclick="return confirmDelete()">Borrar</button>
-                </form>
-                <form  th:method="get" th:action="@{/user/edit/userCourse/{id}(id=${user.id})}" th:object="${users}">
-                    <button type="submit" class="btn btn-success">gestionar curso</button>
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirmDelete()"><i class="bi bi-trash3-fill"></i></button>
                 </form>
             </td>
+            <td>
+                <form  th:method="get" th:action="@{/user/edit/userCourse/{id}(id=${user.id})}" th:object="${users}">
+                    <button type="submit" class="btn btn-success btn-sm"><i class="bi bi-plus-circle"> Curso</i></button>
+                </form>
+            </td>
+
         </tr>
         </tbody>
     </table>
-</div>
+</section>
 <section class="container">
     <th:block th:insert="components/footer :: footer"></th:block>
 </section>
+<script th:replace="components/bootstrap_js :: script"></script>
+<script th:replace="~{components/dataTable_js :: script}"></script>
 <script th:inline="javascript">
+
+    $(document).ready(function() {
+        $('#myTable').DataTable();
+    });
     function confirmDelete() {
         if (confirm('Estás seguro que deseas eliminar al usuario?')) {
             return true;
@@ -66,6 +77,5 @@
         }
     }
 </script>
-<script th:replace="components/bootstrap_js :: script"></script>
 </body>
 </html>

@@ -1,13 +1,10 @@
 package cl.praxis.bootcapp.controllers;
 
 import cl.praxis.bootcapp.entities.LoginDTO;
-import cl.praxis.bootcapp.entities.Role;
 import cl.praxis.bootcapp.entities.UserEntity;
 import cl.praxis.bootcapp.services.imp.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.*;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -40,7 +37,6 @@ public class LoginController {
                return "redirect:/register";
            }
     }
-
 
     @PostMapping("/login")
     public String userLogin(@RequestBody LoginDTO loginDTO, String email) {
