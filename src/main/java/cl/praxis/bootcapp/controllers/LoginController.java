@@ -1,6 +1,7 @@
 package cl.praxis.bootcapp.controllers;
 
 import cl.praxis.bootcapp.entities.LoginDTO;
+import cl.praxis.bootcapp.entities.Role;
 import cl.praxis.bootcapp.entities.UserEntity;
 import cl.praxis.bootcapp.services.imp.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,7 @@ public class LoginController {
     @Autowired
     CustomUserDetailsService userDetailsService;
 
-    //@GetMapping("/")
-   // public String routeHome(){
-    //    return "index";
-    //}
-
-       @GetMapping("/login")
+    @GetMapping("/login")
     public String routeLogin() {
         return "login";
     }
@@ -29,6 +25,7 @@ public class LoginController {
     public String routeRegister() {
            return "register";
     }
+
 
     @PostMapping("/register")
     public String userRegister(@ModelAttribute UserEntity user, @RequestParam String passwordConfirmation) {

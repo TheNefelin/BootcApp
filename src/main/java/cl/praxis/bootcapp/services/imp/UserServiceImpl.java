@@ -4,6 +4,8 @@ import cl.praxis.bootcapp.entities.UserEntity;
 import cl.praxis.bootcapp.repositories.IUserRepository;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
 import cl.praxis.bootcapp.services.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +14,8 @@ import java.util.Optional;
 public class UserServiceImpl implements IBaseServiceCRUD<UserEntity>, IUserService {
 
     private IUserRepository userRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(IUserRepository userRepository) {
         this.userRepository = userRepository;
@@ -29,6 +33,7 @@ public class UserServiceImpl implements IBaseServiceCRUD<UserEntity>, IUserServi
 
     @Override
     public UserEntity create(UserEntity userEntity) {
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         return userRepository.save(userEntity);
     }
 
@@ -37,6 +42,7 @@ public class UserServiceImpl implements IBaseServiceCRUD<UserEntity>, IUserServi
         Optional<UserEntity> userExist = userRepository.findById(userEntity.getId());
         if(userExist.isPresent()){
             userEntity.setCourses(userExist.get().getCourses());
+            userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
             return userRepository.save(userEntity);
         }else{
             return null;

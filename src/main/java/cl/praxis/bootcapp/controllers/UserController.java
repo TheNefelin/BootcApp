@@ -4,6 +4,9 @@ import cl.praxis.bootcapp.entities.Role;
 import cl.praxis.bootcapp.entities.UserEntity;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
 import cl.praxis.bootcapp.services.imp.CourseServiceImpl;
+import cl.praxis.bootcapp.services.imp.CustomUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +24,8 @@ public class UserController {
     private IBaseServiceCRUD<Course> courseCrudService;
 
     private CourseServiceImpl courseService ;
+
+
     public UserController(IBaseServiceCRUD<UserEntity> userCrudService, IBaseServiceCRUD<Course> courseCrudService,
                           IBaseServiceCRUD<Role> roleService, CourseServiceImpl courseService) {
         this.userCrudService = userCrudService;
@@ -41,6 +46,7 @@ public class UserController {
     public String showForm(@ModelAttribute UserEntity user, Model model) {
         List<Role> listRoles = roleService.getAll();
         List<Course> listCourse = courseCrudService.getAll();
+        model.addAttribute("user", new UserEntity());
         model.addAttribute("roles", listRoles );
         model.addAttribute("courses", listCourse);
         return "user_form";
@@ -67,7 +73,10 @@ public class UserController {
     }
   
     @PostMapping
-    public String insertUser(@ModelAttribute UserEntity user) {
+    public String insertUser(@ModelAttribute UserEntity user, @RequestParam String passwordConfirmation) {
+        if (!user.getPassword().equals(passwordConfirmation)) {
+            return "redirect:/register?error=passwordMismatch";
+        }
         userCrudService.create(user);
         return "redirect:/user/users";
     }

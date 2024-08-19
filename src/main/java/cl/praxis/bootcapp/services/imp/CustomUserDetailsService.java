@@ -41,7 +41,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     public UserEntity register(UserEntity userEntity) {
         Role role = new Role();
-        role.setId(1L);
+        role.setId(2L);
 
         userEntity.setRole(role);
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
