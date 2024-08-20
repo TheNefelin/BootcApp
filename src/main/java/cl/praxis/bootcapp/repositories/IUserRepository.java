@@ -13,3 +13,4 @@ import static org.hibernate.sql.ast.Clause.WHERE;
 @Repository
 public interface IUserRepository extends JpaRepository<User, Long> {
 }
+
