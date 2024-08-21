@@ -1,8 +1,10 @@
 package cl.praxis.bootcapp.controllers;
 import cl.praxis.bootcapp.entities.Course;
+import cl.praxis.bootcapp.entities.LoginDTO;
 import cl.praxis.bootcapp.entities.Role;
 import cl.praxis.bootcapp.entities.UserEntity;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
+import cl.praxis.bootcapp.services.IUserService;
 import cl.praxis.bootcapp.services.imp.CourseServiceImpl;
 import cl.praxis.bootcapp.services.imp.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +22,13 @@ import java.util.Set;
 @RequestMapping("/user")
 public class UserController {
     private IBaseServiceCRUD<UserEntity> userCrudService;
-    private IBaseServiceCRUD<Role> roleService;
+       private IBaseServiceCRUD<Role> roleService;
     private IBaseServiceCRUD<Course> courseCrudService;
 
     private CourseServiceImpl courseService ;
 
-
+    @Autowired
+    private CustomUserDetailsService userService;
     public UserController(IBaseServiceCRUD<UserEntity> userCrudService, IBaseServiceCRUD<Course> courseCrudService,
                           IBaseServiceCRUD<Role> roleService, CourseServiceImpl courseService) {
         this.userCrudService = userCrudService;
@@ -34,12 +37,23 @@ public class UserController {
         this.courseService = courseService;
     }
 
+    @GetMapping("/perfil")
+    public String getUserByEmail(@ModelAttribute LoginDTO loginDTO, @ModelAttribute UserEntity user, String email, Model model) {
+        LoginDTO logueado = userService.authenticate(loginDTO, email) ;
+        if(logueado.getUsername().equals(user.getEmail())) {
+            model.addAttribute("user", user);
+            return "perfil";
+        }
+       return "login";
+    }
     @GetMapping("/users")
     public String getAllUser(Model model) {
         List<UserEntity> users = userCrudService.getAll();
         model.addAttribute("users", users);
         return "user_list";
     }
+
+
 
     // Ruta a formulario agregar
     @GetMapping("/new")

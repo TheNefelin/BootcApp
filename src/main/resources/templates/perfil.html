@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil</title>
+    <th:block th:insert="~{components/bootstrap_css :: head}"></th:block>
+</head>
+<body>
+<header class="bg-body-tertiary shadow-lg">
+    <th:block th:insert="~{components/nav :: nav}"></th:block>
+</header>
+
+<h4 th:text="Bienvenido, ${user.name} ${user.surname}"></h4>
+
+<section class="container">
+    <th:block th:insert="~{components/footer :: footer}"></th:block>
+</section>
+
+<script th:replace="~{components/bootstrap_js :: script}"></script>
+</body>
+</html>

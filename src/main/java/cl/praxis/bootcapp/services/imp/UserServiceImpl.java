@@ -1,5 +1,6 @@
 package cl.praxis.bootcapp.services.imp;
 
+import cl.praxis.bootcapp.entities.LoginDTO;
 import cl.praxis.bootcapp.entities.UserEntity;
 import cl.praxis.bootcapp.repositories.IUserRepository;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
@@ -16,6 +17,8 @@ public class UserServiceImpl implements IBaseServiceCRUD<UserEntity>, IUserServi
     private IUserRepository userRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    CustomUserDetailsService userDetailsService;
 
     public UserServiceImpl(IUserRepository userRepository) {
         this.userRepository = userRepository;
@@ -53,5 +56,14 @@ public class UserServiceImpl implements IBaseServiceCRUD<UserEntity>, IUserServi
     public boolean delete(Long id) {
         userRepository.deleteById(id);
         return true;
+    }
+
+    public boolean getUserLoginEmail(UserEntity userEntity, LoginDTO loginDTO, String email) {
+        LoginDTO loguerUser =userDetailsService.authenticate(loginDTO, email);
+        if(loguerUser.getUsername().equals(userEntity.getEmail())) {
+            userRepository.findUserByEmail(email);
+            return true;
+        }
+        return false;
     }
 }

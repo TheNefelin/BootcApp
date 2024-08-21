@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:insert="components/bootstrap_css :: head"></th:block>
-    <link th:replace="components/dataTable_css :: link">
+    <th:block th:insert="~{components/bootstrap_css :: head}"></th:block>
+    <link th:replace="~{components/dataTable_css :: link}">
     <title>BootcApp</title>
 </head>
 <body>
 <header class="bg-body-tertiary shadow-lg">
-    <th:block th:insert="components/nav :: nav"></th:block>
+    <th:block th:insert="~{components/nav :: nav}"></th:block>
 </header>
 <section class="container my-4">
 <form th:action="@{/user/new}" method="get" class="my-4 ms-2">

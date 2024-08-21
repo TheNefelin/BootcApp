@@ -17,11 +17,12 @@
     <th:block th:insert="components/nav :: nav"></th:block>
 </header>
 
-<h2 class="text-center my-3">Registro Usuario</h2>
 
-<div class="d-flex flex-row justify-content-center">
 
-    <form class="card" th:action="@{/register}"  th:method="post">
+<div class="d-flex flex-row justify-content-center mt-5">
+
+    <form class="border rounded p-4 shadow-lg m-auto login" th:action="@{/register}"  th:method="post">
+        <h4 class="text-center my-4">Registro Usuario</h4>
         <div class="px-3 mx-3 my-3">
             <div class="d-flex flex-column mt-3">
                 <label for="name">Nombre</label>
@@ -37,17 +38,15 @@
             </div>
             <div class="d-flex flex-column mt-3">
                 <label for="password">Contraseña</label>
-                <input id="password" name="password" required />
+                <input type="password" id="password" name="password" required />
             </div>
 
             <div class="d-flex flex-column mt-3">
                 <label for="passwordConfirmation">Confirmar Contraseña</label>
-                <input id="passwordConfirmation" name="passwordConfirmation" required />
+                <input type="password" id="passwordConfirmation" name="passwordConfirmation" required />
             </div>
-            <div class="d-flex justify-content-center my-3">
-                <div class="mb-3">
-                    <a th:href="@{'/login'}">Iniciar Sessión</a>
-                </div>
+            <div class="d-flex justify-content-center mt-4 my-4 gap-2">
+                <a th:href="@{'/login'}">Iniciar Sessión</a>
                 <button type="submit" class="btn btn-primary">Registrarse</button>
             </div>
         </div>
