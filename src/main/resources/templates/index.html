@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <th:block th:insert="components/bootstrap_css :: head"></th:block>
 
@@ -14,6 +14,47 @@
         <div class="shadow-lg d-flex justify-content-center">
             <img src="/img/springboot.gif" class="img-fluid" alt="SpringBoot">
         </div>
+    </section>
+
+    <section class="container mt-5">
+        <h2>Listado de usuarios para pruebas</h2>
+
+        <table class="table table-warning">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Clave</th>
+                <th scope="col">Rol</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="table-info">
+                <th scope="row">1</th>
+                <td>praxis@praxis.cl</td>
+                <td>123</td>
+                <td>ADMIN</td>
+            </tr>
+            <tr class="table-info">
+                <th scope="row">2</th>
+                <td>profesor@praxis.cl</td>
+                <td>123</td>
+                <td>PROFESOR</td>
+            </tr>
+            <tr class="table-info">
+                <th scope="row">3</th>
+                <td>estudiante@praxis.cl</td>
+                <td>123</td>
+                <td>ESTUDIANTE</td>
+            </tr>
+            <tr class="table-info">
+                <th scope="row">4</th>
+                <td>apoderado@praxis.cl</td>
+                <td>123</td>
+                <td>APODERADO</td>
+            </tr>
+            </tbody>
+        </table>
     </section>
 
     <section class="container">

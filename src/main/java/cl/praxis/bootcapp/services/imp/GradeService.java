@@ -1,7 +1,9 @@
 package cl.praxis.bootcapp.services.imp;
 
-import cl.praxis.bootcapp.entities.*;
-
+import cl.praxis.bootcapp.entities.dtos.GradeDTO;
+import cl.praxis.bootcapp.entities.Grade;
+import cl.praxis.bootcapp.entities.Subject;
+import cl.praxis.bootcapp.entities.UserEntitiy;
 import cl.praxis.bootcapp.repositories.IGradeRepository;
 import cl.praxis.bootcapp.repositories.ISubjectRepository;
 import cl.praxis.bootcapp.repositories.IUserRepository;
@@ -73,8 +75,8 @@ public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
         Set<Long> idStudentsSet = grades.stream().map(Grade::getIdStudent).collect(Collectors.toSet());
 
         Map<Long, Subject> subjectList = repoSubject.findAllById(idSubjectSet).stream().collect(Collectors.toMap(Subject::getId, subject -> subject));
-        Map<Long, User> teacherList = repoUser.findAllById(idTeacherSet).stream().collect(Collectors.toMap(User::getId, user -> user));
-        Map<Long, User> studentList = repoUser.findAllById(idStudentsSet).stream().collect(Collectors.toMap(User::getId, user -> user));
+        Map<Long, UserEntitiy> teacherList = repoUser.findAllById(idTeacherSet).stream().collect(Collectors.toMap(UserEntitiy::getId, user -> user));
+        Map<Long, UserEntitiy> studentList = repoUser.findAllById(idStudentsSet).stream().collect(Collectors.toMap(UserEntitiy::getId, user -> user));
 
         return grades.stream().map(grade -> {
             GradeDTO gradeDTO = new GradeDTO();

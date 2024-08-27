@@ -1,6 +1,6 @@
 package cl.praxis.bootcapp.services.imp;
 
-import cl.praxis.bootcapp.entities.User;
+import cl.praxis.bootcapp.entities.UserEntitiy;
 import cl.praxis.bootcapp.repositories.IUserRepository;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
 import cl.praxis.bootcapp.services.IUserService;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements IBaseServiceCRUD<User>, IUserService {
+public class UserServiceImpl implements IBaseServiceCRUD<UserEntitiy>, IUserService {
 
     private IUserRepository userRepository;
 
@@ -18,23 +18,23 @@ public class UserServiceImpl implements IBaseServiceCRUD<User>, IUserService {
     }
 
     @Override
-    public List<User> getAll() {
+    public List<UserEntitiy> getAll() {
         return userRepository.findAll();
     }
 
     @Override
-    public User getById(Long id) {
+    public UserEntitiy getById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
     @Override
-    public User create(User user) {
+    public UserEntitiy create(UserEntitiy user) {
         return userRepository.save(user);
     }
 
     @Override
-    public User update(User user) {
-        Optional<User> userExist = userRepository.findById(user.getId());
+    public UserEntitiy update(UserEntitiy user) {
+        Optional<UserEntitiy> userExist = userRepository.findById(user.getId());
         if(userExist.isPresent()){
             user.setCourses(userExist.get().getCourses());
             return userRepository.save(user);

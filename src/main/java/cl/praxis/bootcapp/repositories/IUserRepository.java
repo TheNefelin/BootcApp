@@ -1,15 +1,12 @@
 package cl.praxis.bootcapp.repositories;
 
-import cl.praxis.bootcapp.entities.User;
-import org.springframework.data.jpa.repository.EntityGraph;
+import cl.praxis.bootcapp.entities.UserEntitiy;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-import static org.hibernate.sql.ast.Clause.WHERE;
+import java.util.Optional;
 
 @Repository
-public interface IUserRepository extends JpaRepository<User, Long> {
+public interface IUserRepository extends JpaRepository<UserEntitiy, Long> {
+    Optional<UserEntitiy> findByEmail(String email);
 }

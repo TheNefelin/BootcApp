@@ -6,13 +6,45 @@ Empaquetado WAR es para Web
 [Spring Boot Samples](https://spring.io/projects/spring-boot#samples) <br>
 [Spring Boot Initializr](https://start.spring.io/)
 
-### Preparing project
+## Proyecto
+* Cada requerimiento se trabaja en la rama del Usuario (UserBranch).
+* Finalizado el requerimiento se hace Merge con el Deploy (DeployBranch).
+* No tocar el Main (MainBranch).
+```mermaid
+graph TD;
+    Main
+    Deploy --> MyBranch : merge develop in MyBranch
+    MyBranch --> Deploy : pull request to develop;
+```
+
+[Graficos de Merimaid](https://mermaid.js.org/)
+
+---
+title: Flujo Git y GitHub
+---
+gitGraph
+  commit id: "init" tag: "v1.0.0"
+  commit id: "new develop"
+  branch develop
+  checkout develop
+  branch myBranch
+  commit
+  commit
+  push
+  checkout develop
+  pull
+  checkout myBranch
+  merge develop
+  commit
+  commit
+
+## Preparing project
 * Java
 * Maven
 * JDK and Java 21
 * Packaging War (for web)
 
-### Dependency, Spring Boot: 3.4.0 (SNAPSHOT)
+## Dependency, Spring Boot: 3.4.0 (SNAPSHOT)
 - Developer Tools:
   * Spring Boot DevTools
   * Lombok
@@ -28,7 +60,7 @@ Empaquetado WAR es para Web
   * Spring Data JPA
   * MySql Driver
 
-### Folder
+## Folder
 ```
 /
 ├── main/
@@ -47,7 +79,7 @@ Empaquetado WAR es para Web
 └── test/
 ```
 
-### Annotations
+## Annotations
 * Clases
   * @Service
   * @Repository
@@ -87,7 +119,7 @@ Empaquetado WAR es para Web
   * @ModelAttribute
   * @RequestParam
 
-### Config DB
+## Config DB
 * Edit application.properties file
 ```
 spring.mvc.view.prefix=/templates/
@@ -105,14 +137,14 @@ spring.jpa.properties.hibernate.format_sql=true
 spring.jpa.hibernate.ddl-auto=update
 ```
 
-### Config MVC
+## Config MVC
 * Edit application.properties file
 ```
 # Enable PUT and DELETE in MVC
 spring.mvc.hiddenmethod.filter.enabled=true
 ```
 
-### Config Error Template
+## Config Error Template
 * Edit application.properties file
 ```
 # Custom Error Controller
@@ -140,7 +172,7 @@ public class CustomErrorController implements ErrorController {
     }
 }
 ```
-### Tests
+## Tests
 ```
 //Integra Mockito con JUnit 5.
 @ExtendWith(MockitoExtension.class)
@@ -167,7 +199,7 @@ assertThat(result).isEqualTo(algo);
 verify(repository, times(1)).metodo();
 ```
 
-### Loggers
+## Loggers
 ```
 // import org.springframework.boot.CommandLineRunner;
 // implements CommandLineRunner 
@@ -187,30 +219,74 @@ public void run(String... args) throws Exception {
 }
 ```
 
-### Spring Security
-* SecurityConfig Class in /configure folder
+## Spring Security
+* dependency
+```
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+<dependency>
+  <groupId>org.thymeleaf.extras</groupId>
+  <artifactId>thymeleaf-extras-springsecurity6</artifactId>
+</dependency>
+```
+* HTML
+```
+<html lang="es" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div sec:authorize="isAnonymous()"></div>
+<div sec:authorize="isAuthenticated()"></div>
+<div sec:authorize="hasRole('ADMIN')"></div>
+<div sec:authorize="hasAnyRole('ADMIN', 'USER')"></div>
+<div sec:authorize="hasAuthority('PERMISO_ESPECIAL')"></div>
+```
+* SecurityConfig Class
 ```
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests(request -> request
-                        .requestMatchers("/", "/login", "/register", "/css/**").permitAll()
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeRequests(request -> request
+                        .requestMatchers("/", "/login", "/register", "/css/**", "/img/**").permitAll()
                         .anyRequest().authenticated()
-        ).formLogin(formLogin -> formLogin
+                ).formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .defaultSuccessUrl("/demo", true)
                         .permitAll())
                 .csrf(csrf -> csrf.disable());
 
-        return http.build();
+        return httpSecurity.build();
+    }
+}
+```
+* User Security Service Class
+```
+@Service
+public class CustomUserDetailsService implements UserDetailsService {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private IUserRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserEntitiy userEntitiy = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+
+        List<GrantedAuthority> grantedAuthorityList = AuthorityUtils.createAuthorityList(userEntitiy.getRole().getName());
+
+        return new User(
+                userEntitiy.getEmail(),
+                userEntitiy.getPassword(),
+                grantedAuthorityList);
     }
 }
 ```
 
-### Bootstrap
+## Bootstrap
 ```
 <!-- Bootstrap CSS -->
 <link
@@ -233,7 +309,7 @@ public class SecurityConfig {
 </script>
 ```
 
-### TaskKill
+## TaskKill
 ```
 cmd
 netstat -ano
@@ -241,10 +317,10 @@ netstat -ano | findstr :8080
 taskkill /f /pid <pid-number>
 ```
 
-### Git
+## Git
 ```
 git checkout -b branchName                  // crear rama
-git checkout main                           // cambiar rama
+git switch main                             // cambiar rama
 git pull                                    // descargar las modificaciones de GitHub
 git branch                                  // ver todas las ramas
 git push --set-upstream origin "branchName" // crea la branch automaticamente en Github
@@ -252,30 +328,18 @@ git commit -m "branchName"                  // crear historico commits
 git push                                    // actualiza el branch en GitHub
 
 // merge con develop
-git branch                // visualiza los brancha
-git checkout develop      // cambiar y crear branch develop
-git pull origin develop   // descarga brancha develop
-git merge branchName      // hace merge del branchName con el branchActual
-git status                // visualiza los cambios pendientes
-git push origin develop   // envia brancha develop
-git checkout branchName   // cambiar y crear branchName
-git switch branchName     // cambiar a branchName
-git branch -d branchName  // elimina branchName
-git rm --cached src/main/resources/application.properties // agrega a git ignore
-
+git branch                  // visualiza los brancha
+git checkout -b develop     // cambiar y crear branch develop
+git checkout branchName     // cambiar y llevar cambios a branchName
+git pull origin develop     // descarga brancha develop
+git merge branchName        // hace merge del branchName con el branchActual
+git status                  // visualiza los cambios pendientes
+git push origin branchName  // actualiza brancha branchName en GitHub
+git switch branchName       // cambiar a branchName
+git branch -d branchName    // elimina branchName
 ```
 
-### Proyecto
-* Cada requerimiento se trabaja en la rama del Usuario (UserBranch).
-* Finalizado el requerimiento se hace Merge con el Deploy (DeployBranch).
-* No tocar el Main (MainBranch).
-```mermaid
-graph TD;
-    MainBranch
-    DeployBranch-->UserBranch;
-```
-
-### Seed
+## Seed
 * Create data.sql in Resources folder 
 * Edit application.properties file
 ```
@@ -289,7 +353,7 @@ spring.jpa.defer-datasource-initialization=true
 spring.sql.init.mode=always
 ```
 
-### MySQL Query
+## MySQL Query
 ```
 INSERT INTO roles
     (nombre)
@@ -333,7 +397,7 @@ VALUES
     ('praxis@praxis.cl', '123456', 'Isaac', 'Netero', 1);
 ```
 
-### Create new SQL User
+## Create new SQL User
 ```
 CREATE DATABASE praxis;
 USE praxis;
@@ -344,7 +408,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON *.* TO 'praxis'@'localhost';
 GRANT REFERENCES ON praxis.* TO 'praxis'@'localhost';
 ```
 
-### CSS
+## CSS
 ```
 /* Hide scrollbar for Chrome, Safari and Opera */
 html::-webkit-scrollbar {
@@ -357,3 +421,9 @@ html {
     scrollbar-width: none;  /* Firefox */
 }
 ``
+```
+
+## HTML
+```
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+```
