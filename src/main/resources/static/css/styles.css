@@ -8,3 +8,7 @@ html {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
+
+body {
+    padding-top: 70px; /* Ajusta este valor según la altura de tu navbar */
+}
