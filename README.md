@@ -12,26 +12,25 @@ Empaquetado WAR es para Web
 * No tocar el Main (MainBranch).
 ```mermaid
 graph TD;
-    Main <-- Develop
-    Develop --> GitPull 
+    Main
+    Develop --> GitPull_Develop 
     GitPull_Develop --> MyBranch
     MyBranch --> Merge_Develop
     Merge_Develop --> PullRequest_Develop
-    PullRequest_Develop --> Develop;
+    PullRequest_Develop --> Develop
+    Develop --> Main;
 ```
 
 [Graficos de Merimaid](https://mermaid.js.org/)
 
 ```mermaid
----
-title: Flujo Git y GitHub
----
 gitGraph
-  commit id: "init" tag: "v1.0.0"
-  commit id: "new develop"
-  branch develop
+    commit id: "init" tag: "v1.0.0"
+    commit id: "new develop"
+    branch develop
+    checkout develop
+    commit id: "new user branch"
 ```
-checkout develop
 branch myBranch
 commit
 commit

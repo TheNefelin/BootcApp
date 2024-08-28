@@ -11,45 +11,9 @@
     </header>
 
     <section class="container my-4">
-        <div class="mt-4 alert alert-info row" role="alert">
-            <div class="list-group col-md-4 col-12">
-                <button type="button" class="list-group-item list-group-item-action active" aria-current="true">Usuario</button>
-                <button type="button" class="list-group-item list-group-item-action">Nombre Apellido</button>
-            </div>
-            <div class="list-group col-md-4 col-12">
-                <button type="button" class="list-group-item list-group-item-action active" aria-current="true">Rol</button>
-                <button type="button" class="list-group-item list-group-item-action">Admin - Profesor - Estudiante</button>
-            </div>
-            <div class="list-group col-md-4 col-12">
-                <button type="button" class="list-group-item list-group-item-action active" aria-current="true">Correo</button>
-                <button type="button" class="list-group-item list-group-item-action">prueba@prueba.cl</button>
-            </div>
-        </div>
-
         <h3>Lista de Notas</h3>
 
-        <div th:each="user : ${users}">
-            <div th:switch="${user.role.id}">
-                <div th:case="1">
-                    <p><strong>Nombre Administrador:</strong> <span th:text="${user.name + ' ' + user.surname}"></span></p>
-                    <p><strong>Correo:</strong> <span th:text="${user.email}"></span></p>
-                </div>
-                <div th:case="2">
-                    <p><strong>Nombre Profesor:</strong> <span th:text="${user.name + ' ' + user.surname}"></span></p>
-                    <p><strong>Correo:</strong> <span th:text="${user.email}"></span></p>
-                </div>
-                <div th:case="3">
-                    <p><strong>Nombre Estudiante:</strong> <span th:text="${user.name + ' ' + user.surname}"></span></p>
-                    <p><strong>Correo:</strong> <span th:text="${user.email}"></span></p>
-                </div>
-                <div th:case="4">
-                    <p><strong>Nombre Apoderado:</strong> <span th:text="${user.name + ' ' + user.surname}"></span></p>
-                    <p><strong>Correo:</strong> <span th:text="${user.email}"></span></p>
-                </div>
-            </div>
-        </div>
-
-        <a th:href="@{'/grades/create'}" type="button" class="btn btn-primary my-4">
+        <a sec:authorize="hasAnyRole('ADMIN', 'PROFESOR')" th:href="@{'/grades/create'}" type="button" class="btn btn-primary my-4">
             <i class="bi bi-plus-circle"></i>
             Agregar Nota
         </a>
@@ -63,7 +27,7 @@
                 <th scope="col">Estudiante</th>
                 <th scope="col">Asignatura</th>
                 <th scope="col">Curso</th>
-                <th scope="col">Acciones</th>
+                <th sec:authorize="hasAnyRole('ADMIN', 'PROFESOR')" scope="col">Acciones</th>
             </tr>
             </thead>
             <tbody>
@@ -74,7 +38,7 @@
                 <td th:text="${grade.student.name + ' ' + grade.student.surname}"></td>
                 <td th:text="${grade.subject.name}"></td>
                 <td th:text="${grade.subject.course.name}"></td>
-                <td class="d-flex gap-2">
+                <td sec:authorize="hasAnyRole('ADMIN', 'PROFESOR')" class="d-flex gap-2">
                     <form th:method="put" th:action="@{/grades/update}">
                         <input th:value="${grade.id}" name="id" type="hidden">
                         <button type="submit" class="btn btn-warning btn-sm"><i class="bi bi-pencil-fill"></i></button>
