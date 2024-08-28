@@ -30,18 +30,18 @@ gitGraph
   commit id: "init" tag: "v1.0.0"
   commit id: "new develop"
   branch develop
-  checkout develop
-  branch myBranch
-  commit
-  commit
-  push
-  checkout develop
-  pull
-  checkout myBranch
-  merge develop
-  commit
-  commit
 ```
+checkout develop
+branch myBranch
+commit
+commit
+push
+checkout develop
+pull
+checkout myBranch
+merge develop
+commit
+commit
 
 ## Preparing project
 * Java
