@@ -39,7 +39,6 @@ gitGraph
     merge userBranch
     checkout main
     merge develop
-    commit id: "other merge"    
 ```
 branch myBranch
 commit
