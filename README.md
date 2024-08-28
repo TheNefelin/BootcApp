@@ -40,6 +40,7 @@ gitGraph
     checkout main
     commit id: "other merge"
     merge develop
+    commit
 ```
 branch myBranch
 commit
