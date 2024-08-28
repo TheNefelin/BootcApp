@@ -35,9 +35,11 @@ gitGraph
     commit id: "new user branch"
     commit id: "new modify"
     checkout develop
+    commit id: "other modify"
     merge userBranch
     checkout main
     merge develop
+    commit id: "other merge"    
 ```
 branch myBranch
 commit
