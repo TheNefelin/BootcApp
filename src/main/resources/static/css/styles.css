@@ -12,3 +12,8 @@ html {
 body {
     padding-top: 70px; /* Ajusta este valor según la altura de tu navbar */
 }
+
+.login {
+    max-width: 500px;
+    background: whitesmoke;
+}

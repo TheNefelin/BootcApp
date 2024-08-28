@@ -2,7 +2,7 @@ package cl.praxis.bootcapp.controllers.rests;
 
 
 import cl.praxis.bootcapp.entities.Grade;
-import cl.praxis.bootcapp.entities.GradeDTO;
+import cl.praxis.bootcapp.entities.dtos.GradeDTO;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
 import cl.praxis.bootcapp.services.IGradeService;
 import org.springframework.beans.factory.annotation.Autowired;

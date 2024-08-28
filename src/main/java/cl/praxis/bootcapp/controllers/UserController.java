@@ -1,7 +1,7 @@
 package cl.praxis.bootcapp.controllers;
 import cl.praxis.bootcapp.entities.Course;
 import cl.praxis.bootcapp.entities.Role;
-import cl.praxis.bootcapp.entities.User;
+import cl.praxis.bootcapp.entities.UserEntitiy;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
 import cl.praxis.bootcapp.services.imp.CourseServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -16,12 +16,12 @@ import java.util.Set;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    private IBaseServiceCRUD<User> userCrudService;
+    private IBaseServiceCRUD<UserEntitiy> userCrudService;
     private IBaseServiceCRUD<Role> roleService;
     private IBaseServiceCRUD<Course> courseCrudService;
 
     private CourseServiceImpl courseService ;
-    public UserController(IBaseServiceCRUD<User> userCrudService, IBaseServiceCRUD<Course> courseCrudService,
+    public UserController(IBaseServiceCRUD<UserEntitiy> userCrudService, IBaseServiceCRUD<Course> courseCrudService,
                           IBaseServiceCRUD<Role> roleService, CourseServiceImpl courseService) {
         this.userCrudService = userCrudService;
         this.courseCrudService = courseCrudService;
@@ -31,14 +31,14 @@ public class UserController {
 
     @GetMapping("/users")
     public String getAllUser(Model model) {
-        List<User> users = userCrudService.getAll();
+        List<UserEntitiy> users = userCrudService.getAll();
         model.addAttribute("users", users);
         return "user_list";
     }
 
     // Ruta a formulario agregar
     @GetMapping("/new")
-    public String showForm(@ModelAttribute User user, Model model) {
+    public String showForm(@ModelAttribute UserEntitiy user, Model model) {
         List<Role> listRoles = roleService.getAll();
         List<Course> listCourse = courseCrudService.getAll();
         model.addAttribute("roles", listRoles );
@@ -48,7 +48,7 @@ public class UserController {
 
     @GetMapping("/edit/userCourse/{id}")
     public String edituserCourse(@PathVariable Long id, Model model){
-        User user = userCrudService.getById(id);
+        UserEntitiy user = userCrudService.getById(id);
         List<Course> allCourse = courseCrudService.getAll();
         List<Course> courses = new ArrayList<>(user.getCourses());
         model.addAttribute("user", user);
@@ -59,7 +59,7 @@ public class UserController {
 
     @PostMapping("/update/userCourse")
     public String updateUserCourse(@RequestParam("userId") Long userId, @RequestParam("courseIds") List<Long> courseIds) {
-        User user = userCrudService.getById(userId);
+        UserEntitiy user = userCrudService.getById(userId);
         Set<Course> courses = new HashSet<>(courseService.getCoursesByIds(courseIds));
         user.setCourses(courses);
         userCrudService.update(user);
@@ -67,7 +67,7 @@ public class UserController {
     }
   
     @PostMapping
-    public String insertUser(@ModelAttribute User user) {
+    public String insertUser(@ModelAttribute UserEntitiy user) {
         userCrudService.create(user);
         return "redirect:/user/users";
     }
@@ -75,7 +75,7 @@ public class UserController {
     // Ruta a formulario editar
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model){
-        User user = userCrudService.getById(id);
+        UserEntitiy user = userCrudService.getById(id);
         List<Role> roles = roleService.getAll();
         List<Course> courses = courseCrudService.getAll();
         model.addAttribute("user", user);
@@ -86,7 +86,7 @@ public class UserController {
     }
 
     @PutMapping
-    public String editUser(@ModelAttribute("user") User user){
+    public String editUser(@ModelAttribute("user") UserEntitiy user){
         userCrudService.update(user);
         return "redirect:/user/users";
     }

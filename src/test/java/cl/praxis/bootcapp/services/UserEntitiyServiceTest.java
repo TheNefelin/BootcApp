@@ -2,7 +2,7 @@ package cl.praxis.bootcapp.services;
 
 import cl.praxis.bootcapp.entities.Course;
 import cl.praxis.bootcapp.entities.Role;
-import cl.praxis.bootcapp.entities.User;
+import cl.praxis.bootcapp.entities.UserEntitiy;
 import cl.praxis.bootcapp.repositories.IUserRepository;
 import cl.praxis.bootcapp.services.imp.UserServiceImpl;
 import org.junit.jupiter.api.Assertions;
@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class UserServiceTest {
+public class UserEntitiyServiceTest {
 
     @Mock
     private IUserRepository userRepo;
@@ -35,8 +35,8 @@ public class UserServiceTest {
     private UserServiceImpl userService;
 
     private final static Logger LOG = LoggerFactory.getLogger(SubjectServiceTest.class);
-    private User user1;
-    private User user2;
+    private UserEntitiy user1;
+    private UserEntitiy user2;
     private Course course1;
     private Course course2;
     private  Set<Course> courses = new HashSet<>();
@@ -54,14 +54,14 @@ public class UserServiceTest {
         courses.add(course1);
         courses.add(course2);
 
-        user1 = new User(1L, "antomiranda@gmail.com", "1234", "Antonia", "Miranda", role1, courses);
-        user2 = new User(2L, "arrtierrez@gmail.com", "123456", "Mario", "Cifuentes", role2, courses);
+        user1 = new UserEntitiy(1L, "antomiranda@gmail.com", "1234", "Antonia", "Miranda", role1, courses);
+        user2 = new UserEntitiy(2L, "arrtierrez@gmail.com", "123456", "Mario", "Cifuentes", role2, courses);
     }
 
     @Test
     void getAllUsersTest() {
         when(userRepo.findAll()).thenReturn(List.of(user1, user2));
-        List<User> users = userService.getAll();
+        List<UserEntitiy> users = userService.getAll();
         assertEquals(2,users.size());
         assertEquals("Antonia", users.get(0).getName());
         assertEquals("Mario",users.get(1).getName());
@@ -73,7 +73,7 @@ public class UserServiceTest {
     void getByIdTest() {
         when(userRepo.findById(1L)).thenReturn(Optional.of(user1));
 
-        User userById = userService.getById(1L);
+        UserEntitiy userById = userService.getById(1L);
 
         assertNotNull(userById);
         assertEquals(1L, userById.getId());
@@ -84,7 +84,7 @@ public class UserServiceTest {
     void createUserTest() {
         when(userRepo.save(user1)).thenReturn(user1);
 
-        User createdUser = userService.create(user1);
+        UserEntitiy createdUser = userService.create(user1);
 
         assertNotNull(createdUser);
         assertEquals(createdUser, user1);
@@ -102,9 +102,9 @@ public class UserServiceTest {
         user1.setRole(role2);
         user1.setCourses(courses);
 
-        User userExist = userService.getById(user1.getId());
+        UserEntitiy userExist = userService.getById(user1.getId());
         if(userExist != null) {
-            User updatedUser = userService.update(user1);
+            UserEntitiy updatedUser = userService.update(user1);
             assertEquals("maryperez@email.com", updatedUser.getEmail());
             assertEquals("marymary", updatedUser.getPassword());
             assertEquals("María", updatedUser.getName());

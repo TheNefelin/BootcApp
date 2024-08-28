@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:insert="components/bootstrap_css :: head"></th:block>
+    <link th:replace="components/dataTable_css :: link">
+    <title>Login</title>
+</head>
+<body>
+    <header class="bg-body-tertiary shadow-lg fixed-top">
+        <th:block th:insert="components/nav :: nav"></th:block>
+    </header>
+
+    <section th:if="${msge != null}" class="container mt-5">
+        <p th:text="${msge}" class="alert alert-info" role="alert"></p>
+    </section>
+
+    <section class="container mt-5">
+        <form th:action="@{/login}" th:method="post" class="border rounded p-4 shadow-lg m-auto login">
+            <h3 class="text-center mb-4">Iniciar Sessión</h3>
+
+            <div class="mb-3">
+                <label for="username" class="form-label">Correo Electronico</label>
+                <input required type="email" class="form-control" id="username" name="username">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input required type="password" class="form-control" id="password" name="password">
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-4">Iniciar Sessión</button>
+        </form>
+    </section>
+
+    <section class="container">
+        <th:block th:insert="components/footer :: footer"></th:block>
+    </section>
+
+    <script th:replace="components/bootstrap_js :: script"></script>
+</body>
+</html>
