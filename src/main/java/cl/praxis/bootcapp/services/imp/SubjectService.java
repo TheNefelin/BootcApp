@@ -1,8 +1,7 @@
 package cl.praxis.bootcapp.services.imp;
 
-import cl.praxis.bootcapp.entities.GradeDTO;
+import cl.praxis.bootcapp.entities.dtos.GradeDTO;
 import cl.praxis.bootcapp.entities.Subject;
-import cl.praxis.bootcapp.repositories.ICourseRepository;
 import cl.praxis.bootcapp.repositories.ISubjectRepository;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
 import cl.praxis.bootcapp.services.IGradeService;

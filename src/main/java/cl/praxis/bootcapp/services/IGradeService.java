@@ -1,6 +1,6 @@
 package cl.praxis.bootcapp.services;
 
-import cl.praxis.bootcapp.entities.GradeDTO;
+import cl.praxis.bootcapp.entities.dtos.GradeDTO;
 
 import java.util.List;
 

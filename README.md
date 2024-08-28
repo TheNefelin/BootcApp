@@ -6,13 +6,50 @@ Empaquetado WAR es para Web
 [Spring Boot Samples](https://spring.io/projects/spring-boot#samples) <br>
 [Spring Boot Initializr](https://start.spring.io/)
 
-### Preparing project
+## Proyecto
+* Cada requerimiento se trabaja en la rama del Usuario (UserBranch).
+* Finalizado el requerimiento se hace Merge con el Deploy (DeployBranch).
+* No tocar el Main (MainBranch).
+```mermaid
+graph TD;
+    Main
+    Develop --> GitPull_Develop 
+    GitPull_Develop --> MyBranch
+    MyBranch --> Merge_Develop
+    Merge_Develop --> PullRequest_Develop
+    PullRequest_Develop --> Develop
+    Develop --> Main;
+```
+
+[Graficos de Merimaid](https://mermaid.js.org/)
+
+```mermaid
+gitGraph
+    commit id: "init" tag: "v1.0.0"
+    commit id: "1 other merge" tag: "v1.0.1"
+    branch develop
+    checkout develop
+    commit id: "new develop branch"
+    branch userBranch
+    checkout userBranch
+    commit id: "new user branch"
+    commit id: "new modify"
+    checkout develop
+    commit id: "other modify"
+    merge userBranch
+    checkout main
+    commit id: "2 other merge" tag: "v1.0.2"
+    merge develop tag: "v1.0.3"
+    commit id: "3 other merge" tag: "v1.1.0"
+```
+
+## Preparing project
 * Java
 * Maven
 * JDK and Java 21
 * Packaging War (for web)
 
-### Dependency, Spring Boot: 3.4.0 (SNAPSHOT)
+## Dependency, Spring Boot: 3.4.0 (SNAPSHOT)
 - Developer Tools:
   * Spring Boot DevTools
   * Lombok
@@ -28,7 +65,7 @@ Empaquetado WAR es para Web
   * Spring Data JPA
   * MySql Driver
 
-### Folder
+## Folder
 ```
 /
 ├── main/
@@ -47,7 +84,7 @@ Empaquetado WAR es para Web
 └── test/
 ```
 
-### Annotations
+## Annotations
 * Clases
   * @Service
   * @Repository
@@ -87,7 +124,7 @@ Empaquetado WAR es para Web
   * @ModelAttribute
   * @RequestParam
 
-### Config DB
+## Config DB
 * Edit application.properties file
 ```
 spring.mvc.view.prefix=/templates/
@@ -105,14 +142,14 @@ spring.jpa.properties.hibernate.format_sql=true
 spring.jpa.hibernate.ddl-auto=update
 ```
 
-### Config MVC
+## Config MVC
 * Edit application.properties file
 ```
 # Enable PUT and DELETE in MVC
 spring.mvc.hiddenmethod.filter.enabled=true
 ```
 
-### Config Error Template
+## Config Error Template
 * Edit application.properties file
 ```
 # Custom Error Controller
@@ -124,23 +161,37 @@ server.error.path=/error
 ```
 @Controller
 public class CustomErrorController implements ErrorController {
+
     @GetMapping("/error")
-    public String handleError(HttpServletRequest request) {
+    public String handleError(HttpServletRequest request, Model model) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
         if (status != null) {
             Integer statusCode = Integer.valueOf(status.toString());
 
             if (statusCode == 404) {
+                model.addAttribute("errorMessage", "La página que estás buscando no existe");
+                return "error404";
+            }
+
+            if (statusCode == 403) {
+                model.addAttribute("errorMessage", "No tienes permisos para acceder a este recurso.");
+                return "error404";
+            }
+
+            if (statusCode == 401) {
+                model.addAttribute("errorMessage", "No estás autenticado. Por favor, inicia sesión.");
                 return "error404";
             }
         }
 
+        model.addAttribute("errorMessage", "La página que estás buscando no existe");
         return "error404";
     }
 }
+
 ```
-### Tests
+## Tests
 ```
 //Integra Mockito con JUnit 5.
 @ExtendWith(MockitoExtension.class)
@@ -167,7 +218,7 @@ assertThat(result).isEqualTo(algo);
 verify(repository, times(1)).metodo();
 ```
 
-### Loggers
+## Loggers
 ```
 // import org.springframework.boot.CommandLineRunner;
 // implements CommandLineRunner 
@@ -187,30 +238,105 @@ public void run(String... args) throws Exception {
 }
 ```
 
-### Spring Security
-* SecurityConfig Class in /configure folder
+## Spring Security
+* dependency
+```
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+<dependency>
+  <groupId>org.thymeleaf.extras</groupId>
+  <artifactId>thymeleaf-extras-springsecurity6</artifactId>
+</dependency>
+```
+* User Security Service Class
+```
+@Service
+public class CustomUserDetailsService implements UserDetailsService {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private IUserRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserEntitiy userEntitiy = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+
+        List<GrantedAuthority> grantedAuthorityList = AuthorityUtils.createAuthorityList("ROLE_".concat(userEntitiy.getRole().getName()));
+
+        return new User(
+                userEntitiy.getEmail(),
+                userEntitiy.getPassword(),
+                true,
+                true,
+                true,
+                true,
+                grantedAuthorityList);
+    }
+```
+* SecurityConfig Class
+* Security on pages and metods
 ```
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests(request -> request
-                        .requestMatchers("/", "/login", "/register", "/css/**").permitAll()
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .authorizeRequests(request -> request
+                        .requestMatchers("/", "/login", "/register", "/css/**", "/img/**").permitAll()
                         .anyRequest().authenticated()
-        ).formLogin(formLogin -> formLogin
+                ).formLogin(formLogin -> formLogin
                         .loginPage("/login")
-                        .defaultSuccessUrl("/demo", true)
+                        .defaultSuccessUrl("/grades", true)
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
                         .permitAll())
                 .csrf(csrf -> csrf.disable());
 
-        return http.build();
+        return httpSecurity.build();
     }
 }
 ```
+* Security on metods
+```
+@PreAuthorize("hasAnyRole('ADMIN', 'PROFESOR', 'ESTUDIANTE', 'APODERADO')")
+@GetMapping
+public String getAllGrades(Model model, @AuthenticationPrincipal UserDetails authenticatedPrincipal) {
+  List<GradeDTO> dto = gradeService.getAllGrades();
 
-### Bootstrap
+  System.out.println("------------------------");
+  System.out.println(authenticatedPrincipal);
+  System.out.println("------------------------");
+
+  model.addAttribute("grades", dto);
+  return "grade_list";
+}
+```
+* Security on HTML tag
+```
+<html lang="es" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div sec:authorize="isAnonymous()"></div>
+<div sec:authorize="isAuthenticated()"></div>
+<div sec:authorize="hasRole('ADMIN')"></div>
+<div sec:authorize="hasAnyRole('ADMIN', 'USER')"></div>
+<div sec:authorize="hasAuthority('PERMISO_ESPECIAL')"></div>
+```
+
+## Bootstrap
 ```
 <!-- Bootstrap CSS -->
 <link
@@ -233,7 +359,7 @@ public class SecurityConfig {
 </script>
 ```
 
-### TaskKill
+## TaskKill
 ```
 cmd
 netstat -ano
@@ -241,10 +367,10 @@ netstat -ano | findstr :8080
 taskkill /f /pid <pid-number>
 ```
 
-### Git
+## Git
 ```
 git checkout -b branchName                  // crear rama
-git checkout main                           // cambiar rama
+git switch main                             // cambiar rama
 git pull                                    // descargar las modificaciones de GitHub
 git branch                                  // ver todas las ramas
 git push --set-upstream origin "branchName" // crea la branch automaticamente en Github
@@ -252,30 +378,18 @@ git commit -m "branchName"                  // crear historico commits
 git push                                    // actualiza el branch en GitHub
 
 // merge con develop
-git branch                // visualiza los brancha
-git checkout develop      // cambiar y crear branch develop
-git pull origin develop   // descarga brancha develop
-git merge branchName      // hace merge del branchName con el branchActual
-git status                // visualiza los cambios pendientes
-git push origin develop   // envia brancha develop
-git checkout branchName   // cambiar y crear branchName
-git switch branchName     // cambiar a branchName
-git branch -d branchName  // elimina branchName
-git rm --cached src/main/resources/application.properties // agrega a git ignore
-
+git branch                  // visualiza los brancha
+git checkout -b develop     // cambiar y crear branch develop
+git checkout branchName     // cambiar y llevar cambios a branchName
+git pull origin develop     // descarga brancha develop
+git merge branchName        // hace merge del branchName con el branchActual
+git status                  // visualiza los cambios pendientes
+git push origin branchName  // actualiza brancha branchName en GitHub
+git switch branchName       // cambiar a branchName
+git branch -d branchName    // elimina branchName
 ```
 
-### Proyecto
-* Cada requerimiento se trabaja en la rama del Usuario (UserBranch).
-* Finalizado el requerimiento se hace Merge con el Deploy (DeployBranch).
-* No tocar el Main (MainBranch).
-```mermaid
-graph TD;
-    MainBranch
-    DeployBranch-->UserBranch;
-```
-
-### Seed
+## Seed
 * Create data.sql in Resources folder 
 * Edit application.properties file
 ```
@@ -289,7 +403,7 @@ spring.jpa.defer-datasource-initialization=true
 spring.sql.init.mode=always
 ```
 
-### MySQL Query
+## MySQL Query
 ```
 INSERT INTO roles
     (nombre)
@@ -333,7 +447,7 @@ VALUES
     ('praxis@praxis.cl', '123456', 'Isaac', 'Netero', 1);
 ```
 
-### Create new SQL User
+## Create new SQL User
 ```
 CREATE DATABASE praxis;
 USE praxis;
@@ -344,7 +458,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON *.* TO 'praxis'@'localhost';
 GRANT REFERENCES ON praxis.* TO 'praxis'@'localhost';
 ```
 
-### CSS
+## CSS
 ```
 /* Hide scrollbar for Chrome, Safari and Opera */
 html::-webkit-scrollbar {
@@ -357,3 +471,9 @@ html {
     scrollbar-width: none;  /* Firefox */
 }
 ``
+```
+
+## HTML
+```
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+```

@@ -1,10 +1,15 @@
 package cl.praxis.bootcapp.services.imp;
 
-import cl.praxis.bootcapp.entities.*;
-
+import cl.praxis.bootcapp.entities.RolesEnum;
+import cl.praxis.bootcapp.entities.dtos.AuthenticatedUserDTO;
+import cl.praxis.bootcapp.entities.dtos.GradeDTO;
+import cl.praxis.bootcapp.entities.Grade;
+import cl.praxis.bootcapp.entities.Subject;
+import cl.praxis.bootcapp.entities.UserEntitiy;
 import cl.praxis.bootcapp.repositories.IGradeRepository;
 import cl.praxis.bootcapp.repositories.ISubjectRepository;
 import cl.praxis.bootcapp.repositories.IUserRepository;
+import cl.praxis.bootcapp.security.CustomUserDetailsService;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
 
 import cl.praxis.bootcapp.services.IGradeService;
@@ -17,13 +22,14 @@ import java.util.stream.Collectors;
 @Service
 public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
     @Autowired
+    private CustomUserDetailsService customUserDetailsService;
+
+    @Autowired
     private IGradeRepository repoGrade;
 
-    // MODIFICAR
     @Autowired
     private ISubjectRepository repoSubject;
 
-    // MODIFICAR
     @Autowired
     private IUserRepository repoUser;
 
@@ -47,7 +53,17 @@ public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
 
     @Override
     public List<GradeDTO> getAllGrades() {
-        List<Grade> grades = repoGrade.findAll();
+        AuthenticatedUserDTO authUser = customUserDetailsService.getAuthenticatedUser();
+        List<Grade> grades = new ArrayList<>();
+
+        if (authUser.getRoles().contains(RolesEnum.ROLE_ADMIN.toString())) {
+            grades = repoGrade.findAll();
+        } else if (authUser.getRoles().contains(RolesEnum.ROLE_PROFESOR.toString())) {
+            grades = repoGrade.findAllGradesByIdTeacher(authUser.getId());
+        } else if (authUser.getRoles().contains(RolesEnum.ROLE_ESTUDIANTE.toString())) {
+            grades = repoGrade.findAllGradesByIdStudent(authUser.getId());
+        }
+
         return toDTO(grades);
     }
 
@@ -73,8 +89,8 @@ public class GradeService implements IGradeService, IBaseServiceCRUD<Grade> {
         Set<Long> idStudentsSet = grades.stream().map(Grade::getIdStudent).collect(Collectors.toSet());
 
         Map<Long, Subject> subjectList = repoSubject.findAllById(idSubjectSet).stream().collect(Collectors.toMap(Subject::getId, subject -> subject));
-        Map<Long, User> teacherList = repoUser.findAllById(idTeacherSet).stream().collect(Collectors.toMap(User::getId, user -> user));
-        Map<Long, User> studentList = repoUser.findAllById(idStudentsSet).stream().collect(Collectors.toMap(User::getId, user -> user));
+        Map<Long, UserEntitiy> teacherList = repoUser.findAllById(idTeacherSet).stream().collect(Collectors.toMap(UserEntitiy::getId, user -> user));
+        Map<Long, UserEntitiy> studentList = repoUser.findAllById(idStudentsSet).stream().collect(Collectors.toMap(UserEntitiy::getId, user -> user));
 
         return grades.stream().map(grade -> {
             GradeDTO gradeDTO = new GradeDTO();

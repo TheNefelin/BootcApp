@@ -1,7 +1,6 @@
 package cl.praxis.bootcapp.controllers;
 
 
-import cl.praxis.bootcapp.entities.Course;
 import cl.praxis.bootcapp.entities.Role;
 import cl.praxis.bootcapp.services.imp.RoleServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;

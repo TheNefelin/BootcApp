@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <th:block th:insert="components/bootstrap_css :: head"></th:block>
     <link th:replace="components/dataTable_css :: link">
@@ -10,7 +10,8 @@
         <th:block th:insert="components/nav :: nav"></th:block>
     </header>
 
-    <p>Plantilla, solo para copiar y crear nuevos html</p>
+    <h1 class="text-center">Plantilla, solo para copiar y crear nuevos HTML</h1>
+    <p class="text-center">... Ah si ... Bienvenido!!!</p>
 
     <section class="container">
         <th:block th:insert="components/footer :: footer"></th:block>
