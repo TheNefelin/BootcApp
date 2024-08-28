@@ -12,16 +12,17 @@ Empaquetado WAR es para Web
 * No tocar el Main (MainBranch).
 ```mermaid
 graph TD;
-    Main
-    Deploy --> GitPull 
-    GitPull --> MyBranch
-    MyBranch --> Merge_Deploy
-    Merge_Deploy --> PullRequest_Develop
-    PullRequest_Develop --> Deploy;
+    Main <-- Develop
+    Develop --> GitPull 
+    GitPull_Develop --> MyBranch
+    MyBranch --> Merge_Develop
+    Merge_Develop --> PullRequest_Develop
+    PullRequest_Develop --> Develop;
 ```
 
 [Graficos de Merimaid](https://mermaid.js.org/)
 
+```mermaid
 ---
 title: Flujo Git y GitHub
 ---
@@ -40,6 +41,7 @@ gitGraph
   merge develop
   commit
   commit
+```
 
 ## Preparing project
 * Java
