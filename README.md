@@ -33,6 +33,9 @@ gitGraph
     branch userBranch
     checkout userBranch
     commit id: "new user branch"
+    commit id: "new modify"
+    checkout userBranch
+    merge develop
 ```
 branch myBranch
 commit
