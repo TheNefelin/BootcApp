@@ -42,16 +42,6 @@ gitGraph
     merge develop
     commit id: "3 other merge"
 ```
-branch myBranch
-commit
-commit
-push
-checkout develop
-pull
-checkout myBranch
-merge develop
-commit
-commit
 
 ## Preparing project
 * Java
