@@ -26,7 +26,7 @@ graph TD;
 ```mermaid
 gitGraph
     commit id: "init" tag: "v1.0.0"
-    commit id: "other merge"
+    commit id: "1 other merge"
     branch develop
     checkout develop
     commit id: "new develop branch"
@@ -38,9 +38,9 @@ gitGraph
     commit id: "other modify"
     merge userBranch
     checkout main
-    commit id: "other merge"
+    commit id: "2 other merge"
     merge develop
-    commit id: "other merge"
+    commit id: "3 other merge"
 ```
 branch myBranch
 commit
