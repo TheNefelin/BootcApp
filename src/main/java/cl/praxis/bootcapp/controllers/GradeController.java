@@ -9,6 +9,11 @@ import cl.praxis.bootcapp.entities.UserEntitiy;
 import cl.praxis.bootcapp.services.IBaseServiceCRUD;
 import cl.praxis.bootcapp.services.imp.GradeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +33,7 @@ public class GradeController {
     @Autowired
     private IBaseServiceCRUD<Subject> subjectService;
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESOR', 'ESTUDIANTE')")
     @GetMapping
     public String getAllGrades(Model model) {
         List<GradeDTO> dto = gradeService.getAllGrades();

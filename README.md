@@ -13,12 +13,12 @@ Empaquetado WAR es para Web
 ```mermaid
 graph TD;
     Main
-    Deploy --> MyBranch : merge develop in MyBranch
-    MyBranch --> Deploy : pull request to develop;
+    Deploy --> MyBranch 
+    MyBranch --> Deploy;
 ```
 
 [Graficos de Merimaid](https://mermaid.js.org/)
-
+```mermaid
 ---
 title: Flujo Git y GitHub
 ---
@@ -37,6 +37,7 @@ gitGraph
   merge develop
   commit
   commit
+```
 
 ## Preparing project
 * Java
@@ -156,21 +157,35 @@ server.error.path=/error
 ```
 @Controller
 public class CustomErrorController implements ErrorController {
+
     @GetMapping("/error")
-    public String handleError(HttpServletRequest request) {
+    public String handleError(HttpServletRequest request, Model model) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
         if (status != null) {
             Integer statusCode = Integer.valueOf(status.toString());
 
             if (statusCode == 404) {
+                model.addAttribute("errorMessage", "La página que estás buscando no existe");
+                return "error404";
+            }
+
+            if (statusCode == 403) {
+                model.addAttribute("errorMessage", "No tienes permisos para acceder a este recurso.");
+                return "error404";
+            }
+
+            if (statusCode == 401) {
+                model.addAttribute("errorMessage", "No estás autenticado. Por favor, inicia sesión.");
                 return "error404";
             }
         }
 
+        model.addAttribute("errorMessage", "La página que estás buscando no existe");
         return "error404";
     }
 }
+
 ```
 ## Tests
 ```
@@ -231,37 +246,6 @@ public void run(String... args) throws Exception {
   <artifactId>thymeleaf-extras-springsecurity6</artifactId>
 </dependency>
 ```
-* HTML
-```
-<html lang="es" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
-<div sec:authorize="isAnonymous()"></div>
-<div sec:authorize="isAuthenticated()"></div>
-<div sec:authorize="hasRole('ADMIN')"></div>
-<div sec:authorize="hasAnyRole('ADMIN', 'USER')"></div>
-<div sec:authorize="hasAuthority('PERMISO_ESPECIAL')"></div>
-```
-* SecurityConfig Class
-```
-@Configuration
-@EnableWebSecurity
-public class SecurityConfig {
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeRequests(request -> request
-                        .requestMatchers("/", "/login", "/register", "/css/**", "/img/**").permitAll()
-                        .anyRequest().authenticated()
-                ).formLogin(formLogin -> formLogin
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/demo", true)
-                        .permitAll())
-                .csrf(csrf -> csrf.disable());
-
-        return httpSecurity.build();
-    }
-}
-```
 * User Security Service Class
 ```
 @Service
@@ -276,14 +260,76 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserEntitiy userEntitiy = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
-        List<GrantedAuthority> grantedAuthorityList = AuthorityUtils.createAuthorityList(userEntitiy.getRole().getName());
+        List<GrantedAuthority> grantedAuthorityList = AuthorityUtils.createAuthorityList("ROLE_".concat(userEntitiy.getRole().getName()));
 
         return new User(
                 userEntitiy.getEmail(),
                 userEntitiy.getPassword(),
+                true,
+                true,
+                true,
+                true,
                 grantedAuthorityList);
     }
+```
+* SecurityConfig Class
+* Security on pages and metods
+```
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
+public class SecurityConfig {
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .authorizeRequests(request -> request
+                        .requestMatchers("/", "/login", "/register", "/css/**", "/img/**").permitAll()
+                        .anyRequest().authenticated()
+                ).formLogin(formLogin -> formLogin
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/grades", true)
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll())
+                .csrf(csrf -> csrf.disable());
+
+        return httpSecurity.build();
+    }
 }
+```
+* Security on metods
+```
+@PreAuthorize("hasAnyRole('ADMIN', 'PROFESOR', 'ESTUDIANTE', 'APODERADO')")
+@GetMapping
+public String getAllGrades(Model model, @AuthenticationPrincipal UserDetails authenticatedPrincipal) {
+  List<GradeDTO> dto = gradeService.getAllGrades();
+
+  System.out.println("------------------------");
+  System.out.println(authenticatedPrincipal);
+  System.out.println("------------------------");
+
+  model.addAttribute("grades", dto);
+  return "grade_list";
+}
+```
+* Security on HTML tag
+```
+<html lang="es" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div sec:authorize="isAnonymous()"></div>
+<div sec:authorize="isAuthenticated()"></div>
+<div sec:authorize="hasRole('ADMIN')"></div>
+<div sec:authorize="hasAnyRole('ADMIN', 'USER')"></div>
+<div sec:authorize="hasAuthority('PERMISO_ESPECIAL')"></div>
 ```
 
 ## Bootstrap
