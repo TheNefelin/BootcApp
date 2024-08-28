@@ -26,9 +26,12 @@ graph TD;
 ```mermaid
 gitGraph
     commit id: "init" tag: "v1.0.0"
-    commit id: "new develop"
+    commit
     branch develop
     checkout develop
+    commit id: "new develop branch"
+    branch userBranch
+    checkout userBranch
     commit id: "new user branch"
 ```
 branch myBranch
