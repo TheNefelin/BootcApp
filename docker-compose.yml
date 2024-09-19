@@ -1,0 +1,23 @@
+services:
+  mysql:
+    image: mysql
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: testing
+      MYSQL_DATABASE: testing
+      MYSQL_USER: testing
+      MYSQL_PASSWORD: testing
+    ports:
+      - '3306:3306'
+
+  app:
+    build: .
+    container_name: java_app_container
+    ports:
+      - '8080:8080'
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/testing
+      SPRING_DATASOURCE_USERNAME: testing
+      SPRING_DATASOURCE_PASSWORD: testing
